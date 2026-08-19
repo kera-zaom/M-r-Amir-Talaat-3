@@ -949,6 +949,7 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_lPAYrGCg_7-5Y1Dj7E5BSw_o-DsYl9Z";
 
+
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
@@ -978,32 +979,17 @@ const loginButton =
 const signupButton =
     document.getElementById("signupButton");
 
-const loginEmail =
-    document.getElementById("loginEmail");
-
-const loginPassword =
-    document.getElementById("loginPassword");
-
-const signupName =
-    document.getElementById("signupName");
-
-const signupEmail =
-    document.getElementById("signupEmail");
-
-const signupPassword =
-    document.getElementById("signupPassword");
-
 const message =
     document.getElementById("message");
 
 
 /* =====================================================
-   REQUEST LOCKS
+   REQUEST LOCK
    يمنع إرسال أكثر من طلب في نفس الوقت
 ===================================================== */
 
-let loginInProgress = false;
-let signupInProgress = false;
+let loginRequestRunning = false;
+let signupRequestRunning = false;
 
 
 /* =====================================================
@@ -1023,33 +1009,8 @@ function hideMessage(){
 
     message.textContent = "";
 
-    message.className = "message";
-}
-
-
-/* =====================================================
-   BUTTON STATE
-===================================================== */
-
-function setLoginLoading(loading){
-
-    loginButton.disabled = loading;
-
-    loginButton.textContent =
-        loading
-            ? "جارٍ تسجيل الدخول..."
-            : "تسجيل الدخول";
-}
-
-
-function setSignupLoading(loading){
-
-    signupButton.disabled = loading;
-
-    signupButton.textContent =
-        loading
-            ? "جارٍ إنشاء الحساب..."
-            : "إنشاء الحساب";
+    message.className =
+        "message";
 }
 
 
@@ -1111,7 +1072,7 @@ async function getUserRole(userId){
 async function redirectByRole(user){
 
     if(!user){
-        return false;
+        return;
     }
 
 
@@ -1133,7 +1094,7 @@ async function redirectByRole(user){
                 "admin/index.html"
             );
 
-            return true;
+            return;
         }
 
 
@@ -1143,7 +1104,7 @@ async function redirectByRole(user){
                 "student.html"
             );
 
-            return true;
+            return;
         }
 
 
@@ -1166,8 +1127,6 @@ async function redirectByRole(user){
             "حدث خطأ أثناء فتح الحساب.",
             "error"
         );
-
-        return false;
     }
 }
 
@@ -1178,11 +1137,14 @@ async function redirectByRole(user){
 
 loginTab.addEventListener(
     "click",
-    () => {
+    function(){
 
-        if(loginInProgress || signupInProgress){
+        if(loginRequestRunning ||
+           signupRequestRunning){
+
             return;
         }
+
 
         loginTab.classList.add("active");
 
@@ -1199,11 +1161,14 @@ loginTab.addEventListener(
 
 signupTab.addEventListener(
     "click",
-    () => {
+    function(){
 
-        if(loginInProgress || signupInProgress){
+        if(loginRequestRunning ||
+           signupRequestRunning){
+
             return;
         }
+
 
         signupTab.classList.add("active");
 
@@ -1224,18 +1189,18 @@ signupTab.addEventListener(
 
 signupForm.addEventListener(
     "submit",
-    async (event) => {
+    async function(event){
 
         event.preventDefault();
 
-        if(signupInProgress || loginInProgress){
-            return;
-        }
 
+        /*
+         * حماية إضافية:
+         * لو فيه طلب إنشاء حساب بالفعل
+         * لا نرسل أي طلب جديد.
+         */
 
-        if(!signupForm.checkValidity()){
-
-            signupForm.reportValidity();
+        if(signupRequestRunning){
 
             return;
         }
@@ -1243,19 +1208,24 @@ signupForm.addEventListener(
 
         hideMessage();
 
-        signupInProgress = true;
-
-        setSignupLoading(true);
-
 
         const name =
-            signupName.value.trim();
+            document
+            .getElementById("signupName")
+            .value
+            .trim();
 
         const email =
-            signupEmail.value.trim().toLowerCase();
+            document
+            .getElementById("signupEmail")
+            .value
+            .trim()
+            .toLowerCase();
 
         const password =
-            signupPassword.value;
+            document
+            .getElementById("signupPassword")
+            .value;
 
 
         if(name.length < 2){
@@ -1265,9 +1235,16 @@ signupForm.addEventListener(
                 "error"
             );
 
-            signupInProgress = false;
+            return;
+        }
 
-            setSignupLoading(false);
+
+        if(!email){
+
+            showMessage(
+                "اكتب البريد الإلكتروني.",
+                "error"
+            );
 
             return;
         }
@@ -1280,15 +1257,27 @@ signupForm.addEventListener(
                 "error"
             );
 
-            signupInProgress = false;
-
-            setSignupLoading(false);
-
             return;
         }
 
 
+        /*
+         * قفل الطلب قبل الاتصال بـ Supabase.
+         */
+
+        signupRequestRunning = true;
+
+        signupButton.disabled = true;
+
+        signupButton.textContent =
+            "جارٍ إنشاء الحساب...";
+
+
         try{
+
+            /*
+             * طلب واحد فقط.
+             */
 
             const {
                 data,
@@ -1314,6 +1303,7 @@ signupForm.addEventListener(
 
 
             if(error){
+
                 throw error;
             }
 
@@ -1326,16 +1316,35 @@ signupForm.addEventListener(
             }
 
 
+            /*
+             * لا نعيد signUp مرة أخرى.
+             */
+
             if(data.session){
 
                 showMessage(
-                    "تم إنشاء الحساب بنجاح...",
+                    "تم إنشاء الحساب بنجاح.",
                     "success"
                 );
 
 
-                await redirectByRole(
-                    data.user
+                /*
+                 * انتظار بسيط فقط ثم قراءة
+                 * بيانات المستخدم.
+                 *
+                 * لا يوجد هنا أي طلب إنشاء
+                 * حساب جديد.
+                 */
+
+                setTimeout(
+                    async function(){
+
+                        await redirectByRole(
+                            data.user
+                        );
+
+                    },
+                    500
                 );
 
             }else{
@@ -1361,9 +1370,12 @@ signupForm.addEventListener(
 
         }finally{
 
-            signupInProgress = false;
+            signupRequestRunning = false;
 
-            setSignupLoading(false);
+            signupButton.disabled = false;
+
+            signupButton.textContent =
+                "إنشاء الحساب";
         }
 
     }
@@ -1372,61 +1384,20 @@ signupForm.addEventListener(
 
 /* =====================================================
    LOGIN
-   مهم:
-   طلب تسجيل الدخول يتم مرة واحدة فقط
 ===================================================== */
 
 loginForm.addEventListener(
     "submit",
-    async (event) => {
+    async function(event){
 
         event.preventDefault();
 
 
         /*
-         * لو فيه طلب تسجيل دخول شغال بالفعل
-         * لا نرسل أي طلب جديد.
+         * حماية من الضغط المتكرر.
          */
 
-        if(loginInProgress){
-            return;
-        }
-
-
-        /*
-         * لا تسمح بتسجيل الدخول أثناء إنشاء الحساب.
-         */
-
-        if(signupInProgress){
-            return;
-        }
-
-
-        /*
-         * تحقق من الحقول قبل الاتصال بـ Supabase.
-         */
-
-        if(!loginForm.checkValidity()){
-
-            loginForm.reportValidity();
-
-            return;
-        }
-
-
-        const email =
-            loginEmail.value.trim().toLowerCase();
-
-        const password =
-            loginPassword.value;
-
-
-        if(!email || !password){
-
-            showMessage(
-                "اكتب البريد الإلكتروني وكلمة المرور.",
-                "error"
-            );
+        if(loginRequestRunning){
 
             return;
         }
@@ -1435,21 +1406,58 @@ loginForm.addEventListener(
         hideMessage();
 
 
+        const email =
+            document
+            .getElementById("loginEmail")
+            .value
+            .trim()
+            .toLowerCase();
+
+        const password =
+            document
+            .getElementById("loginPassword")
+            .value;
+
+
+        if(!email){
+
+            showMessage(
+                "اكتب البريد الإلكتروني.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(!password){
+
+            showMessage(
+                "اكتب كلمة المرور.",
+                "error"
+            );
+
+            return;
+        }
+
+
         /*
-         * قفل الطلب قبل استدعاء Supabase.
+         * قفل الطلب قبل إرسال الطلب.
          */
 
-        loginInProgress = true;
+        loginRequestRunning = true;
 
-        setLoginLoading(true);
+        loginButton.disabled = true;
+
+        loginButton.textContent =
+            "جارٍ تسجيل الدخول...";
 
 
         try{
 
-            console.log(
-                "LOGIN REQUEST: sending once"
-            );
-
+            /*
+             * طلب تسجيل دخول واحد فقط.
+             */
 
             const {
                 data,
@@ -1478,12 +1486,6 @@ loginForm.addEventListener(
             }
 
 
-            console.log(
-                "LOGIN SUCCESS:",
-                data.user.id
-            );
-
-
             showMessage(
                 "تم تسجيل الدخول بنجاح...",
                 "success"
@@ -1491,8 +1493,7 @@ loginForm.addEventListener(
 
 
             /*
-             * لا نعمل signIn مرة ثانية.
-             * فقط نقرأ Role ثم ننتقل.
+             * لا يوجد signIn مرة ثانية.
              */
 
             await redirectByRole(
@@ -1512,16 +1513,14 @@ loginForm.addEventListener(
                 "error"
             );
 
-
         }finally{
 
-            /*
-             * فتح الزر بعد انتهاء الطلب.
-             */
+            loginRequestRunning = false;
 
-            loginInProgress = false;
+            loginButton.disabled = false;
 
-            setLoginLoading(false);
+            loginButton.textContent =
+                "تسجيل الدخول";
         }
 
     }
@@ -1530,6 +1529,7 @@ loginForm.addEventListener(
 
 /* =====================================================
    EXISTING SESSION
+   قراءة الجلسة فقط
 ===================================================== */
 
 async function checkExistingSession(){
@@ -1555,11 +1555,19 @@ async function checkExistingSession(){
 
 
         /*
-         * لو المستخدم داخل بالفعل،
-         * نرسله مباشرة حسب الـRole.
+         * مهم:
+         *
+         * getSession() لا ينشئ حسابًا
+         * ولا يسجل دخولًا جديدًا.
+         *
+         * نحن فقط نقرأ الجلسة الحالية.
          */
 
-        if(data && data.session){
+        if(
+            data &&
+            data.session &&
+            data.session.user
+        ){
 
             await redirectByRole(
                 data.session.user
@@ -1579,11 +1587,10 @@ async function checkExistingSession(){
 
 /* =====================================================
    AUTH STATE
-   لا يوجد أي signIn هنا
 ===================================================== */
 
 supabaseClient.auth.onAuthStateChange(
-    (event, session) => {
+    function(event, session){
 
         console.log(
             "AUTH EVENT:",
@@ -1591,9 +1598,14 @@ supabaseClient.auth.onAuthStateChange(
         );
 
         /*
-         * مهم:
-         * لا نستدعي signInWithPassword هنا.
-         * هذا Listener للمراقبة فقط.
+         * مهم جدًا:
+         *
+         * لا نعمل signIn
+         * ولا signUp
+         * ولا redirect هنا.
+         *
+         * هذا يمنع تكرار الطلبات الناتج
+         * عن تغيّر حالة المصادقة.
          */
     }
 );
@@ -1665,16 +1677,40 @@ function translateError(error){
     if(
         msg.includes(
             "rate limit"
-        ) ||
-        msg.includes(
-            "over_request_rate_limit"
-        ) ||
+        )
+    ){
+
+        return "تم تجاوز حد المحاولات مؤقتًا من Supabase. انتظر قليلًا ثم حاول مرة واحدة فقط.";
+    }
+
+
+    if(
         msg.includes(
             "too many requests"
         )
     ){
 
-        return "تم تجاوز حد المحاولات من Supabase. انتظر قليلًا ثم حاول مرة أخرى.";
+        return "طلبات كثيرة جدًا. انتظر قليلًا ثم حاول مرة أخرى.";
+    }
+
+
+    if(
+        msg.includes(
+            "email rate limit exceeded"
+        )
+    ){
+
+        return "تم تجاوز حد إنشاء الحسابات بالبريد الإلكتروني مؤقتًا. انتظر قليلًا ثم حاول مرة واحدة فقط.";
+    }
+
+
+    if(
+        msg.includes(
+            "over_email_send_rate_limit"
+        )
+    ){
+
+        return "تم تجاوز حد إرسال رسائل البريد مؤقتًا. انتظر قليلًا ثم حاول مرة أخرى.";
     }
 
 
@@ -1688,10 +1724,6 @@ function translateError(error){
 /* =====================================================
    START
 ===================================================== */
-
-/*
- * فحص Session مرة واحدة فقط عند فتح الصفحة.
- */
 
 checkExistingSession();
 
