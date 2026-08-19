@@ -62,14 +62,13 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    BACKGROUND
-===================================================== */
+========================= */
 
 .background{
 
     position:fixed;
-
     inset:0;
 
     z-index:-10;
@@ -128,11 +127,6 @@ body{
     opacity:.14;
 }
 
-
-/* =====================================================
-   STARS
-===================================================== */
-
 .stars{
 
     position:absolute;
@@ -158,16 +152,15 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    NAVBAR
-===================================================== */
+========================= */
 
 .navbar{
 
     width:100%;
 
-    padding:
-        20px 5%;
+    padding:20px 5%;
 
     display:flex;
 
@@ -190,9 +183,9 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    BRAND
-===================================================== */
+========================= */
 
 .brand{
 
@@ -202,11 +195,6 @@ body{
 
     gap:12px;
 }
-
-
-/* =====================================================
-   TEACHER IMAGE BRAND
-===================================================== */
 
 .brand-icon{
 
@@ -234,7 +222,6 @@ body{
         rgba(180,155,255,.35);
 
     box-shadow:
-
         0 12px 35px
         rgba(119,76,255,.30),
 
@@ -293,7 +280,6 @@ body{
     -webkit-user-drag:none;
 }
 
-
 .brand-info{
 
     display:flex;
@@ -320,9 +306,9 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    LOGOUT
-===================================================== */
+========================= */
 
 .logout-button{
 
@@ -335,8 +321,7 @@ body{
 
     color:#c9c9d8;
 
-    padding:
-        11px 17px;
+    padding:11px 17px;
 
     border-radius:13px;
 
@@ -361,9 +346,9 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    MAIN
-===================================================== */
+========================= */
 
 .main{
 
@@ -373,14 +358,13 @@ body{
 
     margin:auto;
 
-    padding:
-        55px 5% 80px;
+    padding:55px 5% 80px;
 }
 
 
-/* =====================================================
+/* =========================
    WELCOME
-===================================================== */
+========================= */
 
 .welcome{
 
@@ -401,8 +385,7 @@ body{
 
     gap:8px;
 
-    padding:
-        9px 15px;
+    padding:9px 15px;
 
     border-radius:50px;
 
@@ -476,9 +459,9 @@ body{
 }
 
 
-/* =====================================================
-   SECTION TITLE
-===================================================== */
+/* =========================
+   SECTION
+========================= */
 
 .section-title{
 
@@ -506,9 +489,9 @@ body{
 }
 
 
-/* =====================================================
-   EXAMS GRID
-===================================================== */
+/* =========================
+   EXAMS
+========================= */
 
 .exams-grid{
 
@@ -522,11 +505,6 @@ body{
 
     gap:20px;
 }
-
-
-/* =====================================================
-   EXAM CARD
-===================================================== */
 
 .exam-card{
 
@@ -592,8 +570,7 @@ body{
 
 .exam-card:hover{
 
-    transform:
-        translateY(-6px);
+    transform:translateY(-6px);
 
     border-color:
         rgba(145,108,255,.35);
@@ -666,8 +643,7 @@ body{
 
 .info{
 
-    padding:
-        7px 10px;
+    padding:7px 10px;
 
     border-radius:10px;
 
@@ -691,8 +667,7 @@ body{
 
     border-radius:14px;
 
-    padding:
-        13px;
+    padding:13px;
 
     font-family:inherit;
 
@@ -720,8 +695,7 @@ body{
 
 .start-exam:hover{
 
-    transform:
-        translateY(-2px);
+    transform:translateY(-2px);
 
     box-shadow:
         0 17px 38px
@@ -729,9 +703,9 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    EMPTY
-===================================================== */
+========================= */
 
 .empty{
 
@@ -739,8 +713,7 @@ body{
 
     text-align:center;
 
-    padding:
-        65px 20px;
+    padding:65px 20px;
 
     border-radius:24px;
 
@@ -776,16 +749,15 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    LOADING
-===================================================== */
+========================= */
 
 .loading{
 
     text-align:center;
 
-    padding:
-        60px 20px;
+    padding:60px 20px;
 
     color:#8d8b9d;
 
@@ -817,9 +789,9 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    ERROR
-===================================================== */
+========================= */
 
 .error-box{
 
@@ -846,9 +818,9 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    FOOTER
-===================================================== */
+========================= */
 
 .footer{
 
@@ -858,27 +830,24 @@ body{
 
     font-size:10px;
 
-    padding:
-        15px 0 30px;
+    padding:15px 0 30px;
 }
 
 
-/* =====================================================
+/* =========================
    ANIMATIONS
-===================================================== */
+========================= */
 
 @keyframes contentIn{
 
     from{
         opacity:0;
-        transform:
-            translateY(25px);
+        transform:translateY(25px);
     }
 
     to{
         opacity:1;
-        transform:
-            translateY(0);
+        transform:translateY(0);
     }
 }
 
@@ -886,35 +855,30 @@ body{
 
     from{
         opacity:0;
-        transform:
-            translateY(20px);
+        transform:translateY(20px);
     }
 
     to{
         opacity:1;
-        transform:
-            translateY(0);
+        transform:translateY(0);
     }
 }
 
 @keyframes spin{
 
     to{
-        transform:
-            rotate(360deg);
+        transform:rotate(360deg);
     }
 }
 
 @keyframes starsMove{
 
     from{
-        transform:
-            translate(0,0);
+        transform:translate(0,0);
     }
 
     to{
-        transform:
-            translate(-90px,-90px);
+        transform:translate(-90px,-90px);
     }
 }
 
@@ -934,7 +898,6 @@ body{
     50%{
 
         box-shadow:
-
             0 12px 45px
             rgba(119,76,255,.55),
 
@@ -944,16 +907,14 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    MOBILE
-===================================================== */
+========================= */
 
 @media(max-width:600px){
 
     .navbar{
-
-        padding:
-            16px;
+        padding:16px;
     }
 
     .brand-icon{
@@ -965,24 +926,20 @@ body{
     }
 
     .brand-icon img{
-
         border-radius:13px;
     }
 
     .brand-name{
-
         font-size:16px;
     }
 
     .brand-sub{
-
         font-size:9px;
     }
 
     .logout-button{
 
-        padding:
-            9px 12px;
+        padding:9px 12px;
 
         font-size:11px;
     }
@@ -1028,20 +985,12 @@ body{
 <body>
 
 
-<!-- =====================================================
-     BACKGROUND
-===================================================== -->
-
 <div class="background">
 
     <div class="stars"></div>
 
 </div>
 
-
-<!-- =====================================================
-     NAVBAR
-===================================================== -->
 
 <header class="navbar">
 
@@ -1082,10 +1031,6 @@ body{
 
 </header>
 
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
 
 <main class="main">
 
@@ -1187,10 +1132,6 @@ body{
 </main>
 
 
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
 <footer class="footer">
 
     © 2026 الخوارزمي | منصة الاختبارات
@@ -1204,18 +1145,11 @@ body{
    SUPABASE
 ===================================================== */
 
-/*
-   مهم:
-
-   ضع هنا نفس بيانات Supabase
-   الموجودة في auth.html
-*/
-
 const SUPABASE_URL =
-    "ضع_رابط_مشروعك_هنا";
+    "https://mqwtrsbncanwtxotxppp.supabase.co";
 
 const SUPABASE_ANON_KEY =
-    "ضع_مفتاح_anon_هنا";
+    "sb_publishable_lPAYrGCg_7-5Y1Dj7E5BSw_o-DsYl9Z";
 
 
 const supabaseClient =
@@ -1295,9 +1229,7 @@ async function loadStudent(){
 
 
         if(error){
-
             throw error;
-
         }
 
 
@@ -1311,30 +1243,80 @@ async function loadStudent(){
                 "../auth.html"
             );
 
-            return;
+            return null;
 
         }
 
 
-        const name =
-            user.user_metadata?.name ||
-            user.user_metadata?.full_name ||
-            user.email?.split("@")[0] ||
-            "الطالب";
+        const {
+            data: profile,
+            error: profileError
+        } =
+        await supabaseClient
+            .from("profiles")
+            .select(
+                "full_name,email,role,is_active"
+            )
+            .eq(
+                "id",
+                user.id
+            )
+            .maybeSingle();
 
 
-        studentName.textContent =
-            name;
+        if(profileError){
 
+            console.error(
+                "Profile error:",
+                profileError
+            );
+
+            studentName.textContent =
+                user.user_metadata?.full_name ||
+                user.user_metadata?.name ||
+                user.email?.split("@")[0] ||
+                "الطالب";
+
+            return user;
+
+        }
+
+
+        if(
+            profile &&
+            profile.full_name
+        ){
+
+            studentName.textContent =
+                profile.full_name;
+
+        }
+        else{
+
+            studentName.textContent =
+                user.user_metadata?.full_name ||
+                user.user_metadata?.name ||
+                user.email?.split("@")[0] ||
+                "الطالب";
+
+        }
+
+
+        return user;
 
     }
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Student error:",
+            error
+        );
 
         showError(
             "تعذر تحميل بيانات الحساب."
         );
+
+        return null;
 
     }
 
@@ -1380,9 +1362,7 @@ async function loadExams(){
 
 
         if(error){
-
             throw error;
-
         }
 
 
@@ -1438,13 +1418,11 @@ async function loadExams(){
 
 
                 const duration =
-                    exam.duration ??
-                    0;
+                    exam.duration ?? 0;
 
 
                 const questions =
-                    exam.questions_count ??
-                    0;
+                    exam.questions_count ?? 0;
 
 
                 card.innerHTML = `
@@ -1493,6 +1471,16 @@ async function loadExams(){
                     "click",
                     function(){
 
+                        if(button.disabled){
+                            return;
+                        }
+
+                        button.disabled =
+                            true;
+
+                        button.textContent =
+                            "جاري فتح الاختبار...";
+
                         startExam(
                             exam.id
                         );
@@ -1523,7 +1511,7 @@ async function loadExams(){
 
 
         showError(
-            "حدث خطأ أثناء تحميل الاختبارات. تأكد من وجود جدول exams في Supabase."
+            "حدث خطأ أثناء تحميل الاختبارات. تأكد من وجود جدول exams والأعمدة المطلوبة في Supabase."
         );
 
     }
@@ -1589,9 +1577,7 @@ logoutButton.addEventListener(
     async function(){
 
         if(loggingOut){
-
             return;
-
         }
 
 
@@ -1613,16 +1599,13 @@ logoutButton.addEventListener(
 
 
             if(error){
-
                 throw error;
-
             }
 
 
             window.location.replace(
                 "../auth.html"
             );
-
 
         }
         catch(error){
@@ -1651,9 +1634,26 @@ logoutButton.addEventListener(
    INITIALIZE
 ===================================================== */
 
+let initialized = false;
+
+
 async function init(){
 
-    await loadStudent();
+    if(initialized){
+        return;
+    }
+
+    initialized = true;
+
+
+    const user =
+        await loadStudent();
+
+
+    if(!user){
+        return;
+    }
+
 
     await loadExams();
 
@@ -1667,4 +1667,4 @@ init();
 
 </body>
 
-  </html>
+</html>
