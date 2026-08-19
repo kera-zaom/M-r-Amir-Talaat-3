@@ -747,8 +747,6 @@ label{
 <div class="auth-card">
 
 
-    <!-- صورة المستر -->
-
     <div class="logo">
 
         <img
@@ -792,11 +790,12 @@ label{
     </div>
 
 
-    <!-- تسجيل الدخول -->
+    <!-- LOGIN -->
 
     <form
         id="loginForm"
         class="form active"
+        novalidate
     >
 
         <div class="field">
@@ -846,11 +845,12 @@ label{
     </form>
 
 
-    <!-- إنشاء الحساب -->
+    <!-- SIGNUP -->
 
     <form
         id="signupForm"
         class="form"
+        novalidate
     >
 
         <div class="field">
@@ -949,7 +949,6 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_lPAYrGCg_7-5Y1Dj7E5BSw_o-DsYl9Z";
 
-
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
@@ -979,8 +978,32 @@ const loginButton =
 const signupButton =
     document.getElementById("signupButton");
 
+const loginEmail =
+    document.getElementById("loginEmail");
+
+const loginPassword =
+    document.getElementById("loginPassword");
+
+const signupName =
+    document.getElementById("signupName");
+
+const signupEmail =
+    document.getElementById("signupEmail");
+
+const signupPassword =
+    document.getElementById("signupPassword");
+
 const message =
     document.getElementById("message");
+
+
+/* =====================================================
+   REQUEST LOCKS
+   يمنع إرسال أكثر من طلب في نفس الوقت
+===================================================== */
+
+let loginInProgress = false;
+let signupInProgress = false;
 
 
 /* =====================================================
@@ -1001,6 +1024,32 @@ function hideMessage(){
     message.textContent = "";
 
     message.className = "message";
+}
+
+
+/* =====================================================
+   BUTTON STATE
+===================================================== */
+
+function setLoginLoading(loading){
+
+    loginButton.disabled = loading;
+
+    loginButton.textContent =
+        loading
+            ? "جارٍ تسجيل الدخول..."
+            : "تسجيل الدخول";
+}
+
+
+function setSignupLoading(loading){
+
+    signupButton.disabled = loading;
+
+    signupButton.textContent =
+        loading
+            ? "جارٍ إنشاء الحساب..."
+            : "إنشاء الحساب";
 }
 
 
@@ -1062,8 +1111,7 @@ async function getUserRole(userId){
 async function redirectByRole(user){
 
     if(!user){
-
-        return;
+        return false;
     }
 
 
@@ -1085,7 +1133,7 @@ async function redirectByRole(user){
                 "admin/index.html"
             );
 
-            return;
+            return true;
         }
 
 
@@ -1095,12 +1143,11 @@ async function redirectByRole(user){
                 "student.html"
             );
 
-            return;
+            return true;
         }
 
 
         await supabaseClient.auth.signOut();
-
 
         throw new Error(
             "نوع الحساب غير معروف."
@@ -1119,6 +1166,8 @@ async function redirectByRole(user){
             "حدث خطأ أثناء فتح الحساب.",
             "error"
         );
+
+        return false;
     }
 }
 
@@ -1130,6 +1179,10 @@ async function redirectByRole(user){
 loginTab.addEventListener(
     "click",
     () => {
+
+        if(loginInProgress || signupInProgress){
+            return;
+        }
 
         loginTab.classList.add("active");
 
@@ -1147,6 +1200,10 @@ loginTab.addEventListener(
 signupTab.addEventListener(
     "click",
     () => {
+
+        if(loginInProgress || signupInProgress){
+            return;
+        }
 
         signupTab.classList.add("active");
 
@@ -1171,31 +1228,34 @@ signupForm.addEventListener(
 
         event.preventDefault();
 
+        if(signupInProgress || loginInProgress){
+            return;
+        }
+
+
+        if(!signupForm.checkValidity()){
+
+            signupForm.reportValidity();
+
+            return;
+        }
+
+
         hideMessage();
 
-        signupButton.disabled = true;
+        signupInProgress = true;
 
-        signupButton.textContent =
-            "جارٍ إنشاء الحساب...";
+        setSignupLoading(true);
 
 
         const name =
-            document
-            .getElementById("signupName")
-            .value
-            .trim();
+            signupName.value.trim();
 
         const email =
-            document
-            .getElementById("signupEmail")
-            .value
-            .trim()
-            .toLowerCase();
+            signupEmail.value.trim().toLowerCase();
 
         const password =
-            document
-            .getElementById("signupPassword")
-            .value;
+            signupPassword.value;
 
 
         if(name.length < 2){
@@ -1205,10 +1265,9 @@ signupForm.addEventListener(
                 "error"
             );
 
-            signupButton.disabled = false;
+            signupInProgress = false;
 
-            signupButton.textContent =
-                "إنشاء الحساب";
+            setSignupLoading(false);
 
             return;
         }
@@ -1221,10 +1280,9 @@ signupForm.addEventListener(
                 "error"
             );
 
-            signupButton.disabled = false;
+            signupInProgress = false;
 
-            signupButton.textContent =
-                "إنشاء الحساب";
+            setSignupLoading(false);
 
             return;
         }
@@ -1256,7 +1314,6 @@ signupForm.addEventListener(
 
 
             if(error){
-
                 throw error;
             }
 
@@ -1269,11 +1326,6 @@ signupForm.addEventListener(
             }
 
 
-            /*
-             * لو Supabase رجع Session
-             * يبقى الحساب جاهز للدخول.
-             */
-
             if(data.session){
 
                 showMessage(
@@ -1282,29 +1334,11 @@ signupForm.addEventListener(
                 );
 
 
-                /*
-                 * ننتظر لحظة صغيرة
-                 * حتى يتم تنفيذ Trigger
-                 * وإنشاء profiles.
-                 */
-
-                setTimeout(
-                    async () => {
-
-                        await redirectByRole(
-                            data.user
-                        );
-
-                    },
-                    500
+                await redirectByRole(
+                    data.user
                 );
 
             }else{
-
-                /*
-                 * لو مفيش Session،
-                 * غالبًا Confirm Email مفعّل.
-                 */
 
                 showMessage(
                     "تم إنشاء الحساب. يجب تأكيد البريد الإلكتروني أولًا.",
@@ -1327,10 +1361,9 @@ signupForm.addEventListener(
 
         }finally{
 
-            signupButton.disabled = false;
+            signupInProgress = false;
 
-            signupButton.textContent =
-                "إنشاء الحساب";
+            setSignupLoading(false);
         }
 
     }
@@ -1339,6 +1372,8 @@ signupForm.addEventListener(
 
 /* =====================================================
    LOGIN
+   مهم:
+   طلب تسجيل الدخول يتم مرة واحدة فقط
 ===================================================== */
 
 loginForm.addEventListener(
@@ -1347,28 +1382,74 @@ loginForm.addEventListener(
 
         event.preventDefault();
 
-        hideMessage();
 
-        loginButton.disabled = true;
+        /*
+         * لو فيه طلب تسجيل دخول شغال بالفعل
+         * لا نرسل أي طلب جديد.
+         */
 
-        loginButton.textContent =
-            "جارٍ تسجيل الدخول...";
+        if(loginInProgress){
+            return;
+        }
+
+
+        /*
+         * لا تسمح بتسجيل الدخول أثناء إنشاء الحساب.
+         */
+
+        if(signupInProgress){
+            return;
+        }
+
+
+        /*
+         * تحقق من الحقول قبل الاتصال بـ Supabase.
+         */
+
+        if(!loginForm.checkValidity()){
+
+            loginForm.reportValidity();
+
+            return;
+        }
 
 
         const email =
-            document
-            .getElementById("loginEmail")
-            .value
-            .trim()
-            .toLowerCase();
+            loginEmail.value.trim().toLowerCase();
 
         const password =
-            document
-            .getElementById("loginPassword")
-            .value;
+            loginPassword.value;
+
+
+        if(!email || !password){
+
+            showMessage(
+                "اكتب البريد الإلكتروني وكلمة المرور.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        hideMessage();
+
+
+        /*
+         * قفل الطلب قبل استدعاء Supabase.
+         */
+
+        loginInProgress = true;
+
+        setLoginLoading(true);
 
 
         try{
+
+            console.log(
+                "LOGIN REQUEST: sending once"
+            );
+
 
             const {
                 data,
@@ -1397,11 +1478,22 @@ loginForm.addEventListener(
             }
 
 
+            console.log(
+                "LOGIN SUCCESS:",
+                data.user.id
+            );
+
+
             showMessage(
                 "تم تسجيل الدخول بنجاح...",
                 "success"
             );
 
+
+            /*
+             * لا نعمل signIn مرة ثانية.
+             * فقط نقرأ Role ثم ننتقل.
+             */
 
             await redirectByRole(
                 data.user
@@ -1420,12 +1512,16 @@ loginForm.addEventListener(
                 "error"
             );
 
+
         }finally{
 
-            loginButton.disabled = false;
+            /*
+             * فتح الزر بعد انتهاء الطلب.
+             */
 
-            loginButton.textContent =
-                "تسجيل الدخول";
+            loginInProgress = false;
+
+            setLoginLoading(false);
         }
 
     }
@@ -1458,12 +1554,12 @@ async function checkExistingSession(){
         }
 
 
-        if(data && data.session){
+        /*
+         * لو المستخدم داخل بالفعل،
+         * نرسله مباشرة حسب الـRole.
+         */
 
-            /*
-             * المستخدم مسجل بالفعل.
-             * نقرأ role ونرسله لمكانه.
-             */
+        if(data && data.session){
 
             await redirectByRole(
                 data.session.user
@@ -1483,6 +1579,7 @@ async function checkExistingSession(){
 
 /* =====================================================
    AUTH STATE
+   لا يوجد أي signIn هنا
 ===================================================== */
 
 supabaseClient.auth.onAuthStateChange(
@@ -1493,6 +1590,11 @@ supabaseClient.auth.onAuthStateChange(
             event
         );
 
+        /*
+         * مهم:
+         * لا نستدعي signInWithPassword هنا.
+         * هذا Listener للمراقبة فقط.
+         */
     }
 );
 
@@ -1563,20 +1665,16 @@ function translateError(error){
     if(
         msg.includes(
             "rate limit"
-        )
-    ){
-
-        return "تم تجاوز عدد المحاولات مؤقتًا. انتظر قليلًا ثم حاول مرة أخرى.";
-    }
-
-
-    if(
+        ) ||
+        msg.includes(
+            "over_request_rate_limit"
+        ) ||
         msg.includes(
             "too many requests"
         )
     ){
 
-        return "طلبات كثيرة جدًا. انتظر قليلًا ثم حاول مرة أخرى.";
+        return "تم تجاوز حد المحاولات من Supabase. انتظر قليلًا ثم حاول مرة أخرى.";
     }
 
 
@@ -1590,6 +1688,10 @@ function translateError(error){
 /* =====================================================
    START
 ===================================================== */
+
+/*
+ * فحص Session مرة واحدة فقط عند فتح الصفحة.
+ */
 
 checkExistingSession();
 
