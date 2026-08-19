@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<meta name="theme-color" content="#050507">
+
+<title>لوحة التحكم | الخوارزمي</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+    min-height:100%;
+}
+
+body{
+
+    font-family:
+        "Cairo",
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(116,72,232,.16),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 100% 100%,
+            rgba(48,38,100,.18),
+            transparent 35%
+        ),
+        #050507;
+
+    overflow-x:hidden;
+}
+
+
+/* BACKGROUND */
+
+.background{
+
+    position:fixed;
+    inset:0;
+
+    z-index:-5;
+
+    pointer-events:none;
+
+    overflow:hidden;
+}
+
+.background::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    top:-250px;
+    right:-150px;
+
+    border-radius:50%;
+
+    background:#7448e8;
+
+    filter:blur(160px);
+
+    opacity:.20;
+}
+
+.background::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:450px;
+    height:450px;
+
+    bottom:-250px;
+    left:-150px;
+
+    border-radius:50%;
+
+    background:#3154df;
+
+    filter:blur(160px);
+
+    opacity:.12;
+}
+
+
+/* NAVBAR */
+
+.navbar{
+
+    width:100%;
+
+    padding:
+        20px 5%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+
+    background:
+        rgba(5,5,7,.55);
+
+    backdrop-filter:blur(20px);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:50;
+}
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.brand-image{
+
+    width:48px;
+    height:48px;
+
+    border-radius:15px;
+
+    object-fit:cover;
+
+    border:
+        2px solid
+        rgba(151,112,255,.55);
+
+    box-shadow:
+        0 0 25px
+        rgba(119,76,255,.30);
+}
+
+.brand-text{
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+.brand-name{
+
+    font-size:18px;
+
+    font-weight:900;
+}
+
+.brand-sub{
+
+    color:#8f8f9e;
+
+    font-size:10px;
+
+    margin-top:3px;
+}
+
+.logout{
+
+    border:1px solid
+        rgba(255,255,255,.10);
+
+    background:
+        rgba(255,255,255,.045);
+
+    color:#ddd;
+
+    padding:
+        10px 17px;
+
+    border-radius:12px;
+
+    font-family:inherit;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.logout:hover{
+
+    background:
+        rgba(255,80,100,.12);
+
+    border-color:
+        rgba(255,80,100,.30);
+
+    color:#ff9da8;
+}
+
+
+/* CONTAINER */
+
+.container{
+
+    width:min(1200px,92%);
+
+    margin:
+        45px auto 70px;
+}
+
+
+/* WELCOME */
+
+.welcome{
+
+    margin-bottom:35px;
+
+    animation:
+        fadeUp .7s ease both;
+}
+
+.welcome-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:
+        8px 14px;
+
+    border-radius:30px;
+
+    background:
+        rgba(137,98,255,.10);
+
+    border:
+        1px solid
+        rgba(137,98,255,.20);
+
+    color:#bca9ff;
+
+    font-size:12px;
+
+    margin-bottom:16px;
+}
+
+.welcome h1{
+
+    font-size:
+        clamp(30px,5vw,48px);
+
+    line-height:1.2;
+
+    margin-bottom:10px;
+}
+
+.welcome h1 span{
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #a987ff
+        );
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
+}
+
+.welcome p{
+
+    color:#8f8f9f;
+
+    font-size:14px;
+
+    line-height:1.9;
+}
+
+
+/* STATS */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:18px;
+
+    margin-bottom:35px;
+}
+
+.stat{
+
+    padding:25px;
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.065),
+            rgba(255,255,255,.018)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,.20);
+
+    backdrop-filter:blur(18px);
+
+    transition:
+        transform .25s,
+        border-color .25s;
+
+    animation:
+        fadeUp .7s ease both;
+}
+
+.stat:hover{
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        rgba(143,108,255,.35);
+}
+
+.stat-icon{
+
+    width:45px;
+    height:45px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:
+        rgba(137,98,255,.12);
+
+    font-size:21px;
+
+    margin-bottom:18px;
+}
+
+.stat-title{
+
+    color:#8f8f9e;
+
+    font-size:12px;
+
+    margin-bottom:7px;
+}
+
+.stat-number{
+
+    font-size:30px;
+
+    font-weight:1000;
+}
+
+
+/* ACTIONS */
+
+.section-title{
+
+    font-size:20px;
+
+    font-weight:900;
+
+    margin-bottom:18px;
+}
+
+.actions{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:18px;
+
+    margin-bottom:35px;
+}
+
+.action{
+
+    text-decoration:none;
+
+    color:#fff;
+
+    padding:25px;
+
+    min-height:145px;
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.06),
+            rgba(255,255,255,.018)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    transition:
+        transform .25s,
+        border-color .25s,
+        background .25s;
+
+    animation:
+        fadeUp .8s ease both;
+}
+
+.action:hover{
+
+    transform:
+        translateY(-6px);
+
+    border-color:
+        rgba(143,108,255,.38);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(137,98,255,.12),
+            rgba(255,255,255,.025)
+        );
+}
+
+.action-icon{
+
+    font-size:27px;
+
+    margin-bottom:14px;
+}
+
+.action h3{
+
+    font-size:16px;
+
+    margin-bottom:7px;
+}
+
+.action p{
+
+    color:#858593;
+
+    font-size:11px;
+
+    line-height:1.8;
+}
+
+
+/* LOADING */
+
+.loading{
+
+    color:#8f8f9e;
+
+    font-size:13px;
+}
+
+
+/* ERROR */
+
+.error{
+
+    display:none;
+
+    padding:20px;
+
+    margin-top:20px;
+
+    border-radius:18px;
+
+    background:
+        rgba(255,70,90,.08);
+
+    border:
+        1px solid
+        rgba(255,70,90,.20);
+
+    color:#ff9da8;
+
+    line-height:1.9;
+
+    font-size:13px;
+}
+
+
+/* FOOTER */
+
+.footer{
+
+    text-align:center;
+
+    color:#555562;
+
+    font-size:10px;
+
+    padding:20px;
+}
+
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+/* TABLET */
+
+@media(max-width:900px){
+
+    .stats{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .actions{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .navbar{
+
+        padding:
+            15px 18px;
+    }
+
+    .brand-image{
+
+        width:42px;
+        height:42px;
+
+        border-radius:13px;
+    }
+
+    .brand-name{
+
+        font-size:15px;
+    }
+
+    .brand-sub{
+
+        font-size:9px;
+    }
+
+    .logout{
+
+        padding:
+            9px 12px;
+
+        font-size:11px;
+    }
+
+    .container{
+
+        width:92%;
+
+        margin-top:30px;
+    }
+
+    .stats{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:12px;
+    }
+
+    .stat{
+
+        padding:18px;
+
+        border-radius:18px;
+    }
+
+    .stat-icon{
+
+        width:40px;
+        height:40px;
+
+        font-size:18px;
+
+        margin-bottom:13px;
+    }
+
+    .stat-number{
+
+        font-size:25px;
+    }
+
+    .actions{
+
+        grid-template-columns:1fr;
+
+        gap:12px;
+    }
+
+    .action{
+
+        min-height:auto;
+
+        padding:20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="background"></div>
+
+
+<!-- NAVBAR -->
+
+<header class="navbar">
+
+    <div class="brand">
+
+        <img
+            src="../teacher.png"
+            class="brand-image"
+            alt="المستر"
+        >
+
+        <div class="brand-text">
+
+            <div class="brand-name">
+                الخوارزمي
+            </div>
+
+            <div class="brand-sub">
+                لوحة تحكم الإدارة
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <button
+        id="logoutButton"
+        class="logout"
+        type="button"
+    >
+
+        تسجيل الخروج
+
+    </button>
+
+</header>
+
+
+<!-- CONTENT -->
+
+<main class="container">
+
+
+    <section class="welcome">
+
+        <div class="welcome-badge">
+
+            🛡️ لوحة الإدارة
+
+        </div>
+
+
+        <h1>
+
+            أهلاً بك
+            <span id="adminName">
+                ...
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            من هنا يمكنك إدارة الطلاب والاختبارات
+            والأسئلة والنتائج الخاصة بمنصة الخوارزمي.
+
+        </p>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                👥
+            </div>
+
+            <div class="stat-title">
+                الطلاب
+            </div>
+
+            <div
+                class="stat-number"
+                id="studentsCount"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                📝
+            </div>
+
+            <div class="stat-title">
+                الاختبارات
+            </div>
+
+            <div
+                class="stat-number"
+                id="examsCount"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                ❓
+            </div>
+
+            <div class="stat-title">
+                الأسئلة
+            </div>
+
+            <div
+                class="stat-number"
+                id="questionsCount"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                📊
+            </div>
+
+            <div class="stat-title">
+                النتائج
+            </div>
+
+            <div
+                class="stat-number"
+                id="resultsCount"
+            >
+                —
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="section-title">
+        إدارة المنصة
+    </div>
+
+
+    <div class="actions">
+
+
+        <a
+            href="add-exam.html"
+            class="action"
+        >
+
+            <div class="action-icon">
+                ➕
+            </div>
+
+            <h3>
+                إنشاء اختبار
+            </h3>
+
+            <p>
+                إنشاء اختبار جديد وإضافة بياناته.
+            </p>
+
+        </a>
+
+
+        <a
+            href="exams.html"
+            class="action"
+        >
+
+            <div class="action-icon">
+                📝
+            </div>
+
+            <h3>
+                إدارة الاختبارات
+            </h3>
+
+            <p>
+                عرض وتعديل وحذف الاختبارات.
+            </p>
+
+        </a>
+
+
+        <a
+            href="questions.html"
+            class="action"
+        >
+
+            <div class="action-icon">
+                ❓
+            </div>
+
+            <h3>
+                إدارة الأسئلة
+            </h3>
+
+            <p>
+                إضافة وتعديل أسئلة الاختبارات.
+            </p>
+
+        </a>
+
+
+        <a
+            href="students.html"
+            class="action"
+        >
+
+            <div class="action-icon">
+                👥
+            </div>
+
+            <h3>
+                الطلاب
+            </h3>
+
+            <p>
+                مشاهدة الطلاب وحساباتهم.
+            </p>
+
+        </a>
+
+
+        <a
+            href="add-users.html"
+            class="action"
+        >
+
+            <div class="action-icon">
+                👤
+            </div>
+
+            <h3>
+                إدارة المستخدمين
+            </h3>
+
+            <p>
+                إضافة ومتابعة حسابات المستخدمين.
+            </p>
+
+        </a>
+
+
+    </div>
+
+
+    <div
+        id="errorBox"
+        class="error"
+    ></div>
+
+
+</main>
+
+
+<footer class="footer">
+
+    © 2026 الخوارزمي | لوحة الإدارة
+
+</footer>
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE CONFIG
+===================================================== */
+
+const SUPABASE_URL =
+    "YOUR_SUPABASE_URL";
+
+const SUPABASE_ANON_KEY =
+    "YOUR_SUPABASE_ANON_KEY";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const adminName =
+    document.getElementById(
+        "adminName"
+    );
+
+const errorBox =
+    document.getElementById(
+        "errorBox"
+    );
+
+const studentsCount =
+    document.getElementById(
+        "studentsCount"
+    );
+
+const examsCount =
+    document.getElementById(
+        "examsCount"
+    );
+
+const questionsCount =
+    document.getElementById(
+        "questionsCount"
+    );
+
+const resultsCount =
+    document.getElementById(
+        "resultsCount"
+    );
+
+const logoutButton =
+    document.getElementById(
+        "logoutButton"
+    );
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+function showError(message){
+
+    errorBox.textContent =
+        message;
+
+    errorBox.style.display =
+        "block";
+}
+
+
+/* =====================================================
+   CHECK ADMIN
+===================================================== */
+
+async function checkAdmin(){
+
+    try{
+
+        const {
+            data:{
+                session
+            },
+            error:sessionError
+        } =
+            await supabaseClient
+                .auth
+                .getSession();
+
+
+        if(sessionError){
+
+            throw sessionError;
+
+        }
+
+
+        /*
+         * لا يوجد تسجيل دخول
+         */
+
+        if(!session){
+
+            window.location.replace(
+                "../auth.html"
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * جلب بيانات المستخدم
+         */
+
+        const {
+            data:profile,
+            error:profileError
+        } =
+            await supabaseClient
+                .from("profiles")
+                .select(
+                    "full_name,email,role,is_active"
+                )
+                .eq(
+                    "id",
+                    session.user.id
+                )
+                .maybeSingle();
+
+
+        if(profileError){
+
+            throw profileError;
+
+        }
+
+
+        /*
+         * لا يوجد Profile
+         */
+
+        if(!profile){
+
+            showError(
+                "لم يتم العثور على بيانات حسابك في جدول profiles."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * التحقق من الدور
+         */
+
+        if(
+            profile.role !== "admin"
+        ){
+
+            showError(
+                "ليس لديك صلاحية الدخول إلى لوحة الإدارة."
+            );
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+            setTimeout(
+                function(){
+
+                    window.location.replace(
+                        "../auth.html"
+                    );
+
+                },
+                1500
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * التحقق من الحساب
+         */
+
+        if(
+            profile.is_active === false
+        ){
+
+            showError(
+                "هذا الحساب غير مفعل حاليًا."
+            );
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+            setTimeout(
+                function(){
+
+                    window.location.replace(
+                        "../auth.html"
+                    );
+
+                },
+                1500
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * عرض اسم الأدمن
+         */
+
+        adminName.textContent =
+            profile.full_name ||
+            profile.email ||
+            "مدير المنصة";
+
+
+        /*
+         * تحميل الإحصائيات
+         */
+
+        await loadStats();
+
+    }
+    catch(error){
+
+        console.error(
+            "ADMIN ERROR:",
+            error
+        );
+
+        showError(
+            "حدث خطأ أثناء التحقق من الحساب. حاول تحديث الصفحة."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD STATS
+===================================================== */
+
+async function loadStats(){
+
+    try{
+
+        /*
+         * الطلاب
+         */
+
+        const students =
+            await supabaseClient
+                .from("profiles")
+                .select(
+                    "id",
+                    {
+                        count:"exact",
+                        head:true
+                    }
+                )
+                .eq(
+                    "role",
+                    "student"
+                );
+
+
+        if(!students.error){
+
+            studentsCount.textContent =
+                students.count ?? 0;
+
+        }
+
+
+        /*
+         * الاختبارات
+         *
+         * إذا لم يتم إنشاء جدول exams
+         * سيظل الرقم —
+         */
+
+        const exams =
+            await supabaseClient
+                .from("exams")
+                .select(
+                    "id",
+                    {
+                        count:"exact",
+                        head:true
+                    }
+                );
+
+
+        if(!exams.error){
+
+            examsCount.textContent =
+                exams.count ?? 0;
+
+        }
+        else{
+
+            examsCount.textContent =
+                "0";
+
+        }
+
+
+        /*
+         * الأسئلة
+         */
+
+        const questions =
+            await supabaseClient
+                .from("questions")
+                .select(
+                    "id",
+                    {
+                        count:"exact",
+                        head:true
+                    }
+                );
+
+
+        if(!questions.error){
+
+            questionsCount.textContent =
+                questions.count ?? 0;
+
+        }
+        else{
+
+            questionsCount.textContent =
+                "0";
+
+        }
+
+
+        /*
+         * النتائج
+         */
+
+        const results =
+            await supabaseClient
+                .from("results")
+                .select(
+                    "id",
+                    {
+                        count:"exact",
+                        head:true
+                    }
+                );
+
+
+        if(!results.error){
+
+            resultsCount.textContent =
+                results.count ?? 0;
+
+        }
+        else{
+
+            resultsCount.textContent =
+                "0";
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "STATS ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+logoutButton.addEventListener(
+    "click",
+    async function(){
+
+        logoutButton.disabled =
+            true;
+
+        logoutButton.textContent =
+            "جاري الخروج...";
+
+
+        try{
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+        }
+        catch(error){
+
+            console.error(error);
+
+        }
+
+
+        window.location.replace(
+            "../auth.html"
+        );
+
+    }
+);
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+supabaseClient
+    .auth
+    .onAuthStateChange(
+        function(event, session){
+
+            if(
+                event ===
+                "SIGNED_OUT"
+            ){
+
+                window.location.replace(
+                    "../auth.html"
+                );
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   START
+===================================================== */
+
+checkAdmin();
+
+</script>
+
+
+</body>
+
+</html>
