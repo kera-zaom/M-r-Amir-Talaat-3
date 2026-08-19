@@ -46,10 +46,15 @@ body{
 
     background:
         radial-gradient(
-            circle at 75% 15%,
+            circle at 50% 45%,
+            rgba(105,70,220,.13),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 10%,
             #302052 0%,
-            #15121e 35%,
-            #07070a 72%,
+            #15121e 30%,
+            #07070a 65%,
             #000 100%
         );
 
@@ -64,6 +69,7 @@ body{
 .background{
 
     position:fixed;
+
     inset:0;
 
     z-index:-20;
@@ -71,6 +77,13 @@ body{
     overflow:hidden;
 
     pointer-events:none;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(116,72,232,.06),
+            transparent 45%
+        );
 }
 
 .background::before{
@@ -79,19 +92,19 @@ body{
 
     position:absolute;
 
-    width:600px;
-    height:600px;
+    width:650px;
+    height:650px;
 
-    top:-280px;
+    top:-300px;
     right:-180px;
 
     border-radius:50%;
 
     background:#7448e8;
 
-    filter:blur(150px);
+    filter:blur(170px);
 
-    opacity:.20;
+    opacity:.22;
 }
 
 .background::after{
@@ -100,24 +113,24 @@ body{
 
     position:absolute;
 
-    width:500px;
-    height:500px;
+    width:600px;
+    height:600px;
 
-    bottom:-300px;
-    left:-180px;
+    bottom:-350px;
+    left:-220px;
 
     border-radius:50%;
 
     background:#3154df;
 
-    filter:blur(160px);
+    filter:blur(180px);
 
-    opacity:.13;
+    opacity:.15;
 }
 
 
 /* =====================================================
-   STAR FIELD
+   STARS
 ===================================================== */
 
 .stars{
@@ -126,7 +139,7 @@ body{
 
     inset:0;
 
-    opacity:.08;
+    opacity:.09;
 
     background-image:
 
@@ -262,7 +275,7 @@ body{
         0 12px 35px
         rgba(119,76,255,.30);
 
-    font-size:22px;
+    font-size:24px;
 
     animation:
         logoGlow 3s ease-in-out infinite;
@@ -341,11 +354,6 @@ body{
     animation:
         contentIn .9s ease both;
 }
-
-
-/* =====================================================
-   DECORATIVE LINE
-===================================================== */
 
 .content::before{
 
@@ -639,7 +647,7 @@ h1 span{
 
 
 /* =====================================================
-   VISUAL AREA
+   VISUAL
 ===================================================== */
 
 .visual{
@@ -654,7 +662,7 @@ h1 span{
 
     justify-content:center;
 
-    min-height:590px;
+    min-height:650px;
 
     animation:
         visualIn 1s ease .1s both;
@@ -669,19 +677,22 @@ h1 span{
 
     position:absolute;
 
-    width:540px;
-    height:540px;
+    width:570px;
+    height:570px;
 
     border-radius:50%;
 
     background:
         radial-gradient(
             circle,
-            rgba(112,75,255,.32),
-            transparent 68%
+            rgba(120,78,255,.38),
+            rgba(88,52,200,.16) 38%,
+            transparent 70%
         );
 
-    filter:blur(25px);
+    filter:blur(30px);
+
+    opacity:.9;
 
     pointer-events:none;
 
@@ -692,7 +703,7 @@ h1 span{
 
 
 /* =====================================================
-   IMAGE AREA
+   IMAGE WRAPPER
    الصورة فقط هي التي تميل
 ===================================================== */
 
@@ -700,7 +711,7 @@ h1 span{
 
     position:relative;
 
-    width:min(570px,100%);
+    width:min(500px, 92vw);
 
     z-index:2;
 
@@ -717,7 +728,7 @@ h1 span{
 
 
 /* =====================================================
-   IMAGE FRAME
+   IMAGE FRAME — دائري
 ===================================================== */
 
 .image-frame{
@@ -726,29 +737,32 @@ h1 span{
 
     width:100%;
 
-    min-height:520px;
+    aspect-ratio:1 / 1;
 
     overflow:hidden;
 
-    border-radius:32px;
+    border-radius:50%;
 
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.12),
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.10),
             rgba(255,255,255,.025)
         );
 
     border:
-        1px solid
-        rgba(255,255,255,.13);
+        3px solid
+        rgba(160,125,255,.45);
 
     box-shadow:
 
         0 35px 90px
-        rgba(0,0,0,.65),
+        rgba(0,0,0,.70),
 
-        0 0 70px
+        0 0 55px
+        rgba(103,68,230,.30),
+
+        0 0 120px
         rgba(103,68,230,.15);
 
     backdrop-filter:blur(20px);
@@ -756,7 +770,6 @@ h1 span{
     display:flex;
 
     align-items:center;
-
     justify-content:center;
 
     cursor:pointer;
@@ -766,17 +779,78 @@ h1 span{
         border-color .8s ease;
 }
 
+
+/* =====================================================
+   IMAGE BORDER
+===================================================== */
+
+.image-frame::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-7px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(180,155,255,.28);
+
+    box-shadow:
+        0 0 25px
+        rgba(128,88,255,.20);
+
+    pointer-events:none;
+
+    z-index:4;
+}
+
+.image-frame::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.18),
+            transparent 28%,
+            transparent 70%,
+            rgba(116,78,255,.15)
+        );
+
+    pointer-events:none;
+
+    z-index:3;
+}
+
+
+/* =====================================================
+   TEACHER IMAGE
+===================================================== */
+
 .teacher-image{
 
     width:100%;
 
-    height:520px;
+    height:100%;
+
+    aspect-ratio:1 / 1;
 
     object-fit:cover;
 
     object-position:center;
 
     display:block;
+
+    border-radius:50%;
 
     filter:
         drop-shadow(
@@ -793,7 +867,7 @@ h1 span{
 
 
 /* =====================================================
-   IMAGE SHINE
+   SHINE
 ===================================================== */
 
 .image-frame .shine{
@@ -802,9 +876,9 @@ h1 span{
 
     top:-100%;
 
-    left:-40%;
+    left:-60%;
 
-    width:45%;
+    width:35%;
 
     height:300%;
 
@@ -812,7 +886,7 @@ h1 span{
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,.12),
+            rgba(255,255,255,.28),
             transparent
         );
 
@@ -821,63 +895,15 @@ h1 span{
 
     pointer-events:none;
 
-    opacity:.5;
+    opacity:.7;
+
+    z-index:5;
 }
 
 .image-frame:hover .shine{
 
     animation:
         imageShine 1.2s ease;
-}
-
-
-/* =====================================================
-   IMAGE BORDER
-===================================================== */
-
-.image-frame::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    border-radius:32px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.10);
-
-    pointer-events:none;
-
-    z-index:3;
-}
-
-.image-frame::after{
-
-    content:"";
-
-    position:absolute;
-
-    top:0;
-
-    left:0;
-
-    width:100%;
-
-    height:35%;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(255,255,255,.09),
-            transparent
-        );
-
-    pointer-events:none;
-
-    z-index:3;
 }
 
 
@@ -891,7 +917,7 @@ h1 span{
 
     inset:-80px;
 
-    z-index:5;
+    z-index:10;
 
     pointer-events:none;
 
@@ -1005,35 +1031,35 @@ h1 span{
 
     transform:
         rotate(0deg)
-        scale(1.025);
+        scale(1.05);
 }
 
 .image-wrapper.active .image-frame{
 
     border-color:
-        rgba(151,116,255,.65);
+        rgba(174,143,255,.85);
 
     box-shadow:
 
         0 40px 100px
-        rgba(0,0,0,.7),
+        rgba(0,0,0,.75),
 
-        0 0 100px
-        rgba(112,75,255,.45),
+        0 0 90px
+        rgba(112,75,255,.55),
 
-        0 0 160px
-        rgba(112,75,255,.18);
+        0 0 170px
+        rgba(112,75,255,.25);
 }
 
 .image-wrapper.active .teacher-image{
 
     transform:
-        scale(1.04);
+        scale(1.05);
 
     filter:
         drop-shadow(
-            0 20px 45px
-            rgba(127,87,255,.35)
+            0 20px 50px
+            rgba(127,87,255,.45)
         );
 }
 
@@ -1042,7 +1068,7 @@ h1 span{
     transform:
         scale(1.35);
 
-    opacity:.8;
+    opacity:1;
 }
 
 .image-wrapper.active .particles{
@@ -1061,22 +1087,49 @@ h1 span{
 
 
 /* =====================================================
-   TEXT BELOW IMAGE
-   ثابت بالكامل
+   TEACHER MESSAGE
+   ثابت ومستقيم
 ===================================================== */
 
 .teacher-message{
+
+    position:relative;
 
     width:100%;
 
     text-align:center;
 
-    margin-top:22px;
+    margin-top:32px;
 
-    /*
-       لا يوجد أي animation هنا
-       حتى يظل النص ثابتًا
-    */
+    transform:none !important;
+
+    animation:none !important;
+
+    z-index:10;
+}
+
+
+/* =====================================================
+   DECORATION ABOVE TEXT
+===================================================== */
+
+.teacher-message::before{
+
+    content:"✦ ───────── ✦";
+
+    display:block;
+
+    margin-bottom:13px;
+
+    color:#8060df;
+
+    font-size:12px;
+
+    letter-spacing:4px;
+
+    text-shadow:
+        0 0 15px
+        rgba(128,96,223,.7);
 }
 
 
@@ -1092,43 +1145,52 @@ h1 span{
 
     justify-content:center;
 
-    gap:7px;
+    gap:10px;
 
-    color:#c0adff;
+    color:#d0c2ff;
 
-    font-size:15px;
+    font-size:17px;
 
-    font-weight:900;
+    font-weight:1000;
 
     line-height:1.8;
 
-    margin-bottom:14px;
+    margin-bottom:15px;
+
+    text-shadow:
+        0 0 20px
+        rgba(144,104,255,.35);
 }
 
 .trust-line span{
 
-    color:#9068ff;
+    color:#a27cff;
 
-    font-size:17px;
+    font-size:18px;
 
     text-shadow:
-        0 0 12px
-        rgba(144,104,255,.8);
+        0 0 12px #9068ff,
+        0 0 25px rgba(144,104,255,.8);
 }
 
 
 /* =====================================================
-   LONG DESCRIPTION
+   TEACHER DESCRIPTION
 ===================================================== */
 
 .teacher-description{
 
-    max-width:540px;
+    position:relative;
+
+    max-width:570px;
 
     margin:
-        0 auto 20px;
+        0 auto 22px;
 
-    color:#a4a4b3;
+    padding:
+        20px 25px;
+
+    color:#aaa9b8;
 
     font-size:13px;
 
@@ -1137,45 +1199,116 @@ h1 span{
     font-weight:500;
 
     text-align:center;
-}
-
-
-/* =====================================================
-   FINAL NOTE
-===================================================== */
-
-.gift-message{
-
-    display:inline-block;
-
-    max-width:520px;
-
-    padding:
-        12px 20px;
-
-    border-radius:15px;
 
     background:
-        rgba(255,255,255,.045);
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.018)
+        );
 
     border:
         1px solid
         rgba(255,255,255,.08);
 
-    color:#9999a8;
+    border-radius:20px;
+
+    box-shadow:
+
+        inset 0 1px
+        rgba(255,255,255,.04),
+
+        0 15px 40px
+        rgba(0,0,0,.20);
+
+    backdrop-filter:blur(15px);
+}
+
+.teacher-description::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    right:50%;
+
+    transform:
+        translateX(50%);
+
+    width:80px;
+    height:2px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #916cff,
+            transparent
+        );
+
+    box-shadow:
+        0 0 15px
+        rgba(145,108,255,.8);
+}
+
+
+/* =====================================================
+   GIFT MESSAGE
+===================================================== */
+
+.gift-message{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:7px;
+
+    max-width:520px;
+
+    padding:
+        12px 22px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.06),
+            rgba(255,255,255,.025)
+        );
+
+    border:
+        1px solid
+        rgba(150,120,255,.18);
+
+    color:#92919f;
 
     font-size:12px;
 
     line-height:2;
 
     backdrop-filter:blur(12px);
+
+    box-shadow:
+        0 10px 35px
+        rgba(0,0,0,.18);
 }
 
 .gift-message strong{
 
-    color:#d2c5ff;
+    color:#d6c9ff;
 
-    font-weight:900;
+    font-weight:1000;
+
+    text-shadow:
+        0 0 15px
+        rgba(150,120,255,.25);
 }
 
 
@@ -1185,19 +1318,18 @@ h1 span{
 
 .footer{
 
-    position:fixed;
+    position:relative;
 
-    left:0;
-
-    right:0;
-
-    bottom:18px;
+    width:100%;
 
     text-align:center;
 
     color:#626273;
 
     font-size:11px;
+
+    padding:
+        10px 0 25px;
 
     z-index:4;
 }
@@ -1210,37 +1342,27 @@ h1 span{
 @keyframes contentIn{
 
     from{
-
         opacity:0;
-
-        transform:
-            translateY(30px);
+        transform:translateY(30px);
     }
 
     to{
-
         opacity:1;
-
-        transform:
-            translateY(0);
+        transform:translateY(0);
     }
 }
 
 @keyframes visualIn{
 
     from{
-
         opacity:0;
-
         transform:
             translateY(30px)
             scale(.96);
     }
 
     to{
-
         opacity:1;
-
         transform:
             translateY(0)
             scale(1);
@@ -1251,14 +1373,12 @@ h1 span{
 
     0%,
     100%{
-
         transform:
             rotate(3deg)
             translateY(0);
     }
 
     50%{
-
         transform:
             rotate(1deg)
             translateY(-10px);
@@ -1268,23 +1388,18 @@ h1 span{
 @keyframes particleExplosion{
 
     0%{
-
         opacity:0;
-
         transform:
             translate(0,0)
             scale(.2);
     }
 
     25%{
-
         opacity:1;
     }
 
     100%{
-
         opacity:0;
-
         transform:
             translate(
                 var(--x),
@@ -1298,7 +1413,6 @@ h1 span{
 
     0%,
     100%{
-
         transform:
             translateY(0)
             scale(1);
@@ -1307,7 +1421,6 @@ h1 span{
     }
 
     50%{
-
         transform:
             translateY(-25px)
             scale(1.7);
@@ -1319,13 +1432,11 @@ h1 span{
 @keyframes starsMove{
 
     from{
-
         transform:
             translate(0,0);
     }
 
     to{
-
         transform:
             translate(-90px,-90px);
     }
@@ -1335,14 +1446,12 @@ h1 span{
 
     0%,
     100%{
-
         box-shadow:
             0 12px 35px
             rgba(119,76,255,.30);
     }
 
     50%{
-
         box-shadow:
 
             0 12px 45px
@@ -1357,16 +1466,12 @@ h1 span{
 
     0%,
     100%{
-
         transform:scale(1);
-
         opacity:.7;
     }
 
     50%{
-
         transform:scale(1.5);
-
         opacity:1;
     }
 }
@@ -1374,12 +1479,10 @@ h1 span{
 @keyframes imageShine{
 
     from{
-
-        left:-50%;
+        left:-60%;
     }
 
     to{
-
         left:130%;
     }
 }
@@ -1441,7 +1544,7 @@ h1 span{
 
     .image-wrapper{
 
-        max-width:600px;
+        max-width:500px;
     }
 }
 
@@ -1464,7 +1567,7 @@ h1 span{
 
         border-radius:14px;
 
-        font-size:20px;
+        font-size:21px;
     }
 
     .brand-name{
@@ -1482,7 +1585,7 @@ h1 span{
         min-height:auto;
 
         padding:
-            35px 16px 70px;
+            35px 16px 30px;
     }
 
     .hero-container{
@@ -1521,50 +1624,41 @@ h1 span{
 
     .image-glow{
 
-        width:340px;
-        height:340px;
+        width:350px;
+        height:350px;
     }
 
     .image-wrapper{
 
-        width:100%;
+        width:
+            min(390px, 88vw);
     }
 
     .image-frame{
 
-        min-height:390px;
-
-        border-radius:24px;
-    }
-
-    .teacher-image{
-
-        height:390px;
-    }
-
-    .image-frame::before{
-
-        border-radius:24px;
+        border-width:2px;
     }
 
     .teacher-message{
 
-        margin-top:18px;
+        margin-top:25px;
     }
 
     .trust-line{
 
-        font-size:13px;
+        font-size:14px;
+
+        gap:7px;
     }
 
     .teacher-description{
 
+        padding:
+            17px 16px;
+
         font-size:12px;
 
         line-height:2.15;
-
-        padding:
-            0 4px;
     }
 
     .gift-message{
@@ -1583,14 +1677,6 @@ h1 span{
             17px 20px;
     }
 
-    .footer{
-
-        position:relative;
-
-        bottom:auto;
-
-        margin-top:20px;
-    }
 }
 
 
@@ -1605,19 +1691,19 @@ h1 span{
         font-size:43px;
     }
 
-    .image-frame{
+    .image-wrapper{
 
-        min-height:340px;
-    }
-
-    .teacher-image{
-
-        height:340px;
+        width:86vw;
     }
 
     .trust-line{
 
         font-size:12px;
+    }
+
+    .teacher-description{
+
+        font-size:11px;
     }
 
 }
@@ -1687,11 +1773,10 @@ h1 span{
 
 
         <!-- =================================================
-             LEFT CONTENT
+             CONTENT
         ================================================== -->
 
         <section class="content">
-
 
             <div class="badge">
 
@@ -1743,12 +1828,11 @@ h1 span{
 
             </button>
 
-
         </section>
 
 
         <!-- =================================================
-             TEACHER AREA
+             TEACHER
         ================================================== -->
 
         <section
@@ -1756,23 +1840,18 @@ h1 span{
             id="visual"
         >
 
-
             <div class="image-glow"></div>
 
-
-            <!-- الصورة فقط هي التي تتحرك -->
 
             <div
                 class="image-wrapper"
                 id="imageWrapper"
             >
 
-
                 <div
                     class="image-frame"
                     id="imageFrame"
                 >
-
 
                     <img
                         src="teacher.png"
@@ -1780,7 +1859,6 @@ h1 span{
                         class="teacher-image"
                         draggable="false"
                     >
-
 
                     <div class="shine"></div>
 
@@ -1800,16 +1878,14 @@ h1 span{
 
                     </div>
 
-
                 </div>
 
 
                 <!-- =================================================
-                     TEXT ثابت خارج الصورة
+                     TEXT — ثابت
                 ================================================== -->
 
                 <div class="teacher-message">
-
 
                     <div class="trust-line">
 
@@ -1842,7 +1918,7 @@ h1 span{
 
                     <div class="gift-message">
 
-                        Note: من تلميذك العزيزي 
+                        Note: من تلميذك العزيز
 
                         <strong>
                             Moaz Yosry
@@ -1852,15 +1928,11 @@ h1 span{
 
                     </div>
 
-
                 </div>
-
 
             </div>
 
-
         </section>
-
 
     </div>
 
@@ -1873,7 +1945,7 @@ h1 span{
 
 <footer class="footer">
 
-    © 2026 الخوارزمي | منصة 
+    © 2026 الخوارزمي | منصة الاختبارات
 
 </footer>
 
@@ -1881,7 +1953,7 @@ h1 span{
 <script>
 
 /* =====================================================
-   IMAGE CLICK EFFECT
+   IMAGE CLICK
 ===================================================== */
 
 const imageFrame =
@@ -1963,6 +2035,7 @@ startButton.addEventListener(
 
         startButton.style.opacity =
             "0.7";
+
 
         window.location.href =
             "auth.html";
