@@ -13,7 +13,6 @@
 
 <title>الخوارزمي | تسجيل الدخول</title>
 
-<!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -25,8 +24,7 @@
     -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body{
+html,body{
     width:100%;
     min-height:100%;
 }
@@ -69,7 +67,6 @@ body{
 .background{
 
     position:fixed;
-
     inset:0;
 
     overflow:hidden;
@@ -121,15 +118,9 @@ body{
     opacity:.12;
 }
 
-
-/* =========================
-   STARS
-========================= */
-
 .stars{
 
     position:absolute;
-
     inset:0;
 
     opacity:.08;
@@ -146,11 +137,6 @@ body{
     animation:
         starsMove 20s linear infinite;
 }
-
-
-/* =========================
-   LIGHTS
-========================= */
 
 .light{
 
@@ -212,7 +198,6 @@ body{
 .auth-card{
 
     width:100%;
-
     max-width:460px;
 
     padding:34px;
@@ -262,8 +247,7 @@ body{
         2px solid
         rgba(160,125,255,.55);
 
-    background:
-        #181522;
+    background:#181522;
 
     box-shadow:
 
@@ -496,7 +480,7 @@ label{
 
 
 /* =========================
-   SUBMIT
+   BUTTON
 ========================= */
 
 .submit{
@@ -658,8 +642,7 @@ label{
 
 @keyframes teacherFloat{
 
-    0%,
-    100%{
+    0%,100%{
 
         transform:
             translateY(0)
@@ -676,8 +659,7 @@ label{
 
 @keyframes floatLight{
 
-    0%,
-    100%{
+    0%,100%{
 
         transform:
             translateY(0)
@@ -749,8 +731,6 @@ label{
 <body>
 
 
-<!-- BACKGROUND -->
-
 <div class="background">
 
     <div class="stars"></div>
@@ -763,8 +743,6 @@ label{
 
 </div>
 
-
-<!-- AUTH CARD -->
 
 <div class="auth-card">
 
@@ -793,8 +771,6 @@ label{
     </p>
 
 
-    <!-- TABS -->
-
     <div class="tabs">
 
         <button
@@ -816,9 +792,7 @@ label{
     </div>
 
 
-    <!-- =========================
-         LOGIN FORM
-    ========================== -->
+    <!-- تسجيل الدخول -->
 
     <form
         id="loginForm"
@@ -872,9 +846,7 @@ label{
     </form>
 
 
-    <!-- =========================
-         SIGNUP FORM
-    ========================== -->
+    <!-- إنشاء الحساب -->
 
     <form
         id="signupForm"
@@ -948,8 +920,6 @@ label{
     </form>
 
 
-    <!-- MESSAGE -->
-
     <div
         id="message"
         class="message"
@@ -970,20 +940,20 @@ label{
 <script>
 
 /* =====================================================
-   SUPABASE CONNECTION
+   SUPABASE
 ===================================================== */
 
 const SUPABASE_URL =
     "https://mqwtrsbncanwtxotxppp.supabase.co";
 
-const SUPABASE_ANON_KEY =
+const SUPABASE_KEY =
     "sb_publishable_lPAYrGCg_7-5Y1Dj7E5BSw_o-DsYl9Z";
 
 
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_ANON_KEY
+        SUPABASE_KEY
     );
 
 
@@ -1017,10 +987,7 @@ const message =
    MESSAGE
 ===================================================== */
 
-function showMessage(
-    text,
-    type
-){
+function showMessage(text, type){
 
     message.textContent = text;
 
@@ -1033,8 +1000,126 @@ function hideMessage(){
 
     message.textContent = "";
 
-    message.className =
-        "message";
+    message.className = "message";
+}
+
+
+/* =====================================================
+   GET USER ROLE
+===================================================== */
+
+async function getUserRole(userId){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("profiles")
+        .select("role,is_active")
+        .eq("id", userId)
+        .single();
+
+
+    if(error){
+
+        console.error(
+            "PROFILE ERROR:",
+            error
+        );
+
+        throw new Error(
+            "تعذر قراءة بيانات الحساب."
+        );
+    }
+
+
+    if(!data){
+
+        throw new Error(
+            "لم يتم العثور على ملف الحساب."
+        );
+    }
+
+
+    if(data.is_active === false){
+
+        await supabaseClient.auth.signOut();
+
+        throw new Error(
+            "هذا الحساب غير مفعل حاليًا."
+        );
+    }
+
+
+    return data.role;
+}
+
+
+/* =====================================================
+   REDIRECT BY ROLE
+===================================================== */
+
+async function redirectByRole(user){
+
+    if(!user){
+
+        return;
+    }
+
+
+    try{
+
+        const role =
+            await getUserRole(user.id);
+
+
+        console.log(
+            "USER ROLE:",
+            role
+        );
+
+
+        if(role === "admin"){
+
+            window.location.replace(
+                "admin/index.html"
+            );
+
+            return;
+        }
+
+
+        if(role === "student"){
+
+            window.location.replace(
+                "student.html"
+            );
+
+            return;
+        }
+
+
+        await supabaseClient.auth.signOut();
+
+
+        throw new Error(
+            "نوع الحساب غير معروف."
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "ROLE REDIRECT ERROR:",
+            error
+        );
+
+        showMessage(
+            error.message ||
+            "حدث خطأ أثناء فتح الحساب.",
+            "error"
+        );
+    }
 }
 
 
@@ -1055,7 +1140,6 @@ loginTab.addEventListener(
         signupForm.classList.remove("active");
 
         hideMessage();
-
     }
 );
 
@@ -1073,13 +1157,12 @@ signupTab.addEventListener(
         loginForm.classList.remove("active");
 
         hideMessage();
-
     }
 );
 
 
 /* =====================================================
-   CREATE ACCOUNT
+   SIGN UP
 ===================================================== */
 
 signupForm.addEventListener(
@@ -1149,7 +1232,10 @@ signupForm.addEventListener(
 
         try{
 
-            const result =
+            const {
+                data,
+                error
+            } =
                 await supabaseClient.auth.signUp({
 
                     email: email,
@@ -1169,13 +1255,6 @@ signupForm.addEventListener(
                 });
 
 
-            const data =
-                result.data;
-
-            const error =
-                result.error;
-
-
             if(error){
 
                 throw error;
@@ -1191,47 +1270,53 @@ signupForm.addEventListener(
 
 
             /*
-             * لو Supabase يرجع Session
-             * فهذا يعني أن تأكيد البريد مغلق.
+             * لو Supabase رجع Session
+             * يبقى الحساب جاهز للدخول.
              */
 
             if(data.session){
 
                 showMessage(
-                    "تم إنشاء الحساب بنجاح! جارٍ دخولك...",
+                    "تم إنشاء الحساب بنجاح...",
                     "success"
                 );
 
 
-                setTimeout(
-                    () => {
+                /*
+                 * ننتظر لحظة صغيرة
+                 * حتى يتم تنفيذ Trigger
+                 * وإنشاء profiles.
+                 */
 
-                        window.location.href =
-                            "student.html";
+                setTimeout(
+                    async () => {
+
+                        await redirectByRole(
+                            data.user
+                        );
 
                     },
-                    800
+                    500
                 );
 
             }else{
 
                 /*
-                 * إذا لم توجد Session
-                 * فغالبًا تأكيد البريد الإلكتروني مفعّل.
+                 * لو مفيش Session،
+                 * غالبًا Confirm Email مفعّل.
                  */
 
                 showMessage(
-                    "تم إنشاء الحساب، لكن يجب تأكيد البريد الإلكتروني من إعدادات Supabase.",
+                    "تم إنشاء الحساب. يجب تأكيد البريد الإلكتروني أولًا.",
                     "success"
                 );
-
             }
 
 
         }catch(error){
 
             console.error(
-                "SUPABASE SIGNUP ERROR:",
+                "SIGNUP ERROR:",
                 error
             );
 
@@ -1246,7 +1331,6 @@ signupForm.addEventListener(
 
             signupButton.textContent =
                 "إنشاء الحساب";
-
         }
 
     }
@@ -1286,7 +1370,10 @@ loginForm.addEventListener(
 
         try{
 
-            const result =
+            const {
+                data,
+                error
+            } =
                 await supabaseClient.auth.signInWithPassword({
 
                     email: email,
@@ -1294,13 +1381,6 @@ loginForm.addEventListener(
                     password: password
 
                 });
-
-
-            const data =
-                result.data;
-
-            const error =
-                result.error;
 
 
             if(error){
@@ -1318,36 +1398,20 @@ loginForm.addEventListener(
 
 
             showMessage(
-                "تم تسجيل الدخول بنجاح! جارٍ فتح حسابك...",
+                "تم تسجيل الدخول بنجاح...",
                 "success"
             );
 
 
-            /*
-             * مؤقتًا نرسل الطالب إلى student.html.
-             *
-             * في المرحلة القادمة سنقرأ role
-             * من profiles ونفرق بين:
-             *
-             * admin
-             * student
-             */
-
-            setTimeout(
-                () => {
-
-                    window.location.href =
-                        "student.html";
-
-                },
-                700
+            await redirectByRole(
+                data.user
             );
 
 
         }catch(error){
 
             console.error(
-                "SUPABASE LOGIN ERROR:",
+                "LOGIN ERROR:",
                 error
             );
 
@@ -1362,8 +1426,72 @@ loginForm.addEventListener(
 
             loginButton.textContent =
                 "تسجيل الدخول";
-
         }
+
+    }
+);
+
+
+/* =====================================================
+   EXISTING SESSION
+===================================================== */
+
+async function checkExistingSession(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth.getSession();
+
+
+        if(error){
+
+            console.error(
+                "SESSION ERROR:",
+                error
+            );
+
+            return;
+        }
+
+
+        if(data && data.session){
+
+            /*
+             * المستخدم مسجل بالفعل.
+             * نقرأ role ونرسله لمكانه.
+             */
+
+            await redirectByRole(
+                data.session.user
+            );
+        }
+
+
+    }catch(error){
+
+        console.error(
+            "CHECK SESSION ERROR:",
+            error
+        );
+    }
+}
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+supabaseClient.auth.onAuthStateChange(
+    (event, session) => {
+
+        console.log(
+            "AUTH EVENT:",
+            event
+        );
 
     }
 );
@@ -1424,21 +1552,31 @@ function translateError(error){
 
     if(
         msg.includes(
-            "email rate limit"
+            "email not confirmed"
         )
     ){
 
-        return "تم تجاوز عدد محاولات البريد مؤقتًا. حاول لاحقًا.";
+        return "البريد الإلكتروني لم يتم تأكيده.";
     }
 
 
     if(
         msg.includes(
-            "email not confirmed"
+            "rate limit"
         )
     ){
 
-        return "يجب تأكيد البريد الإلكتروني أولًا.";
+        return "تم تجاوز عدد المحاولات مؤقتًا. انتظر قليلًا ثم حاول مرة أخرى.";
+    }
+
+
+    if(
+        msg.includes(
+            "too many requests"
+        )
+    ){
+
+        return "طلبات كثيرة جدًا. انتظر قليلًا ثم حاول مرة أخرى.";
     }
 
 
@@ -1450,75 +1588,10 @@ function translateError(error){
 
 
 /* =====================================================
-   AUTH STATE
+   START
 ===================================================== */
 
-supabaseClient.auth.onAuthStateChange(
-    (event, session) => {
-
-        console.log(
-            "AUTH STATE:",
-            event,
-            session
-        );
-
-    }
-);
-
-
-/* =====================================================
-   CHECK CONNECTION
-===================================================== */
-
-async function checkSupabase(){
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient.auth.getSession();
-
-
-        if(error){
-
-            console.error(
-                "SUPABASE CONNECTION ERROR:",
-                error
-            );
-
-            return;
-        }
-
-
-        console.log(
-            "Supabase connection OK"
-        );
-
-
-        if(data?.session){
-
-            console.log(
-                "Current user:",
-                data.session.user.email
-            );
-
-        }
-
-    }catch(error){
-
-        console.error(
-            "SUPABASE ERROR:",
-            error
-        );
-
-    }
-
-}
-
-
-checkSupabase();
+checkExistingSession();
 
 </script>
 
