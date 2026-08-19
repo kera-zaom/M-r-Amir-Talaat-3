@@ -17,10 +17,6 @@ user-scalable=no">
 
 <style>
 
-/* =====================================================
-   RESET
-===================================================== */
-
 *{
     margin:0;
     padding:0;
@@ -28,20 +24,13 @@ user-scalable=no">
     -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body{
+html,body{
     width:100%;
     min-height:100%;
 }
 
 body{
-
-    font-family:
-        "Cairo",
-        "Tajawal",
-        Arial,
-        sans-serif;
-
+    font-family:"Cairo","Tajawal",Arial,sans-serif;
     color:#fff;
 
     background:
@@ -62,19 +51,15 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    BACKGROUND
-===================================================== */
+========================= */
 
 .background{
-
     position:fixed;
     inset:0;
-
     z-index:-20;
-
     overflow:hidden;
-
     pointer-events:none;
 
     background:
@@ -86,9 +71,7 @@ body{
 }
 
 .background::before{
-
     content:"";
-
     position:absolute;
 
     width:650px;
@@ -100,16 +83,12 @@ body{
     border-radius:50%;
 
     background:#7448e8;
-
     filter:blur(170px);
-
     opacity:.22;
 }
 
 .background::after{
-
     content:"";
-
     position:absolute;
 
     width:600px;
@@ -121,23 +100,18 @@ body{
     border-radius:50%;
 
     background:#3154df;
-
     filter:blur(180px);
-
     opacity:.15;
 }
 
 
-/* =====================================================
+/* =========================
    STARS
-===================================================== */
+========================= */
 
 .stars{
-
     position:absolute;
-
     inset:0;
-
     opacity:.09;
 
     background-image:
@@ -154,12 +128,11 @@ body{
 }
 
 
-/* =====================================================
-   LIGHT PARTICLES
-===================================================== */
+/* =========================
+   FLOATING LIGHTS
+========================= */
 
 .light{
-
     position:absolute;
 
     width:4px;
@@ -219,21 +192,18 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    NAVBAR
-===================================================== */
+========================= */
 
 .navbar{
-
     width:100%;
 
-    padding:
-        24px 5%;
+    padding:24px 5%;
 
     display:flex;
 
     align-items:center;
-
     justify-content:space-between;
 
     position:relative;
@@ -242,80 +212,83 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    BRAND
-===================================================== */
+========================= */
 
 .brand{
-
     display:flex;
-
     align-items:center;
-
     gap:12px;
 }
 
 .brand-icon{
-
     width:48px;
     height:48px;
 
-    display:flex;
+    border-radius:50%;
 
-    align-items:center;
-    justify-content:center;
+    overflow:hidden;
 
-    border-radius:15px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #855cff,
-            #3c2389
-        );
+    border:
+        2px solid
+        rgba(157,120,255,.55);
 
     box-shadow:
-        0 12px 35px
-        rgba(119,76,255,.30);
+        0 10px 35px
+        rgba(119,76,255,.35),
 
-    font-size:24px;
+        0 0 30px
+        rgba(119,76,255,.20);
 
-    animation:
-        logoGlow 3s ease-in-out infinite;
+    background:#15121f;
+
+    transition:.5s;
+}
+
+.brand-icon img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+}
+
+.brand-icon:hover{
+    transform:scale(1.08);
+
+    box-shadow:
+        0 0 25px
+        rgba(150,110,255,.8),
+
+        0 0 60px
+        rgba(110,70,255,.5);
 }
 
 .brand-info{
-
     display:flex;
-
     flex-direction:column;
-
     line-height:1.2;
 }
 
 .brand-name{
-
     font-size:18px;
-
     font-weight:900;
 }
 
 .brand-sub{
-
     margin-top:4px;
-
     color:#9090a1;
-
     font-size:11px;
 }
 
 
-/* =====================================================
-   TEACHER TOP RIGHT
-===================================================== */
+/* =========================
+   TOP TEACHER
+========================= */
 
 .teacher-top{
-
     position:relative;
 
     width:68px;
@@ -325,245 +298,119 @@ body{
 
     cursor:pointer;
 
-    z-index:100;
-
     display:flex;
-
     align-items:center;
     justify-content:center;
 
+    transition:.6s;
+
     animation:
-        teacherTopFloat
+        teacherFloat
         3s
         ease-in-out
         infinite;
-
-    transition:
-        transform .6s
-        cubic-bezier(.2,.8,.2,1);
 }
-
-
-/* =====================================================
-   BIG BACK GLOW
-===================================================== */
-
-.teacher-top-glow{
-
-    position:absolute;
-
-    width:100px;
-    height:100px;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(139,91,255,.65) 0%,
-            rgba(108,65,235,.28) 35%,
-            transparent 72%
-        );
-
-    filter:blur(18px);
-
-    opacity:.45;
-
-    transform:scale(.9);
-
-    transition:
-        transform .7s ease,
-        opacity .7s ease,
-        filter .7s ease;
-
-    z-index:-3;
-}
-
-
-/* =====================================================
-   OUTER RING
-===================================================== */
-
-.teacher-top-ring{
-
-    position:absolute;
-
-    inset:-4px;
-
-    border-radius:50%;
-
-    border:
-        2px solid
-        rgba(153,120,255,.45);
-
-    box-shadow:
-        0 0 20px
-        rgba(127,85,255,.25);
-
-    transition:
-        .7s ease;
-
-    z-index:-1;
-}
-
-
-/* =====================================================
-   TEACHER IMAGE
-===================================================== */
 
 .teacher-top img{
-
     width:100%;
     height:100%;
 
-    display:block;
+    border-radius:50%;
 
     object-fit:cover;
 
-    border-radius:50%;
-
     border:
         2px solid
-        rgba(255,255,255,.15);
+        rgba(255,255,255,.16);
 
     box-shadow:
-
         0 12px 35px
-        rgba(0,0,0,.55),
+        rgba(0,0,0,.6),
 
-        0 0 25px
-        rgba(119,76,255,.28);
+        0 0 30px
+        rgba(120,80,255,.35);
 
-    user-select:none;
-
-    -webkit-user-drag:none;
-
-    transition:
-        transform .7s
-        cubic-bezier(.2,.8,.2,1),
-
-        box-shadow .7s ease;
+    transition:.6s;
 }
 
-
-/* =====================================================
-   LIGHT RING
-===================================================== */
-
 .teacher-top::before{
-
     content:"";
 
     position:absolute;
 
-    inset:-10px;
+    inset:-8px;
 
     border-radius:50%;
 
-    background:
-        conic-gradient(
-            transparent,
-            rgba(155,120,255,.8),
-            transparent,
-            rgba(110,70,255,.6),
-            transparent
-        );
+    border:
+        2px solid
+        rgba(151,115,255,.45);
 
-    filter:blur(4px);
-
-    opacity:.25;
+    box-shadow:
+        0 0 30px
+        rgba(125,80,255,.35);
 
     animation:
         rotateRing
         7s
         linear
         infinite;
-
-    z-index:-2;
 }
 
+.teacher-top::after{
+    content:"";
 
-/* =====================================================
-   CLICK ACTIVE
-===================================================== */
+    position:absolute;
 
-.teacher-top.active{
+    width:110px;
+    height:110px;
 
-    animation:none;
-
-    transform:
-        scale(1.14);
-}
-
-
-.teacher-top.active
-.teacher-top-glow{
-
-    opacity:1;
-
-    transform:scale(2.1);
-
-    filter:blur(24px);
+    border-radius:50%;
 
     background:
         radial-gradient(
             circle,
-            rgba(180,145,255,.98) 0%,
-            rgba(132,85,255,.72) 25%,
-            rgba(91,50,220,.38) 48%,
-            transparent 76%
+            rgba(133,86,255,.45),
+            transparent 70%
         );
+
+    filter:blur(20px);
+
+    z-index:-2;
+
+    opacity:.7;
+
+    transition:.5s;
 }
 
-
-.teacher-top.active
-.teacher-top-ring{
-
-    inset:-9px;
-
-    border-color:
-        rgba(205,185,255,.98);
-
-    box-shadow:
-
-        0 0 15px
-        rgba(170,135,255,1),
-
-        0 0 35px
-        rgba(140,95,255,.95),
-
-        0 0 75px
-        rgba(110,65,255,.75),
-
-        0 0 120px
-        rgba(90,50,220,.45);
+.teacher-top.active{
+    transform:scale(1.15);
+    animation:none;
 }
-
 
 .teacher-top.active img{
-
-    transform:
-        scale(1.08);
+    transform:scale(1.08);
 
     box-shadow:
-
-        0 15px 45px
-        rgba(0,0,0,.65),
-
         0 0 30px
-        rgba(165,125,255,.95),
+        rgba(170,135,255,1),
 
         0 0 70px
         rgba(120,75,255,.85),
 
-        0 0 110px
+        0 0 120px
         rgba(100,55,230,.45);
 }
 
-
 .teacher-top.active::before{
+    inset:-12px;
 
-    opacity:1;
+    border-color:#d4c1ff;
+
+    box-shadow:
+        0 0 25px #a77cff,
+        0 0 65px #8055ff,
+        0 0 120px rgba(120,70,255,.7);
 
     animation:
         rotateRing
@@ -572,52 +419,23 @@ body{
         infinite;
 }
 
-
-/* =====================================================
-   TEACHER LIGHT PULSE
-===================================================== */
-
 .teacher-top.active::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:-35px;
-
-    border-radius:50%;
-
-    border:
-        1px solid
-        rgba(156,120,255,.45);
-
-    box-shadow:
-        0 0 35px
-        rgba(125,80,255,.35);
-
-    animation:
-        teacherPulse
-        1.4s
-        ease-out
-        infinite;
-
-    pointer-events:none;
+    transform:scale(2.2);
+    opacity:1;
 }
 
 
-/* =====================================================
+/* =========================
    HERO
-===================================================== */
+========================= */
 
 .hero{
-
     min-height:
         calc(100vh - 96px);
 
     display:flex;
 
     align-items:center;
-
     justify-content:center;
 
     padding:
@@ -625,15 +443,13 @@ body{
 }
 
 .hero-container{
-
     width:100%;
-
     max-width:1250px;
 
     display:grid;
 
     grid-template-columns:
-        1.1fr 1fr;
+        1.05fr 1fr;
 
     align-items:center;
 
@@ -641,20 +457,21 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    CONTENT
-===================================================== */
+========================= */
 
 .content{
-
     position:relative;
 
     animation:
-        contentIn .9s ease both;
+        contentIn
+        .9s
+        ease
+        both;
 }
 
 .content::before{
-
     content:"";
 
     position:absolute;
@@ -679,12 +496,11 @@ body{
 }
 
 
-/* =====================================================
+/* =========================
    BADGE
-===================================================== */
+========================= */
 
 .badge{
-
     display:inline-flex;
 
     align-items:center;
@@ -710,14 +526,9 @@ body{
     margin-bottom:25px;
 
     backdrop-filter:blur(15px);
-
-    box-shadow:
-        0 0 30px
-        rgba(122,85,255,.08);
 }
 
 .badge-dot{
-
     width:8px;
     height:8px;
 
@@ -730,20 +541,22 @@ body{
         0 0 30px #7650df;
 
     animation:
-        dotPulse 2s ease-in-out infinite;
+        dotPulse
+        2s
+        ease-in-out
+        infinite;
 }
 
 
-/* =====================================================
+/* =========================
    TITLE
-===================================================== */
+========================= */
 
 h1{
-
     position:relative;
 
     font-size:
-        clamp(52px, 6.5vw, 88px);
+        clamp(52px,6.5vw,88px);
 
     line-height:1.04;
 
@@ -754,34 +567,7 @@ h1{
     margin-bottom:25px;
 }
 
-h1::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:180px;
-    height:180px;
-
-    top:-80px;
-    right:-60px;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(134,91,255,.16),
-            transparent 70%
-        );
-
-    filter:blur(10px);
-
-    pointer-events:none;
-}
-
 h1 span{
-
     display:block;
 
     background:
@@ -793,7 +579,6 @@ h1 span{
         );
 
     -webkit-background-clip:text;
-
     background-clip:text;
 
     color:transparent;
@@ -804,12 +589,11 @@ h1 span{
 }
 
 
-/* =====================================================
+/* =========================
    DESCRIPTION
-===================================================== */
+========================= */
 
 .description{
-
     max-width:600px;
 
     color:#a7a7b6;
@@ -822,18 +606,16 @@ h1 span{
 }
 
 
-/* =====================================================
-   START BUTTON
-===================================================== */
+/* =========================
+   BUTTON
+========================= */
 
 .start-button{
-
     position:relative;
 
     width:260px;
 
-    padding:
-        18px 25px;
+    padding:18px 25px;
 
     border:0;
 
@@ -855,7 +637,6 @@ h1 span{
         );
 
     box-shadow:
-
         0 18px 55px
         rgba(105,68,240,.35),
 
@@ -864,47 +645,13 @@ h1 span{
 
     cursor:pointer;
 
-    overflow:hidden;
-
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease;
-}
-
-.start-button::before{
-
-    content:"";
-
-    position:absolute;
-
-    top:0;
-
-    left:-130%;
-
-    width:80%;
-
-    height:100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.32),
-            transparent
-        );
-
-    transform:skewX(-20deg);
-
-    transition:left .7s ease;
+    transition:.25s;
 }
 
 .start-button:hover{
-
-    transform:
-        translateY(-4px);
+    transform:translateY(-4px);
 
     box-shadow:
-
         0 25px 65px
         rgba(105,68,240,.52),
 
@@ -912,44 +659,25 @@ h1 span{
         rgba(120,80,255,.2);
 }
 
-.start-button:hover::before{
-
-    left:150%;
-}
-
-.start-button:active{
-
-    transform:
-        scale(.97);
-}
-
 .button-content{
-
-    position:relative;
-
-    z-index:2;
-
     display:flex;
 
     align-items:center;
-
     justify-content:center;
 
     gap:13px;
 }
 
 .arrow{
-
     font-size:23px;
 }
 
 
-/* =====================================================
+/* =========================
    VISUAL
-===================================================== */
+========================= */
 
 .visual{
-
     position:relative;
 
     display:flex;
@@ -960,251 +688,335 @@ h1 span{
 
     justify-content:center;
 
-    min-height:500px;
+    min-height:650px;
 
     animation:
-        visualIn 1s ease .1s both;
+        visualIn
+        1s
+        ease
+        .1s
+        both;
 }
 
 
-/* =====================================================
+/* =========================
    IMAGE GLOW
-===================================================== */
+========================= */
 
 .image-glow{
-
     position:absolute;
 
-    width:470px;
-    height:470px;
+    width:560px;
+    height:560px;
 
     border-radius:50%;
 
     background:
         radial-gradient(
             circle,
-            rgba(120,78,255,.38),
+            rgba(120,78,255,.42),
             rgba(88,52,200,.16) 38%,
             transparent 70%
         );
 
-    filter:blur(30px);
+    filter:blur(35px);
 
     opacity:.9;
 
     pointer-events:none;
+
+    transition:.7s;
 }
 
 
-/* =====================================================
-   TEACHER MESSAGE
-===================================================== */
+/* =========================
+   CENTER IMAGE
+========================= */
 
-.teacher-message{
-
+.center-teacher{
     position:relative;
+
+    width:min(430px,85vw);
+
+    aspect-ratio:1/1;
+
+    z-index:3;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    transition:
+        transform .7s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+.center-teacher::before{
+    content:"";
+
+    position:absolute;
+
+    inset:-12px;
+
+    border-radius:50%;
+
+    border:
+        2px solid
+        rgba(160,125,255,.55);
+
+    box-shadow:
+        0 0 30px
+        rgba(130,85,255,.4),
+
+        0 0 80px
+        rgba(100,60,230,.25);
+
+    z-index:-1;
+
+    animation:
+        rotateRing
+        8s
+        linear
+        infinite;
+}
+
+.center-teacher::after{
+    content:"";
+
+    position:absolute;
+
+    inset:-40px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(135,88,255,.55),
+            rgba(105,60,230,.22) 35%,
+            transparent 70%
+        );
+
+    filter:blur(25px);
+
+    z-index:-3;
+
+    opacity:.85;
+
+    transition:.7s;
+}
+
+.center-teacher img{
+    width:100%;
+    height:100%;
+
+    display:block;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:
+        3px solid
+        rgba(178,150,255,.55);
+
+    box-shadow:
+        0 35px 90px
+        rgba(0,0,0,.75),
+
+        0 0 55px
+        rgba(110,70,240,.4),
+
+        0 0 120px
+        rgba(100,60,230,.22);
+
+    transition:.7s;
+}
+
+.center-teacher.active{
+    transform:scale(1.07);
+}
+
+.center-teacher.active img{
+    transform:scale(1.05);
+
+    border-color:
+        rgba(218,202,255,.95);
+
+    box-shadow:
+        0 35px 100px
+        rgba(0,0,0,.8),
+
+        0 0 90px
+        rgba(140,95,255,.85),
+
+        0 0 170px
+        rgba(100,55,230,.55);
+}
+
+.center-teacher.active::after{
+    inset:-75px;
+
+    opacity:1;
+
+    filter:blur(35px);
+}
+
+
+/* =========================
+   TRUST
+========================= */
+
+.trust{
+    position:relative;
+
+    margin-top:45px;
 
     width:100%;
 
     text-align:center;
 
-    margin-top:0;
-
-    z-index:10;
+    z-index:5;
 }
 
-.teacher-message::before{
+.trust-title{
+    color:#d4c8ff;
 
-    content:"✦ ───────── ✦";
-
-    display:block;
-
-    margin-bottom:13px;
-
-    color:#8060df;
-
-    font-size:12px;
-
-    letter-spacing:4px;
-
-    text-shadow:
-        0 0 15px
-        rgba(128,96,223,.7);
-}
-
-.trust-line{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:10px;
-
-    color:#d0c2ff;
-
-    font-size:17px;
+    font-size:23px;
 
     font-weight:1000;
-
-    line-height:1.8;
 
     margin-bottom:15px;
 
     text-shadow:
-        0 0 20px
-        rgba(144,104,255,.35);
+        0 0 25px
+        rgba(145,108,255,.4);
 }
 
-.trust-line span{
-
-    color:#a27cff;
-
-    font-size:18px;
-
-    text-shadow:
-        0 0 12px #9068ff,
-        0 0 25px rgba(144,104,255,.8);
+.trust-title span{
+    color:#9c78ff;
 }
+
+
+/* =========================
+   TEACHER DESCRIPTION
+========================= */
 
 .teacher-description{
-
-    position:relative;
-
-    max-width:570px;
+    max-width:600px;
 
     margin:
-        0 auto 22px;
+        0 auto 25px;
 
     padding:
-        20px 25px;
+        22px 25px;
 
-    color:#aaa9b8;
-
-    font-size:13px;
-
-    line-height:2.25;
-
-    font-weight:500;
-
-    text-align:center;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.055),
-            rgba(255,255,255,.018)
-        );
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    border-radius:20px;
-
-    box-shadow:
-
-        inset 0 1px
-        rgba(255,255,255,.04),
-
-        0 15px 40px
-        rgba(0,0,0,.20);
-
-    backdrop-filter:blur(15px);
-}
-
-.teacher-description::before{
-
-    content:"";
-
-    position:absolute;
-
-    top:0;
-    right:50%;
-
-    transform:
-        translateX(50%);
-
-    width:80px;
-    height:2px;
-
-    border-radius:20px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #916cff,
-            transparent
-        );
-
-    box-shadow:
-        0 0 15px
-        rgba(145,108,255,.8);
-}
-
-.gift-message{
-
-    display:inline-flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:7px;
-
-    max-width:520px;
-
-    padding:
-        12px 22px;
-
-    border-radius:18px;
+    border-radius:22px;
 
     background:
         linear-gradient(
             135deg,
             rgba(255,255,255,.06),
+            rgba(255,255,255,.018)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    color:#aaa9b8;
+
+    font-size:14px;
+
+    line-height:2.2;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.25);
+
+    backdrop-filter:blur(15px);
+}
+
+
+/* =========================
+   THANK YOU
+========================= */
+
+.thank-you{
+    max-width:620px;
+
+    margin:0 auto;
+
+    padding:
+        25px 24px;
+
+    border-radius:24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(120,80,255,.10),
             rgba(255,255,255,.025)
         );
 
     border:
         1px solid
-        rgba(150,120,255,.18);
-
-    color:#92919f;
-
-    font-size:12px;
-
-    line-height:2;
-
-    backdrop-filter:blur(12px);
+        rgba(150,120,255,.20);
 
     box-shadow:
-        0 10px 35px
-        rgba(0,0,0,.18);
+        0 15px 50px
+        rgba(0,0,0,.3),
+
+        0 0 35px
+        rgba(110,70,255,.08);
+
+    color:#aaa9b8;
+
+    font-size:14px;
+
+    line-height:2.2;
 }
 
-.gift-message strong{
+.thank-title{
+    color:#d9ceff;
 
-    color:#d6c9ff;
+    font-size:18px;
 
     font-weight:1000;
 
+    margin-bottom:12px;
+}
+
+.developer{
+    margin-top:20px;
+
+    color:#a990ff;
+
+    font-size:15px;
+
+    font-weight:900;
+}
+
+.developer strong{
+    display:block;
+
+    margin-top:5px;
+
+    color:#fff;
+
+    font-size:21px;
+
     text-shadow:
-        0 0 15px
-        rgba(150,120,255,.25);
+        0 0 20px
+        rgba(145,108,255,.5);
 }
 
 
-/* =====================================================
+/* =========================
    FOOTER
-===================================================== */
+========================= */
 
 .footer{
-
-    position:relative;
-
     width:100%;
 
     text-align:center;
@@ -1214,18 +1026,15 @@ h1 span{
     font-size:11px;
 
     padding:
-        10px 0 25px;
-
-    z-index:4;
+        20px 0 30px;
 }
 
 
-/* =====================================================
+/* =========================
    ANIMATIONS
-===================================================== */
+========================= */
 
 @keyframes contentIn{
-
     from{
         opacity:0;
         transform:translateY(30px);
@@ -1238,7 +1047,6 @@ h1 span{
 }
 
 @keyframes visualIn{
-
     from{
         opacity:0;
         transform:
@@ -1255,11 +1063,11 @@ h1 span{
 }
 
 @keyframes lightFloat{
-
     0%,100%{
         transform:
             translateY(0)
             scale(1);
+
         opacity:.3;
     }
 
@@ -1267,12 +1075,12 @@ h1 span{
         transform:
             translateY(-25px)
             scale(1.7);
+
         opacity:.9;
     }
 }
 
 @keyframes starsMove{
-
     from{
         transform:translate(0,0);
     }
@@ -1282,29 +1090,7 @@ h1 span{
     }
 }
 
-@keyframes logoGlow{
-
-    0%,100%{
-
-        box-shadow:
-            0 12px 35px
-            rgba(119,76,255,.30);
-    }
-
-    50%{
-
-        box-shadow:
-
-            0 12px 45px
-            rgba(119,76,255,.55),
-
-            0 0 25px
-            rgba(119,76,255,.20);
-    }
-}
-
 @keyframes dotPulse{
-
     0%,100%{
         transform:scale(1);
         opacity:.7;
@@ -1316,19 +1102,17 @@ h1 span{
     }
 }
 
-@keyframes teacherTopFloat{
-
+@keyframes teacherFloat{
     0%,100%{
         transform:translateY(0);
     }
 
     50%{
-        transform:translateY(-4px);
+        transform:translateY(-5px);
     }
 }
 
 @keyframes rotateRing{
-
     from{
         transform:rotate(0deg);
     }
@@ -1338,33 +1122,18 @@ h1 span{
     }
 }
 
-@keyframes teacherPulse{
 
-    0%{
-        transform:scale(.85);
-        opacity:.8;
-    }
-
-    100%{
-        transform:scale(1.45);
-        opacity:0;
-    }
-}
-
-
-/* =====================================================
+/* =========================
    TABLET
-===================================================== */
+========================= */
 
 @media(max-width:950px){
 
     .hero{
-
         padding-top:20px;
     }
 
     .hero-container{
-
         grid-template-columns:1fr;
 
         gap:45px;
@@ -1377,7 +1146,6 @@ h1 span{
     }
 
     .content::before{
-
         right:50%;
 
         transform:
@@ -1385,46 +1153,37 @@ h1 span{
     }
 
     .visual{
-
         order:2;
 
         min-height:auto;
     }
 
     .description{
-
         margin-left:auto;
         margin-right:auto;
     }
 
     .start-button{
-
         width:100%;
-
         max-width:340px;
     }
+
 }
 
 
-/* =====================================================
+/* =========================
    MOBILE
-===================================================== */
+========================= */
 
 @media(max-width:600px){
 
     .navbar{
-
         padding:18px;
     }
 
     .brand-icon{
-
         width:43px;
         height:43px;
-
-        border-radius:14px;
-
-        font-size:21px;
     }
 
     .brand-name{
@@ -1436,19 +1195,11 @@ h1 span{
     }
 
     .teacher-top{
-
         width:54px;
         height:54px;
     }
 
-    .teacher-top-glow{
-
-        width:75px;
-        height:75px;
-    }
-
     .hero{
-
         min-height:auto;
 
         padding:
@@ -1456,83 +1207,77 @@ h1 span{
     }
 
     .hero-container{
-
         gap:35px;
     }
 
     .badge{
-
         font-size:11px;
-
-        padding:
-            8px 13px;
+        padding:8px 13px;
     }
 
     h1{
-
         font-size:50px;
-
         letter-spacing:-2px;
-
         line-height:1.08;
     }
 
     .description{
-
         font-size:14px;
-
         line-height:1.9;
     }
 
     .visual{
-
         min-height:auto;
     }
 
     .image-glow{
-
         width:350px;
         height:350px;
     }
 
-    .trust-line{
+    .center-teacher{
+        width:84vw;
+    }
 
-        font-size:14px;
+    .trust{
+        margin-top:35px;
+    }
 
-        gap:7px;
+    .trust-title{
+        font-size:18px;
     }
 
     .teacher-description{
-
-        padding:
-            17px 16px;
-
+        padding:17px 16px;
         font-size:12px;
-
         line-height:2.15;
     }
 
-    .gift-message{
+    .thank-you{
+        padding:20px 16px;
+        font-size:12px;
+        line-height:2.1;
+    }
 
-        font-size:11px;
+    .thank-title{
+        font-size:16px;
+    }
 
-        padding:
-            10px 15px;
+    .developer strong{
+        font-size:19px;
     }
 
     .start-button{
-
         font-size:16px;
-
-        padding:
-            17px 20px;
+        padding:17px 20px;
     }
+
 }
 
 
-/* =====================================================
+/* =========================
    SMALL PHONES
-===================================================== */
+========================= */
 
 @media(max-width:390px){
 
@@ -1540,11 +1285,12 @@ h1 span{
         font-size:43px;
     }
 
-    .trust-line{
-        font-size:12px;
+    .trust-title{
+        font-size:16px;
     }
 
-    .teacher-description{
+    .teacher-description,
+    .thank-you{
         font-size:11px;
     }
 
@@ -1558,9 +1304,9 @@ h1 span{
 <body>
 
 
-<!-- =====================================================
+<!-- =========================
      BACKGROUND
-===================================================== -->
+========================= -->
 
 <div class="background">
 
@@ -1576,17 +1322,26 @@ h1 span{
 </div>
 
 
-<!-- =====================================================
+<!-- =========================
      NAVBAR
-===================================================== -->
+========================= -->
 
 <header class="navbar">
 
     <div class="brand">
 
+        <!-- صورة المستر بدل الشعار -->
+
         <div class="brand-icon">
-            🧠
+
+            <img
+                src="teacher.png"
+                alt="المستر"
+                draggable="false"
+            >
+
         </div>
+
 
         <div class="brand-info">
 
@@ -1595,7 +1350,7 @@ h1 span{
             </div>
 
             <div class="brand-sub">
-                منصة الاختبارات
+                ثقة وتعلّم
             </div>
 
         </div>
@@ -1611,14 +1366,6 @@ h1 span{
         title="المستر"
     >
 
-        <div
-            class="teacher-top-glow">
-        </div>
-
-        <div
-            class="teacher-top-ring">
-        </div>
-
         <img
             src="teacher.png"
             alt="المستر"
@@ -1630,18 +1377,18 @@ h1 span{
 </header>
 
 
-<!-- =====================================================
+<!-- =========================
      HERO
-===================================================== -->
+========================= -->
 
 <main class="hero">
 
     <div class="hero-container">
 
 
-        <!-- =================================================
-             CONTENT
-        ================================================== -->
+        <!-- =====================
+             MAIN TEXT
+        ====================== -->
 
         <section class="content">
 
@@ -1669,8 +1416,8 @@ h1 span{
 
                 اختبر معلوماتك، تحدَّ نفسك،
                 واكتشف مستواك من خلال
-                الاختبارات والتحديات المصممة
-                لك.
+                اختبارات وتحديات مصممة
+                لتساعدك على التطور خطوة بخطوة.
 
             </p>
 
@@ -1698,9 +1445,9 @@ h1 span{
         </section>
 
 
-        <!-- =================================================
-             TEACHER MESSAGE
-        ================================================== -->
+        <!-- =====================
+             TEACHER
+        ====================== -->
 
         <section
             class="visual"
@@ -1710,46 +1457,85 @@ h1 span{
             <div class="image-glow"></div>
 
 
-            <div class="teacher-message">
+            <!-- صورة المستر الكبيرة -->
 
-                <div class="trust-line">
+            <div
+                class="center-teacher"
+                id="centerTeacher"
+            >
 
-                    <span>✦</span>
+                <img
+                    src="teacher.png"
+                    alt="المستر"
+                    draggable="false"
+                >
 
-                    هذا المستر مصدر ثقة وعلم
+            </div>
 
-                    <span>✦</span>
+
+            <!-- الثقة والتعلم -->
+
+            <div class="trust">
+
+                <div class="trust-title">
+
+                    ✦ الخوارزمي —
+                    <span>
+                        ثقة وتعلّم
+                    </span>
+                    ✦
 
                 </div>
 
 
                 <p class="teacher-description">
 
-                    مدرس رياضيات يتميز بالقدرة على تبسيط
-                    المفاهيم وشرح الأفكار بطريقة واضحة
-                    ومنظمة، مع الاهتمام بفهم الطالب
-                    للمعلومة وليس مجرد حفظها.
-                    أسلوبه يعتمد على توصيل الفكرة من
-                    الأساس، وربط القوانين بالمسائل
-                    والتطبيقات، حتى تصبح المعلومة أسهل
-                    في الفهم والمراجعة والتذكر.
-                    ومع كل مسألة جديدة، يساعد الطالب
-                    على التفكير بطريقة صحيحة والوصول
-                    إلى الحل بخطوات واضحة، مما يجعل
-                    رحلة تعلم الرياضيات أكثر سهولة وثقة.
+                    منصة اختبارات تهدف إلى جعل تجربة
+                    الاختبار أكثر سهولة وتنظيمًا.
+                    اختبر نفسك، راجع مستواك، وتابع
+                    تطورك من خلال تجربة بسيطة وواضحة
+                    مصممة للطلاب.
 
                 </p>
 
 
-                <div class="gift-message">
+                <!-- رسالة الشكر -->
 
-                    Note: من تلميذك العزيز
+                <div class="thank-you">
 
-                    <strong>
-                        Moaz Yosry
-                    </strong>
+                    <div class="thank-title">
 
-                    🖤
+                        ❤️ رسالة شكر وتقدير
+
+                    </div>
+
+                    شكرًا يا مستر أمير على كل الشغل
+                    والمجهود اللي بتعمله معانا،
+                    وعلى كل وقت وتعب بتقدمه عشان
+                    تساعدنا ونفهم بشكل أفضل.
+
+                    <br>
+
+                    إحنا كطلاب بنشوف تعبك ومجهودك
+                    وبنقدّر جدًا كل حاجة بتعملها
+                    معانا، ودي حاجة بسيطة مني
+                    تعبر عن شكري ليك. ❤️
+
+
+                    <div class="developer">
+
+                        من أحد طلابك في مصر 🇪🇬
+
+                        <strong>
+
+                            معاذ يسري
+
+                        </strong>
+
+                        مطور منصة الخوارزمي
+                        💻🚀
+
+                    </div>
 
                 </div>
 
@@ -1762,9 +1548,9 @@ h1 span{
 </main>
 
 
-<!-- =====================================================
+<!-- =========================
      FOOTER
-===================================================== -->
+========================= -->
 
 <footer class="footer">
 
@@ -1775,15 +1561,14 @@ h1 span{
 
 <script>
 
-/* =====================================================
-   TEACHER TOP CLICK
-===================================================== */
+/* =========================
+   TOP TEACHER CLICK
+========================= */
 
 const teacherTop =
     document.getElementById(
         "teacherTop"
     );
-
 
 teacherTop.addEventListener(
     "click",
@@ -1797,15 +1582,35 @@ teacherTop.addEventListener(
 );
 
 
-/* =====================================================
+/* =========================
+   CENTER TEACHER CLICK
+========================= */
+
+const centerTeacher =
+    document.getElementById(
+        "centerTeacher"
+    );
+
+centerTeacher.addEventListener(
+    "click",
+    function(){
+
+        centerTeacher.classList.toggle(
+            "active"
+        );
+
+    }
+);
+
+
+/* =========================
    START BUTTON
-===================================================== */
+========================= */
 
 const startButton =
     document.getElementById(
         "startButton"
     );
-
 
 startButton.addEventListener(
     "click",
@@ -1814,7 +1619,7 @@ startButton.addEventListener(
         startButton.disabled = true;
 
         startButton.style.opacity =
-            "0.7";
+            ".7";
 
         window.location.href =
             "auth.html";
@@ -1823,15 +1628,16 @@ startButton.addEventListener(
 );
 
 
-/* =====================================================
+/* =========================
    PAGE SHOW
-===================================================== */
+========================= */
 
 window.addEventListener(
     "pageshow",
     function(){
 
-        startButton.disabled = false;
+        startButton.disabled =
+            false;
 
         startButton.style.opacity =
             "1";
@@ -1840,7 +1646,6 @@ window.addEventListener(
 );
 
 </script>
-
 
 </body>
 
