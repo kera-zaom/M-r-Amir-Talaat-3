@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<meta name="theme-color" content="#050507">
+
+<title>الخوارزمي | منصة الاختبارات</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+
+    font-family:
+        "Cairo",
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 75% 15%,
+            #302052 0%,
+            #15121e 35%,
+            #07070a 72%,
+            #000 100%
+        );
+
+    overflow-x:hidden;
+}
+
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+.background{
+
+    position:fixed;
+    inset:0;
+
+    z-index:-20;
+
+    overflow:hidden;
+
+    pointer-events:none;
+}
+
+.background::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:600px;
+    height:600px;
+
+    top:-280px;
+    right:-180px;
+
+    border-radius:50%;
+
+    background:#7448e8;
+
+    filter:blur(150px);
+
+    opacity:.20;
+}
+
+.background::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    bottom:-300px;
+    left:-180px;
+
+    border-radius:50%;
+
+    background:#3154df;
+
+    filter:blur(160px);
+
+    opacity:.13;
+}
+
+
+/* =====================================================
+   STAR FIELD
+===================================================== */
+
+.stars{
+
+    position:absolute;
+
+    inset:0;
+
+    opacity:.08;
+
+    background-image:
+
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.9) 1px,
+            transparent 1px
+        );
+
+    background-size:90px 90px;
+
+    animation:
+        starsMove 18s linear infinite;
+}
+
+
+/* =====================================================
+   LIGHT PARTICLES
+===================================================== */
+
+.light{
+
+    position:absolute;
+
+    width:4px;
+    height:4px;
+
+    border-radius:50%;
+
+    background:#b9a4ff;
+
+    box-shadow:
+        0 0 15px #936cff,
+        0 0 30px rgba(147,108,255,.7);
+
+    opacity:.55;
+
+    animation:
+        lightFloat
+        var(--duration)
+        ease-in-out
+        infinite;
+}
+
+.light:nth-child(1){
+    top:18%;
+    left:12%;
+    --duration:5s;
+}
+
+.light:nth-child(2){
+    top:34%;
+    left:82%;
+    --duration:7s;
+}
+
+.light:nth-child(3){
+    top:65%;
+    left:14%;
+    --duration:6s;
+}
+
+.light:nth-child(4){
+    top:78%;
+    left:75%;
+    --duration:8s;
+}
+
+.light:nth-child(5){
+    top:12%;
+    left:48%;
+    --duration:6.5s;
+}
+
+.light:nth-child(6){
+    top:52%;
+    left:92%;
+    --duration:5.5s;
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar{
+
+    width:100%;
+
+    padding:
+        24px 5%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    position:relative;
+
+    z-index:20;
+}
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.brand-icon{
+
+    width:48px;
+    height:48px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #855cff,
+            #3c2389
+        );
+
+    box-shadow:
+        0 12px 35px
+        rgba(119,76,255,.30);
+
+    font-size:22px;
+
+    animation:
+        logoGlow 3s ease-in-out infinite;
+}
+
+.brand-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    line-height:1.2;
+}
+
+.brand-name{
+
+    font-size:18px;
+
+    font-weight:900;
+}
+
+.brand-sub{
+
+    margin-top:4px;
+
+    color:#9090a1;
+
+    font-size:11px;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+
+    min-height:
+        calc(100vh - 96px);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:
+        20px 5% 80px;
+}
+
+.hero-container{
+
+    width:100%;
+
+    max-width:1250px;
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1.1fr;
+
+    align-items:center;
+
+    gap:65px;
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content{
+
+    position:relative;
+
+    animation:
+        contentIn .9s ease both;
+}
+
+
+/* =====================================================
+   DECORATIVE LINE
+===================================================== */
+
+.content::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:100px;
+    height:2px;
+
+    top:-35px;
+    right:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #8862ff,
+            transparent
+        );
+
+    box-shadow:
+        0 0 15px
+        rgba(136,98,255,.8);
+}
+
+
+/* =====================================================
+   BADGE
+===================================================== */
+
+.badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    padding:
+        10px 18px;
+
+    border-radius:50px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    color:#c9c9d8;
+
+    font-size:13px;
+
+    margin-bottom:25px;
+
+    backdrop-filter:blur(15px);
+
+    box-shadow:
+        0 0 30px
+        rgba(122,85,255,.08);
+}
+
+.badge-dot{
+
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:#936dff;
+
+    box-shadow:
+        0 0 15px #936dff,
+        0 0 30px #7650df;
+
+    animation:
+        dotPulse 2s ease-in-out infinite;
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+h1{
+
+    position:relative;
+
+    font-size:
+        clamp(52px, 6.5vw, 88px);
+
+    line-height:1.04;
+
+    font-weight:1000;
+
+    letter-spacing:-3px;
+
+    margin-bottom:25px;
+}
+
+h1::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    top:-80px;
+    right:-60px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(134,91,255,.16),
+            transparent 70%
+        );
+
+    filter:blur(10px);
+
+    pointer-events:none;
+}
+
+h1 span{
+
+    display:block;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff 0%,
+            #d1c4ff 42%,
+            #7953e5 100%
+        );
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
+
+    text-shadow:
+        0 0 45px
+        rgba(129,91,255,.13);
+}
+
+
+/* =====================================================
+   DESCRIPTION
+===================================================== */
+
+.description{
+
+    max-width:600px;
+
+    color:#a7a7b6;
+
+    font-size:18px;
+
+    line-height:2;
+
+    margin-bottom:35px;
+}
+
+
+/* =====================================================
+   START BUTTON
+===================================================== */
+
+.start-button{
+
+    position:relative;
+
+    width:260px;
+
+    padding:
+        18px 25px;
+
+    border:0;
+
+    border-radius:18px;
+
+    color:#fff;
+
+    font-family:inherit;
+
+    font-size:17px;
+
+    font-weight:900;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8962ff,
+            #4d2bac
+        );
+
+    box-shadow:
+
+        0 18px 55px
+        rgba(105,68,240,.35),
+
+        0 0 35px
+        rgba(120,80,255,.13);
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.start-button::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-130%;
+
+    width:80%;
+
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.32),
+            transparent
+        );
+
+    transform:skewX(-20deg);
+
+    transition:left .7s ease;
+}
+
+.start-button:hover{
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+
+        0 25px 65px
+        rgba(105,68,240,.52),
+
+        0 0 50px
+        rgba(120,80,255,.2);
+}
+
+.start-button:hover::before{
+
+    left:150%;
+}
+
+.start-button:active{
+
+    transform:
+        scale(.97);
+}
+
+.button-content{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:13px;
+}
+
+.arrow{
+
+    font-size:23px;
+}
+
+
+/* =====================================================
+   VISUAL AREA
+===================================================== */
+
+.visual{
+
+    position:relative;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-height:590px;
+
+    animation:
+        visualIn 1s ease .1s both;
+}
+
+
+/* =====================================================
+   IMAGE GLOW
+===================================================== */
+
+.image-glow{
+
+    position:absolute;
+
+    width:540px;
+    height:540px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(112,75,255,.32),
+            transparent 68%
+        );
+
+    filter:blur(25px);
+
+    pointer-events:none;
+
+    transition:
+        transform .8s ease,
+        opacity .8s ease;
+}
+
+
+/* =====================================================
+   IMAGE AREA
+   الصورة فقط هي التي تميل
+===================================================== */
+
+.image-wrapper{
+
+    position:relative;
+
+    width:min(570px,100%);
+
+    z-index:2;
+
+    transform:
+        rotate(3deg);
+
+    animation:
+        imageFloat 4s ease-in-out infinite;
+
+    transition:
+        transform .8s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+
+/* =====================================================
+   IMAGE FRAME
+===================================================== */
+
+.image-frame{
+
+    position:relative;
+
+    width:100%;
+
+    min-height:520px;
+
+    overflow:hidden;
+
+    border-radius:32px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.12),
+            rgba(255,255,255,.025)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    box-shadow:
+
+        0 35px 90px
+        rgba(0,0,0,.65),
+
+        0 0 70px
+        rgba(103,68,230,.15);
+
+    backdrop-filter:blur(20px);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    transition:
+        box-shadow .8s ease,
+        border-color .8s ease;
+}
+
+.teacher-image{
+
+    width:100%;
+
+    height:520px;
+
+    object-fit:cover;
+
+    object-position:center;
+
+    display:block;
+
+    filter:
+        drop-shadow(
+            0 25px 35px
+            rgba(0,0,0,.5)
+        );
+
+    transition:
+        transform .8s
+        cubic-bezier(.2,.8,.2,1),
+
+        filter .8s ease;
+}
+
+
+/* =====================================================
+   IMAGE SHINE
+===================================================== */
+
+.image-frame .shine{
+
+    position:absolute;
+
+    top:-100%;
+
+    left:-40%;
+
+    width:45%;
+
+    height:300%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.12),
+            transparent
+        );
+
+    transform:
+        rotate(20deg);
+
+    pointer-events:none;
+
+    opacity:.5;
+}
+
+.image-frame:hover .shine{
+
+    animation:
+        imageShine 1.2s ease;
+}
+
+
+/* =====================================================
+   IMAGE BORDER
+===================================================== */
+
+.image-frame::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:32px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    pointer-events:none;
+
+    z-index:3;
+}
+
+.image-frame::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:35%;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,.09),
+            transparent
+        );
+
+    pointer-events:none;
+
+    z-index:3;
+}
+
+
+/* =====================================================
+   PARTICLES
+===================================================== */
+
+.particles{
+
+    position:absolute;
+
+    inset:-80px;
+
+    z-index:5;
+
+    pointer-events:none;
+
+    opacity:0;
+
+    transition:
+        opacity .5s ease;
+}
+
+.particle{
+
+    position:absolute;
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#bba5ff;
+
+    box-shadow:
+
+        0 0 15px #8b61ff,
+
+        0 0 30px
+        rgba(139,97,255,.8);
+
+    opacity:0;
+}
+
+.particle:nth-child(1){
+
+    top:12%;
+    right:15%;
+
+    --x:80px;
+    --y:-100px;
+}
+
+.particle:nth-child(2){
+
+    top:30%;
+    left:8%;
+
+    --x:-90px;
+    --y:-50px;
+}
+
+.particle:nth-child(3){
+
+    top:58%;
+    right:5%;
+
+    --x:100px;
+    --y:60px;
+}
+
+.particle:nth-child(4){
+
+    bottom:15%;
+    left:18%;
+
+    --x:-80px;
+    --y:90px;
+}
+
+.particle:nth-child(5){
+
+    top:8%;
+    left:35%;
+
+    --x:20px;
+    --y:-130px;
+}
+
+.particle:nth-child(6){
+
+    bottom:8%;
+    right:30%;
+
+    --x:60px;
+    --y:100px;
+}
+
+.particle:nth-child(7){
+
+    top:48%;
+    left:2%;
+
+    --x:-120px;
+    --y:20px;
+}
+
+.particle:nth-child(8){
+
+    bottom:35%;
+    right:0;
+
+    --x:120px;
+    --y:20px;
+}
+
+
+/* =====================================================
+   ACTIVE IMAGE
+===================================================== */
+
+.image-wrapper.active{
+
+    animation:none;
+
+    transform:
+        rotate(0deg)
+        scale(1.025);
+}
+
+.image-wrapper.active .image-frame{
+
+    border-color:
+        rgba(151,116,255,.65);
+
+    box-shadow:
+
+        0 40px 100px
+        rgba(0,0,0,.7),
+
+        0 0 100px
+        rgba(112,75,255,.45),
+
+        0 0 160px
+        rgba(112,75,255,.18);
+}
+
+.image-wrapper.active .teacher-image{
+
+    transform:
+        scale(1.04);
+
+    filter:
+        drop-shadow(
+            0 20px 45px
+            rgba(127,87,255,.35)
+        );
+}
+
+.visual.active .image-glow{
+
+    transform:
+        scale(1.35);
+
+    opacity:.8;
+}
+
+.image-wrapper.active .particles{
+
+    opacity:1;
+}
+
+.image-wrapper.active .particle{
+
+    animation:
+        particleExplosion
+        1.5s
+        ease-out
+        forwards;
+}
+
+
+/* =====================================================
+   TEXT BELOW IMAGE
+   ثابت بالكامل
+===================================================== */
+
+.teacher-message{
+
+    width:100%;
+
+    text-align:center;
+
+    margin-top:22px;
+
+    /*
+       لا يوجد أي animation هنا
+       حتى يظل النص ثابتًا
+    */
+}
+
+
+/* =====================================================
+   TRUST TITLE
+===================================================== */
+
+.trust-line{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:7px;
+
+    color:#c0adff;
+
+    font-size:15px;
+
+    font-weight:900;
+
+    line-height:1.8;
+
+    margin-bottom:14px;
+}
+
+.trust-line span{
+
+    color:#9068ff;
+
+    font-size:17px;
+
+    text-shadow:
+        0 0 12px
+        rgba(144,104,255,.8);
+}
+
+
+/* =====================================================
+   LONG DESCRIPTION
+===================================================== */
+
+.teacher-description{
+
+    max-width:540px;
+
+    margin:
+        0 auto 20px;
+
+    color:#a4a4b3;
+
+    font-size:13px;
+
+    line-height:2.25;
+
+    font-weight:500;
+
+    text-align:center;
+}
+
+
+/* =====================================================
+   FINAL NOTE
+===================================================== */
+
+.gift-message{
+
+    display:inline-block;
+
+    max-width:520px;
+
+    padding:
+        12px 20px;
+
+    border-radius:15px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    color:#9999a8;
+
+    font-size:12px;
+
+    line-height:2;
+
+    backdrop-filter:blur(12px);
+}
+
+.gift-message strong{
+
+    color:#d2c5ff;
+
+    font-weight:900;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer{
+
+    position:fixed;
+
+    left:0;
+
+    right:0;
+
+    bottom:18px;
+
+    text-align:center;
+
+    color:#626273;
+
+    font-size:11px;
+
+    z-index:4;
+}
+
+
+/* =====================================================
+   ANIMATIONS
+===================================================== */
+
+@keyframes contentIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(30px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+@keyframes visualIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(30px)
+            scale(.96);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+@keyframes imageFloat{
+
+    0%,
+    100%{
+
+        transform:
+            rotate(3deg)
+            translateY(0);
+    }
+
+    50%{
+
+        transform:
+            rotate(1deg)
+            translateY(-10px);
+    }
+}
+
+@keyframes particleExplosion{
+
+    0%{
+
+        opacity:0;
+
+        transform:
+            translate(0,0)
+            scale(.2);
+    }
+
+    25%{
+
+        opacity:1;
+    }
+
+    100%{
+
+        opacity:0;
+
+        transform:
+            translate(
+                var(--x),
+                var(--y)
+            )
+            scale(1.5);
+    }
+}
+
+@keyframes lightFloat{
+
+    0%,
+    100%{
+
+        transform:
+            translateY(0)
+            scale(1);
+
+        opacity:.3;
+    }
+
+    50%{
+
+        transform:
+            translateY(-25px)
+            scale(1.7);
+
+        opacity:.9;
+    }
+}
+
+@keyframes starsMove{
+
+    from{
+
+        transform:
+            translate(0,0);
+    }
+
+    to{
+
+        transform:
+            translate(-90px,-90px);
+    }
+}
+
+@keyframes logoGlow{
+
+    0%,
+    100%{
+
+        box-shadow:
+            0 12px 35px
+            rgba(119,76,255,.30);
+    }
+
+    50%{
+
+        box-shadow:
+
+            0 12px 45px
+            rgba(119,76,255,.55),
+
+            0 0 25px
+            rgba(119,76,255,.20);
+    }
+}
+
+@keyframes dotPulse{
+
+    0%,
+    100%{
+
+        transform:scale(1);
+
+        opacity:.7;
+    }
+
+    50%{
+
+        transform:scale(1.5);
+
+        opacity:1;
+    }
+}
+
+@keyframes imageShine{
+
+    from{
+
+        left:-50%;
+    }
+
+    to{
+
+        left:130%;
+    }
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media(max-width:950px){
+
+    .hero{
+
+        padding-top:20px;
+    }
+
+    .hero-container{
+
+        grid-template-columns:1fr;
+
+        gap:45px;
+
+        text-align:center;
+    }
+
+    .content{
+
+        order:1;
+    }
+
+    .content::before{
+
+        right:50%;
+
+        transform:
+            translateX(50%);
+    }
+
+    .visual{
+
+        order:2;
+
+        min-height:auto;
+    }
+
+    .description{
+
+        margin-left:auto;
+
+        margin-right:auto;
+    }
+
+    .start-button{
+
+        width:100%;
+
+        max-width:340px;
+    }
+
+    .image-wrapper{
+
+        max-width:600px;
+    }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:600px){
+
+    .navbar{
+
+        padding:18px;
+    }
+
+    .brand-icon{
+
+        width:43px;
+        height:43px;
+
+        border-radius:14px;
+
+        font-size:20px;
+    }
+
+    .brand-name{
+
+        font-size:16px;
+    }
+
+    .brand-sub{
+
+        font-size:9px;
+    }
+
+    .hero{
+
+        min-height:auto;
+
+        padding:
+            35px 16px 70px;
+    }
+
+    .hero-container{
+
+        gap:35px;
+    }
+
+    .badge{
+
+        font-size:11px;
+
+        padding:
+            8px 13px;
+    }
+
+    h1{
+
+        font-size:50px;
+
+        letter-spacing:-2px;
+
+        line-height:1.08;
+    }
+
+    .description{
+
+        font-size:14px;
+
+        line-height:1.9;
+    }
+
+    .visual{
+
+        min-height:auto;
+    }
+
+    .image-glow{
+
+        width:340px;
+        height:340px;
+    }
+
+    .image-wrapper{
+
+        width:100%;
+    }
+
+    .image-frame{
+
+        min-height:390px;
+
+        border-radius:24px;
+    }
+
+    .teacher-image{
+
+        height:390px;
+    }
+
+    .image-frame::before{
+
+        border-radius:24px;
+    }
+
+    .teacher-message{
+
+        margin-top:18px;
+    }
+
+    .trust-line{
+
+        font-size:13px;
+    }
+
+    .teacher-description{
+
+        font-size:12px;
+
+        line-height:2.15;
+
+        padding:
+            0 4px;
+    }
+
+    .gift-message{
+
+        font-size:11px;
+
+        padding:
+            10px 15px;
+    }
+
+    .start-button{
+
+        font-size:16px;
+
+        padding:
+            17px 20px;
+    }
+
+    .footer{
+
+        position:relative;
+
+        bottom:auto;
+
+        margin-top:20px;
+    }
+}
+
+
+/* =====================================================
+   SMALL PHONES
+===================================================== */
+
+@media(max-width:390px){
+
+    h1{
+
+        font-size:43px;
+    }
+
+    .image-frame{
+
+        min-height:340px;
+    }
+
+    .teacher-image{
+
+        height:340px;
+    }
+
+    .trust-line{
+
+        font-size:12px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     BACKGROUND
+===================================================== -->
+
+<div class="background">
+
+    <div class="stars"></div>
+
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+
+</div>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🧠
+        </div>
+
+        <div class="brand-info">
+
+            <div class="brand-name">
+                الخوارزمي
+            </div>
+
+            <div class="brand-sub">
+                منصة الاختبارات
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<main class="hero">
+
+    <div class="hero-container">
+
+
+        <!-- =================================================
+             LEFT CONTENT
+        ================================================== -->
+
+        <section class="content">
+
+
+            <div class="badge">
+
+                <span class="badge-dot"></span>
+
+                منصة التحديات والاختبارات
+
+            </div>
+
+
+            <h1>
+
+                جاهز تبدأ
+
+                <span>
+                    المغامرة؟
+                </span>
+
+            </h1>
+
+
+            <p class="description">
+
+                اختبر معلوماتك، تحدَّ نفسك،
+                واكتشف مستواك من خلال
+                الاختبارات والتحديات المصممة
+                لك.
+
+            </p>
+
+
+            <button
+                id="startButton"
+                class="start-button"
+                type="button"
+            >
+
+                <span class="button-content">
+
+                    <span>
+                        🚀 ابدأ مع الخوارزمي
+                    </span>
+
+                    <span class="arrow">
+                        ←
+                    </span>
+
+                </span>
+
+            </button>
+
+
+        </section>
+
+
+        <!-- =================================================
+             TEACHER AREA
+        ================================================== -->
+
+        <section
+            class="visual"
+            id="visual"
+        >
+
+
+            <div class="image-glow"></div>
+
+
+            <!-- الصورة فقط هي التي تتحرك -->
+
+            <div
+                class="image-wrapper"
+                id="imageWrapper"
+            >
+
+
+                <div
+                    class="image-frame"
+                    id="imageFrame"
+                >
+
+
+                    <img
+                        src="teacher.png"
+                        alt="المستر"
+                        class="teacher-image"
+                        draggable="false"
+                    >
+
+
+                    <div class="shine"></div>
+
+
+                    <!-- PARTICLES -->
+
+                    <div class="particles">
+
+                        <span class="particle"></span>
+                        <span class="particle"></span>
+                        <span class="particle"></span>
+                        <span class="particle"></span>
+                        <span class="particle"></span>
+                        <span class="particle"></span>
+                        <span class="particle"></span>
+                        <span class="particle"></span>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     TEXT ثابت خارج الصورة
+                ================================================== -->
+
+                <div class="teacher-message">
+
+
+                    <div class="trust-line">
+
+                        <span>✦</span>
+
+                        هذا المستر مصدر ثقة وعلم
+
+                        <span>✦</span>
+
+                    </div>
+
+
+                    <p class="teacher-description">
+
+                        مدرس رياضيات يتميز بالقدرة على تبسيط
+                        المفاهيم وشرح الأفكار بطريقة واضحة
+                        ومنظمة، مع الاهتمام بفهم الطالب
+                        للمعلومة وليس مجرد حفظها.
+                        أسلوبه يعتمد على توصيل الفكرة من
+                        الأساس، وربط القوانين بالمسائل
+                        والتطبيقات، حتى تصبح المعلومة أسهل
+                        في الفهم والمراجعة والتذكر.
+                        ومع كل مسألة جديدة، يساعد الطالب
+                        على التفكير بطريقة صحيحة والوصول
+                        إلى الحل بخطوات واضحة، مما يجعل
+                        رحلة تعلم الرياضيات أكثر سهولة وثقة.
+
+                    </p>
+
+
+                    <div class="gift-message">
+
+                        Note: من تلميذك العزيزي 
+
+                        <strong>
+                            Moaz Yosry
+                        </strong>
+
+                        🖤
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    © 2026 الخوارزمي | منصة 
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   IMAGE CLICK EFFECT
+===================================================== */
+
+const imageFrame =
+    document.getElementById(
+        "imageFrame"
+    );
+
+const imageWrapper =
+    document.getElementById(
+        "imageWrapper"
+    );
+
+const visual =
+    document.getElementById(
+        "visual"
+    );
+
+
+imageFrame.addEventListener(
+    "click",
+    function(){
+
+        imageWrapper.classList.toggle(
+            "active"
+        );
+
+        visual.classList.toggle(
+            "active"
+        );
+
+
+        if(
+            imageWrapper.classList.contains(
+                "active"
+            )
+        ){
+
+            const particles =
+                document.querySelectorAll(
+                    ".particle"
+                );
+
+
+            particles.forEach(
+                function(particle){
+
+                    particle.style.animation =
+                        "none";
+
+                    void particle.offsetWidth;
+
+                    particle.style.animation =
+                        "particleExplosion 1.5s ease-out forwards";
+
+                }
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   START BUTTON
+===================================================== */
+
+const startButton =
+    document.getElementById(
+        "startButton"
+    );
+
+
+startButton.addEventListener(
+    "click",
+    function(){
+
+        startButton.disabled = true;
+
+        startButton.style.opacity =
+            "0.7";
+
+        window.location.href =
+            "auth.html";
+
+    }
+);
+
+
+/* =====================================================
+   PAGE SHOW
+===================================================== */
+
+window.addEventListener(
+    "pageshow",
+    function(){
+
+        startButton.disabled = false;
+
+        startButton.style.opacity =
+            "1";
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

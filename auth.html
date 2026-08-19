@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
+
+<title>الخوارزمي | تسجيل الدخول</title>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    font-family:
+        "Cairo",
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 70% 10%,
+            #322153 0%,
+            #17131f 35%,
+            #07070a 72%,
+            #000 100%
+        );
+
+    overflow-x:hidden;
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.background{
+
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:-5;
+}
+
+.background::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:550px;
+    height:550px;
+
+    top:-250px;
+    right:-170px;
+
+    border-radius:50%;
+
+    background:#7549e8;
+
+    filter:blur(150px);
+
+    opacity:.20;
+}
+
+.background::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    bottom:-280px;
+    left:-200px;
+
+    border-radius:50%;
+
+    background:#3154df;
+
+    filter:blur(160px);
+
+    opacity:.12;
+}
+
+
+/* =========================
+   STARS
+========================= */
+
+.stars{
+
+    position:absolute;
+
+    inset:0;
+
+    opacity:.08;
+
+    background-image:
+        radial-gradient(
+            circle,
+            #fff 1px,
+            transparent 1px
+        );
+
+    background-size:90px 90px;
+
+    animation:
+        starsMove 20s linear infinite;
+}
+
+
+/* =========================
+   LIGHTS
+========================= */
+
+.light{
+
+    position:absolute;
+
+    width:4px;
+    height:4px;
+
+    border-radius:50%;
+
+    background:#bca8ff;
+
+    box-shadow:
+        0 0 15px #936dff,
+        0 0 30px #7650df;
+
+    animation:
+        floatLight
+        var(--time)
+        ease-in-out
+        infinite;
+}
+
+.light:nth-child(1){
+    top:15%;
+    left:12%;
+    --time:5s;
+}
+
+.light:nth-child(2){
+    top:28%;
+    left:85%;
+    --time:7s;
+}
+
+.light:nth-child(3){
+    top:70%;
+    left:12%;
+    --time:6s;
+}
+
+.light:nth-child(4){
+    top:82%;
+    left:80%;
+    --time:8s;
+}
+
+.light:nth-child(5){
+    top:45%;
+    left:93%;
+    --time:5.5s;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.auth-card{
+
+    width:100%;
+
+    max-width:460px;
+
+    padding:34px;
+
+    border-radius:30px;
+
+    background:
+        rgba(15,14,21,.80);
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    box-shadow:
+
+        0 35px 100px
+        rgba(0,0,0,.70),
+
+        0 0 80px
+        rgba(108,70,220,.15);
+
+    backdrop-filter:blur(25px);
+
+    animation:
+        cardEnter .7s ease both;
+}
+
+
+/* =========================
+   TEACHER IMAGE
+========================= */
+
+.logo{
+
+    width:82px;
+    height:82px;
+
+    margin:0 auto 18px;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    position:relative;
+
+    border:
+        2px solid
+        rgba(160,125,255,.55);
+
+    background:
+        #181522;
+
+    box-shadow:
+
+        0 15px 40px
+        rgba(119,76,255,.35),
+
+        0 0 35px
+        rgba(132,94,255,.20);
+
+    animation:
+        teacherFloat 3s ease-in-out infinite;
+}
+
+.logo img{
+
+    width:100%;
+    height:100%;
+
+    display:block;
+
+    object-fit:cover;
+
+    transform:scale(1.06);
+
+    transition:
+        transform .5s ease;
+}
+
+.logo:hover img{
+
+    transform:
+        scale(1.15)
+        rotate(3deg);
+}
+
+.logo::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.20),
+            transparent 45%,
+            rgba(120,80,255,.22)
+        );
+
+    pointer-events:none;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.title{
+
+    text-align:center;
+
+    font-size:29px;
+
+    font-weight:1000;
+
+    margin-bottom:8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #cdbdff,
+            #8059e9
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
+}
+
+.subtitle{
+
+    text-align:center;
+
+    color:#9796a5;
+
+    font-size:13px;
+
+    line-height:1.9;
+
+    margin-bottom:27px;
+}
+
+
+/* =========================
+   TABS
+========================= */
+
+.tabs{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:7px;
+
+    padding:5px;
+
+    margin-bottom:25px;
+
+    border-radius:16px;
+
+    background:
+        rgba(255,255,255,.045);
+}
+
+.tab{
+
+    border:0;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    background:transparent;
+
+    color:#858391;
+
+    font-family:inherit;
+
+    font-size:13px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.tab.active{
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7953e8,
+            #4c2c9e
+        );
+
+    box-shadow:
+        0 7px 25px
+        rgba(104,67,220,.28);
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form{
+    display:none;
+}
+
+.form.active{
+    display:block;
+}
+
+.field{
+    margin-bottom:17px;
+}
+
+label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:#c7c5d0;
+
+    font-size:13px;
+
+    font-weight:800;
+}
+
+.input{
+
+    width:100%;
+
+    padding:15px 16px;
+
+    border-radius:14px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    outline:none;
+
+    background:
+        rgba(255,255,255,.045);
+
+    color:#fff;
+
+    font-family:inherit;
+
+    font-size:14px;
+
+    transition:.25s;
+}
+
+.input::placeholder{
+    color:#64636f;
+}
+
+.input:focus{
+
+    border-color:
+        rgba(137,98,255,.75);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(137,98,255,.08);
+}
+
+
+/* =========================
+   SUBMIT
+========================= */
+
+.submit{
+
+    width:100%;
+
+    border:0;
+
+    padding:16px;
+
+    margin-top:4px;
+
+    border-radius:15px;
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8962ff,
+            #4d2bac
+        );
+
+    font-family:inherit;
+
+    font-size:15px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 15px 40px
+        rgba(105,68,240,.28);
+
+    transition:.25s;
+}
+
+.submit:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 20px 55px
+        rgba(105,68,240,.42);
+}
+
+.submit:disabled{
+
+    opacity:.55;
+
+    cursor:not-allowed;
+
+    transform:none;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+
+    display:none;
+
+    margin-top:17px;
+
+    padding:12px 14px;
+
+    border-radius:13px;
+
+    font-size:12px;
+
+    line-height:1.8;
+
+    text-align:center;
+}
+
+.message.show{
+    display:block;
+}
+
+.message.error{
+
+    color:#ffbaba;
+
+    background:
+        rgba(255,60,60,.08);
+
+    border:
+        1px solid
+        rgba(255,60,60,.15);
+}
+
+.message.success{
+
+    color:#b9ffd2;
+
+    background:
+        rgba(40,220,120,.08);
+
+    border:
+        1px solid
+        rgba(40,220,120,.15);
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+.back{
+
+    display:block;
+
+    margin-top:22px;
+
+    text-align:center;
+
+    color:#777584;
+
+    text-decoration:none;
+
+    font-size:12px;
+
+    transition:.2s;
+}
+
+.back:hover{
+    color:#bba7ff;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes cardEnter{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(30px)
+            scale(.97);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+@keyframes teacherFloat{
+
+    0%,
+    100%{
+
+        transform:
+            translateY(0)
+            rotate(-3deg);
+    }
+
+    50%{
+
+        transform:
+            translateY(-8px)
+            rotate(3deg);
+    }
+}
+
+@keyframes floatLight{
+
+    0%,
+    100%{
+
+        transform:
+            translateY(0)
+            scale(1);
+
+        opacity:.3;
+    }
+
+    50%{
+
+        transform:
+            translateY(-25px)
+            scale(1.7);
+
+        opacity:.9;
+    }
+}
+
+@keyframes starsMove{
+
+    from{
+        transform:translate(0,0);
+    }
+
+    to{
+        transform:translate(-90px,-90px);
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:500px){
+
+    body{
+        padding:15px;
+    }
+
+    .auth-card{
+
+        padding:27px 20px;
+
+        border-radius:24px;
+    }
+
+    .logo{
+
+        width:75px;
+        height:75px;
+    }
+
+    .title{
+        font-size:25px;
+    }
+
+    .subtitle{
+        font-size:12px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- BACKGROUND -->
+
+<div class="background">
+
+    <div class="stars"></div>
+
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+
+</div>
+
+
+<!-- AUTH CARD -->
+
+<div class="auth-card">
+
+
+    <!-- صورة المستر -->
+
+    <div class="logo">
+
+        <img
+            src="teacher.png"
+            alt="المستر"
+            draggable="false"
+        >
+
+    </div>
+
+
+    <h1 class="title">
+        الخوارزمي
+    </h1>
+
+
+    <p class="subtitle">
+        سجّل دخولك أو أنشئ حسابك
+        وابدأ رحلتك في الاختبارات.
+    </p>
+
+
+    <!-- TABS -->
+
+    <div class="tabs">
+
+        <button
+            id="loginTab"
+            class="tab active"
+            type="button"
+        >
+            تسجيل الدخول
+        </button>
+
+        <button
+            id="signupTab"
+            class="tab"
+            type="button"
+        >
+            إنشاء حساب
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         LOGIN FORM
+    ========================== -->
+
+    <form
+        id="loginForm"
+        class="form active"
+    >
+
+        <div class="field">
+
+            <label>
+                البريد الإلكتروني
+            </label>
+
+            <input
+                id="loginEmail"
+                class="input"
+                type="email"
+                placeholder="example@email.com"
+                autocomplete="email"
+                required
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                كلمة المرور
+            </label>
+
+            <input
+                id="loginPassword"
+                class="input"
+                type="password"
+                placeholder="أدخل كلمة المرور"
+                autocomplete="current-password"
+                required
+            >
+
+        </div>
+
+
+        <button
+            id="loginButton"
+            class="submit"
+            type="submit"
+        >
+            تسجيل الدخول
+        </button>
+
+    </form>
+
+
+    <!-- =========================
+         SIGNUP FORM
+    ========================== -->
+
+    <form
+        id="signupForm"
+        class="form"
+    >
+
+        <div class="field">
+
+            <label>
+                الاسم بالكامل
+            </label>
+
+            <input
+                id="signupName"
+                class="input"
+                type="text"
+                placeholder="اكتب اسمك بالكامل"
+                autocomplete="name"
+                minlength="2"
+                required
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                البريد الإلكتروني
+            </label>
+
+            <input
+                id="signupEmail"
+                class="input"
+                type="email"
+                placeholder="example@email.com"
+                autocomplete="email"
+                required
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                كلمة المرور
+            </label>
+
+            <input
+                id="signupPassword"
+                class="input"
+                type="password"
+                placeholder="6 أحرف أو أكثر"
+                autocomplete="new-password"
+                minlength="6"
+                required
+            >
+
+        </div>
+
+
+        <button
+            id="signupButton"
+            class="submit"
+            type="submit"
+        >
+            إنشاء الحساب
+        </button>
+
+    </form>
+
+
+    <!-- MESSAGE -->
+
+    <div
+        id="message"
+        class="message"
+    ></div>
+
+
+    <a
+        href="index.html"
+        class="back"
+    >
+        ← العودة للصفحة الرئيسية
+    </a>
+
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE CONNECTION
+===================================================== */
+
+const SUPABASE_URL =
+    "https://mqwtrsbncanwtxotxppp.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_lPAYrGCg_7-5Y1Dj7E5BSw_o-DsYl9Z";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const loginTab =
+    document.getElementById("loginTab");
+
+const signupTab =
+    document.getElementById("signupTab");
+
+const loginForm =
+    document.getElementById("loginForm");
+
+const signupForm =
+    document.getElementById("signupForm");
+
+const loginButton =
+    document.getElementById("loginButton");
+
+const signupButton =
+    document.getElementById("signupButton");
+
+const message =
+    document.getElementById("message");
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showMessage(
+    text,
+    type
+){
+
+    message.textContent = text;
+
+    message.className =
+        "message show " + type;
+}
+
+
+function hideMessage(){
+
+    message.textContent = "";
+
+    message.className =
+        "message";
+}
+
+
+/* =====================================================
+   TABS
+===================================================== */
+
+loginTab.addEventListener(
+    "click",
+    () => {
+
+        loginTab.classList.add("active");
+
+        signupTab.classList.remove("active");
+
+        loginForm.classList.add("active");
+
+        signupForm.classList.remove("active");
+
+        hideMessage();
+
+    }
+);
+
+
+signupTab.addEventListener(
+    "click",
+    () => {
+
+        signupTab.classList.add("active");
+
+        loginTab.classList.remove("active");
+
+        signupForm.classList.add("active");
+
+        loginForm.classList.remove("active");
+
+        hideMessage();
+
+    }
+);
+
+
+/* =====================================================
+   CREATE ACCOUNT
+===================================================== */
+
+signupForm.addEventListener(
+    "submit",
+    async (event) => {
+
+        event.preventDefault();
+
+        hideMessage();
+
+        signupButton.disabled = true;
+
+        signupButton.textContent =
+            "جارٍ إنشاء الحساب...";
+
+
+        const name =
+            document
+            .getElementById("signupName")
+            .value
+            .trim();
+
+        const email =
+            document
+            .getElementById("signupEmail")
+            .value
+            .trim()
+            .toLowerCase();
+
+        const password =
+            document
+            .getElementById("signupPassword")
+            .value;
+
+
+        if(name.length < 2){
+
+            showMessage(
+                "اكتب اسمك بالكامل.",
+                "error"
+            );
+
+            signupButton.disabled = false;
+
+            signupButton.textContent =
+                "إنشاء الحساب";
+
+            return;
+        }
+
+
+        if(password.length < 6){
+
+            showMessage(
+                "كلمة المرور يجب أن تكون 6 أحرف على الأقل.",
+                "error"
+            );
+
+            signupButton.disabled = false;
+
+            signupButton.textContent =
+                "إنشاء الحساب";
+
+            return;
+        }
+
+
+        try{
+
+            const result =
+                await supabaseClient.auth.signUp({
+
+                    email: email,
+
+                    password: password,
+
+                    options: {
+
+                        data: {
+
+                            full_name: name
+
+                        }
+
+                    }
+
+                });
+
+
+            const data =
+                result.data;
+
+            const error =
+                result.error;
+
+
+            if(error){
+
+                throw error;
+            }
+
+
+            if(!data || !data.user){
+
+                throw new Error(
+                    "لم يتم إنشاء الحساب."
+                );
+            }
+
+
+            /*
+             * لو Supabase يرجع Session
+             * فهذا يعني أن تأكيد البريد مغلق.
+             */
+
+            if(data.session){
+
+                showMessage(
+                    "تم إنشاء الحساب بنجاح! جارٍ دخولك...",
+                    "success"
+                );
+
+
+                setTimeout(
+                    () => {
+
+                        window.location.href =
+                            "student.html";
+
+                    },
+                    800
+                );
+
+            }else{
+
+                /*
+                 * إذا لم توجد Session
+                 * فغالبًا تأكيد البريد الإلكتروني مفعّل.
+                 */
+
+                showMessage(
+                    "تم إنشاء الحساب، لكن يجب تأكيد البريد الإلكتروني من إعدادات Supabase.",
+                    "success"
+                );
+
+            }
+
+
+        }catch(error){
+
+            console.error(
+                "SUPABASE SIGNUP ERROR:",
+                error
+            );
+
+            showMessage(
+                translateError(error),
+                "error"
+            );
+
+        }finally{
+
+            signupButton.disabled = false;
+
+            signupButton.textContent =
+                "إنشاء الحساب";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+loginForm.addEventListener(
+    "submit",
+    async (event) => {
+
+        event.preventDefault();
+
+        hideMessage();
+
+        loginButton.disabled = true;
+
+        loginButton.textContent =
+            "جارٍ تسجيل الدخول...";
+
+
+        const email =
+            document
+            .getElementById("loginEmail")
+            .value
+            .trim()
+            .toLowerCase();
+
+        const password =
+            document
+            .getElementById("loginPassword")
+            .value;
+
+
+        try{
+
+            const result =
+                await supabaseClient.auth.signInWithPassword({
+
+                    email: email,
+
+                    password: password
+
+                });
+
+
+            const data =
+                result.data;
+
+            const error =
+                result.error;
+
+
+            if(error){
+
+                throw error;
+            }
+
+
+            if(!data || !data.user){
+
+                throw new Error(
+                    "تعذر تسجيل الدخول."
+                );
+            }
+
+
+            showMessage(
+                "تم تسجيل الدخول بنجاح! جارٍ فتح حسابك...",
+                "success"
+            );
+
+
+            /*
+             * مؤقتًا نرسل الطالب إلى student.html.
+             *
+             * في المرحلة القادمة سنقرأ role
+             * من profiles ونفرق بين:
+             *
+             * admin
+             * student
+             */
+
+            setTimeout(
+                () => {
+
+                    window.location.href =
+                        "student.html";
+
+                },
+                700
+            );
+
+
+        }catch(error){
+
+            console.error(
+                "SUPABASE LOGIN ERROR:",
+                error
+            );
+
+            showMessage(
+                translateError(error),
+                "error"
+            );
+
+        }finally{
+
+            loginButton.disabled = false;
+
+            loginButton.textContent =
+                "تسجيل الدخول";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ERROR TRANSLATION
+===================================================== */
+
+function translateError(error){
+
+    const msg =
+        (
+            error?.message ||
+            ""
+        ).toLowerCase();
+
+
+    if(
+        msg.includes(
+            "invalid login credentials"
+        )
+    ){
+
+        return "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+    }
+
+
+    if(
+        msg.includes(
+            "user already registered"
+        )
+    ){
+
+        return "هذا البريد الإلكتروني مسجل بالفعل.";
+    }
+
+
+    if(
+        msg.includes(
+            "password should be at least"
+        )
+    ){
+
+        return "كلمة المرور يجب أن تكون 6 أحرف على الأقل.";
+    }
+
+
+    if(
+        msg.includes(
+            "invalid email"
+        )
+    ){
+
+        return "البريد الإلكتروني غير صحيح.";
+    }
+
+
+    if(
+        msg.includes(
+            "email rate limit"
+        )
+    ){
+
+        return "تم تجاوز عدد محاولات البريد مؤقتًا. حاول لاحقًا.";
+    }
+
+
+    if(
+        msg.includes(
+            "email not confirmed"
+        )
+    ){
+
+        return "يجب تأكيد البريد الإلكتروني أولًا.";
+    }
+
+
+    return (
+        error?.message ||
+        "حدث خطأ غير متوقع."
+    );
+}
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+supabaseClient.auth.onAuthStateChange(
+    (event, session) => {
+
+        console.log(
+            "AUTH STATE:",
+            event,
+            session
+        );
+
+    }
+);
+
+
+/* =====================================================
+   CHECK CONNECTION
+===================================================== */
+
+async function checkSupabase(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth.getSession();
+
+
+        if(error){
+
+            console.error(
+                "SUPABASE CONNECTION ERROR:",
+                error
+            );
+
+            return;
+        }
+
+
+        console.log(
+            "Supabase connection OK"
+        );
+
+
+        if(data?.session){
+
+            console.log(
+                "Current user:",
+                data.session.user.email
+            );
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "SUPABASE ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+checkSupabase();
+
+</script>
+
+</body>
+
+</html>
