@@ -17,6 +17,10 @@ user-scalable=no">
 
 <style>
 
+/* =====================================================
+   RESET
+===================================================== */
+
 *{
     margin:0;
     padding:0;
@@ -24,13 +28,20 @@ user-scalable=no">
     -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+html,
+body{
     width:100%;
     min-height:100%;
 }
 
 body{
-    font-family:"Cairo","Tajawal",Arial,sans-serif;
+
+    font-family:
+        "Cairo",
+        "Tajawal",
+        Arial,
+        sans-serif;
+
     color:#fff;
 
     background:
@@ -51,15 +62,20 @@ body{
 }
 
 
-/* =========================
+/* =====================================================
    BACKGROUND
-========================= */
+===================================================== */
 
 .background{
+
     position:fixed;
+
     inset:0;
+
     z-index:-20;
+
     overflow:hidden;
+
     pointer-events:none;
 
     background:
@@ -71,7 +87,9 @@ body{
 }
 
 .background::before{
+
     content:"";
+
     position:absolute;
 
     width:650px;
@@ -83,12 +101,16 @@ body{
     border-radius:50%;
 
     background:#7448e8;
+
     filter:blur(170px);
+
     opacity:.22;
 }
 
 .background::after{
+
     content:"";
+
     position:absolute;
 
     width:600px;
@@ -100,21 +122,27 @@ body{
     border-radius:50%;
 
     background:#3154df;
+
     filter:blur(180px);
+
     opacity:.15;
 }
 
 
-/* =========================
+/* =====================================================
    STARS
-========================= */
+===================================================== */
 
 .stars{
+
     position:absolute;
+
     inset:0;
+
     opacity:.09;
 
     background-image:
+
         radial-gradient(
             circle,
             rgba(255,255,255,.9) 1px,
@@ -128,11 +156,12 @@ body{
 }
 
 
-/* =========================
-   FLOATING LIGHTS
-========================= */
+/* =====================================================
+   LIGHT PARTICLES
+===================================================== */
 
 .light{
+
     position:absolute;
 
     width:4px;
@@ -192,18 +221,21 @@ body{
 }
 
 
-/* =========================
+/* =====================================================
    NAVBAR
-========================= */
+===================================================== */
 
 .navbar{
+
     width:100%;
 
-    padding:24px 5%;
+    padding:
+        24px 5%;
 
     display:flex;
 
     align-items:center;
+
     justify-content:space-between;
 
     position:relative;
@@ -212,244 +244,127 @@ body{
 }
 
 
-/* =========================
+/* =====================================================
    BRAND
-========================= */
+===================================================== */
 
 .brand{
+
     display:flex;
+
     align-items:center;
+
     gap:12px;
 }
 
 .brand-icon{
+
     width:48px;
     height:48px;
 
-    border-radius:50%;
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:15px;
 
     overflow:hidden;
 
-    border:
-        2px solid
-        rgba(157,120,255,.55);
+    background:
+        linear-gradient(
+            135deg,
+            #855cff,
+            #3c2389
+        );
 
     box-shadow:
-        0 10px 35px
-        rgba(119,76,255,.35),
+        0 12px 35px
+        rgba(119,76,255,.30);
 
-        0 0 30px
-        rgba(119,76,255,.20);
-
-    background:#15121f;
-
-    transition:.5s;
+    animation:
+        logoGlow 3s ease-in-out infinite;
 }
 
 .brand-icon img{
+
     width:100%;
     height:100%;
 
     object-fit:cover;
 
-    display:block;
-}
-
-.brand-icon:hover{
-    transform:scale(1.08);
-
-    box-shadow:
-        0 0 25px
-        rgba(150,110,255,.8),
-
-        0 0 60px
-        rgba(110,70,255,.5);
+    border-radius:15px;
 }
 
 .brand-info{
+
     display:flex;
+
     flex-direction:column;
+
     line-height:1.2;
 }
 
 .brand-name{
+
     font-size:18px;
+
     font-weight:900;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #d3c5ff,
+            #8760ff
+        );
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
 }
 
 .brand-sub{
+
     margin-top:4px;
+
     color:#9090a1;
+
     font-size:11px;
 }
 
 
-/* =========================
-   TOP TEACHER
-========================= */
-
-.teacher-top{
-    position:relative;
-
-    width:68px;
-    height:68px;
-
-    border-radius:50%;
-
-    cursor:pointer;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    transition:.6s;
-
-    animation:
-        teacherFloat
-        3s
-        ease-in-out
-        infinite;
-}
-
-.teacher-top img{
-    width:100%;
-    height:100%;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
-    border:
-        2px solid
-        rgba(255,255,255,.16);
-
-    box-shadow:
-        0 12px 35px
-        rgba(0,0,0,.6),
-
-        0 0 30px
-        rgba(120,80,255,.35);
-
-    transition:.6s;
-}
-
-.teacher-top::before{
-    content:"";
-
-    position:absolute;
-
-    inset:-8px;
-
-    border-radius:50%;
-
-    border:
-        2px solid
-        rgba(151,115,255,.45);
-
-    box-shadow:
-        0 0 30px
-        rgba(125,80,255,.35);
-
-    animation:
-        rotateRing
-        7s
-        linear
-        infinite;
-}
-
-.teacher-top::after{
-    content:"";
-
-    position:absolute;
-
-    width:110px;
-    height:110px;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(133,86,255,.45),
-            transparent 70%
-        );
-
-    filter:blur(20px);
-
-    z-index:-2;
-
-    opacity:.7;
-
-    transition:.5s;
-}
-
-.teacher-top.active{
-    transform:scale(1.15);
-    animation:none;
-}
-
-.teacher-top.active img{
-    transform:scale(1.08);
-
-    box-shadow:
-        0 0 30px
-        rgba(170,135,255,1),
-
-        0 0 70px
-        rgba(120,75,255,.85),
-
-        0 0 120px
-        rgba(100,55,230,.45);
-}
-
-.teacher-top.active::before{
-    inset:-12px;
-
-    border-color:#d4c1ff;
-
-    box-shadow:
-        0 0 25px #a77cff,
-        0 0 65px #8055ff,
-        0 0 120px rgba(120,70,255,.7);
-
-    animation:
-        rotateRing
-        2s
-        linear
-        infinite;
-}
-
-.teacher-top.active::after{
-    transform:scale(2.2);
-    opacity:1;
-}
-
-
-/* =========================
+/* =====================================================
    HERO
-========================= */
+===================================================== */
 
 .hero{
+
     min-height:
         calc(100vh - 96px);
 
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
     padding:
-        20px 5% 80px;
+        20px 5% 60px;
 }
 
 .hero-container{
+
     width:100%;
+
     max-width:1250px;
 
     display:grid;
 
     grid-template-columns:
-        1.05fr 1fr;
+        1.1fr 1fr;
 
     align-items:center;
 
@@ -457,21 +372,20 @@ body{
 }
 
 
-/* =========================
+/* =====================================================
    CONTENT
-========================= */
+===================================================== */
 
 .content{
+
     position:relative;
 
     animation:
-        contentIn
-        .9s
-        ease
-        both;
+        contentIn .9s ease both;
 }
 
 .content::before{
+
     content:"";
 
     position:absolute;
@@ -496,11 +410,12 @@ body{
 }
 
 
-/* =========================
+/* =====================================================
    BADGE
-========================= */
+===================================================== */
 
 .badge{
+
     display:inline-flex;
 
     align-items:center;
@@ -526,9 +441,14 @@ body{
     margin-bottom:25px;
 
     backdrop-filter:blur(15px);
+
+    box-shadow:
+        0 0 30px
+        rgba(122,85,255,.08);
 }
 
 .badge-dot{
+
     width:8px;
     height:8px;
 
@@ -541,22 +461,20 @@ body{
         0 0 30px #7650df;
 
     animation:
-        dotPulse
-        2s
-        ease-in-out
-        infinite;
+        dotPulse 2s ease-in-out infinite;
 }
 
 
-/* =========================
+/* =====================================================
    TITLE
-========================= */
+===================================================== */
 
 h1{
+
     position:relative;
 
     font-size:
-        clamp(52px,6.5vw,88px);
+        clamp(52px, 6.5vw, 88px);
 
     line-height:1.04;
 
@@ -567,7 +485,34 @@ h1{
     margin-bottom:25px;
 }
 
+h1::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    top:-80px;
+    right:-60px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(134,91,255,.16),
+            transparent 70%
+        );
+
+    filter:blur(10px);
+
+    pointer-events:none;
+}
+
 h1 span{
+
     display:block;
 
     background:
@@ -579,6 +524,7 @@ h1 span{
         );
 
     -webkit-background-clip:text;
+
     background-clip:text;
 
     color:transparent;
@@ -589,11 +535,12 @@ h1 span{
 }
 
 
-/* =========================
+/* =====================================================
    DESCRIPTION
-========================= */
+===================================================== */
 
 .description{
+
     max-width:600px;
 
     color:#a7a7b6;
@@ -606,16 +553,18 @@ h1 span{
 }
 
 
-/* =========================
-   BUTTON
-========================= */
+/* =====================================================
+   START BUTTON
+===================================================== */
 
 .start-button{
+
     position:relative;
 
     width:260px;
 
-    padding:18px 25px;
+    padding:
+        18px 25px;
 
     border:0;
 
@@ -637,6 +586,7 @@ h1 span{
         );
 
     box-shadow:
+
         0 18px 55px
         rgba(105,68,240,.35),
 
@@ -645,13 +595,47 @@ h1 span{
 
     cursor:pointer;
 
-    transition:.25s;
+    overflow:hidden;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.start-button::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-130%;
+
+    width:80%;
+
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.32),
+            transparent
+        );
+
+    transform:skewX(-20deg);
+
+    transition:left .7s ease;
 }
 
 .start-button:hover{
-    transform:translateY(-4px);
+
+    transform:
+        translateY(-4px);
 
     box-shadow:
+
         0 25px 65px
         rgba(105,68,240,.52),
 
@@ -659,25 +643,44 @@ h1 span{
         rgba(120,80,255,.2);
 }
 
+.start-button:hover::before{
+
+    left:150%;
+}
+
+.start-button:active{
+
+    transform:
+        scale(.97);
+}
+
 .button-content{
+
+    position:relative;
+
+    z-index:2;
+
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
     gap:13px;
 }
 
 .arrow{
+
     font-size:23px;
 }
 
 
-/* =========================
+/* =====================================================
    VISUAL
-========================= */
+===================================================== */
 
 .visual{
+
     position:relative;
 
     display:flex;
@@ -688,129 +691,120 @@ h1 span{
 
     justify-content:center;
 
-    min-height:650px;
+    min-height:550px;
 
     animation:
-        visualIn
-        1s
-        ease
-        .1s
-        both;
+        visualIn 1s ease .1s both;
 }
 
 
-/* =========================
-   IMAGE GLOW
-========================= */
+/* =====================================================
+   CENTER TEACHER
+===================================================== */
 
-.image-glow{
-    position:absolute;
+.teacher-center{
 
-    width:560px;
-    height:560px;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(120,78,255,.42),
-            rgba(88,52,200,.16) 38%,
-            transparent 70%
-        );
-
-    filter:blur(35px);
-
-    opacity:.9;
-
-    pointer-events:none;
-
-    transition:.7s;
-}
-
-
-/* =========================
-   CENTER IMAGE
-========================= */
-
-.center-teacher{
     position:relative;
 
-    width:min(430px,85vw);
-
-    aspect-ratio:1/1;
-
-    z-index:3;
+    width:280px;
+    height:280px;
 
     border-radius:50%;
 
     cursor:pointer;
+
+    z-index:5;
 
     transition:
         transform .7s
         cubic-bezier(.2,.8,.2,1);
 }
 
-.center-teacher::before{
-    content:"";
+.teacher-center-glow{
 
     position:absolute;
 
-    inset:-12px;
+    width:390px;
+    height:390px;
 
-    border-radius:50%;
+    top:50%;
+    left:50%;
 
-    border:
-        2px solid
-        rgba(160,125,255,.55);
-
-    box-shadow:
-        0 0 30px
-        rgba(130,85,255,.4),
-
-        0 0 80px
-        rgba(100,60,230,.25);
-
-    z-index:-1;
-
-    animation:
-        rotateRing
-        8s
-        linear
-        infinite;
-}
-
-.center-teacher::after{
-    content:"";
-
-    position:absolute;
-
-    inset:-40px;
+    transform:
+        translate(-50%,-50%);
 
     border-radius:50%;
 
     background:
         radial-gradient(
             circle,
-            rgba(135,88,255,.55),
-            rgba(105,60,230,.22) 35%,
-            transparent 70%
+            rgba(139,91,255,.48),
+            rgba(100,60,220,.18) 38%,
+            transparent 72%
         );
 
-    filter:blur(25px);
+    filter:blur(28px);
 
-    z-index:-3;
+    opacity:.65;
 
-    opacity:.85;
-
-    transition:.7s;
+    transition:
+        transform .8s ease,
+        opacity .8s ease;
 }
 
-.center-teacher img{
+.teacher-center-ring{
+
+    position:absolute;
+
+    inset:-9px;
+
+    border-radius:50%;
+
+    border:
+        2px solid
+        rgba(160,130,255,.55);
+
+    box-shadow:
+
+        0 0 25px
+        rgba(130,90,255,.35),
+
+        0 0 60px
+        rgba(100,60,220,.20);
+
+    z-index:2;
+}
+
+.teacher-center::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-18px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(150,115,255,.35);
+
+    box-shadow:
+        0 0 30px
+        rgba(120,80,255,.30);
+
+    animation:
+        rotateRing 8s linear infinite;
+
+    z-index:1;
+}
+
+.teacher-center img{
+
+    position:relative;
+
     width:100%;
     height:100%;
-
-    display:block;
 
     object-fit:cover;
 
@@ -818,100 +812,189 @@ h1 span{
 
     border:
         3px solid
-        rgba(178,150,255,.55);
+        rgba(255,255,255,.16);
+
+    display:block;
+
+    z-index:3;
 
     box-shadow:
-        0 35px 90px
-        rgba(0,0,0,.75),
 
-        0 0 55px
-        rgba(110,70,240,.4),
+        0 30px 70px
+        rgba(0,0,0,.7),
 
-        0 0 120px
-        rgba(100,60,230,.22);
+        0 0 40px
+        rgba(120,80,255,.4);
 
-    transition:.7s;
+    transition:
+        transform .7s ease,
+        box-shadow .7s ease;
 }
 
-.center-teacher.active{
-    transform:scale(1.07);
+
+/* =====================================================
+   TEACHER ACTIVE LIGHT
+===================================================== */
+
+.teacher-center.active{
+
+    transform:
+        scale(1.08);
 }
 
-.center-teacher.active img{
-    transform:scale(1.05);
-
-    border-color:
-        rgba(218,202,255,.95);
-
-    box-shadow:
-        0 35px 100px
-        rgba(0,0,0,.8),
-
-        0 0 90px
-        rgba(140,95,255,.85),
-
-        0 0 170px
-        rgba(100,55,230,.55);
-}
-
-.center-teacher.active::after{
-    inset:-75px;
+.teacher-center.active
+.teacher-center-glow{
 
     opacity:1;
 
-    filter:blur(35px);
+    transform:
+        translate(-50%,-50%)
+        scale(1.55);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(190,155,255,.95),
+            rgba(130,85,255,.55) 35%,
+            rgba(90,50,220,.22) 55%,
+            transparent 75%
+        );
+
+    filter:blur(25px);
+}
+
+.teacher-center.active img{
+
+    transform:scale(1.05);
+
+    box-shadow:
+
+        0 30px 80px
+        rgba(0,0,0,.75),
+
+        0 0 50px
+        rgba(175,140,255,.9),
+
+        0 0 100px
+        rgba(115,70,255,.7);
+}
+
+.teacher-center.active .teacher-center-ring{
+
+    border-color:
+        rgba(215,195,255,1);
+
+    box-shadow:
+
+        0 0 20px
+        rgba(180,145,255,1),
+
+        0 0 50px
+        rgba(140,95,255,.95),
+
+        0 0 100px
+        rgba(105,60,230,.7);
 }
 
 
-/* =========================
-   TRUST
-========================= */
+/* =====================================================
+   CENTER TEXT
+===================================================== */
 
-.trust{
+.teacher-message{
+
     position:relative;
-
-    margin-top:45px;
 
     width:100%;
 
+    max-width:620px;
+
     text-align:center;
 
-    z-index:5;
+    margin-top:45px;
+
+    z-index:10;
 }
 
-.trust-title{
-    color:#d4c8ff;
+.teacher-message::before{
 
-    font-size:23px;
+    content:"✦ ───────── ✦";
 
-    font-weight:1000;
+    display:block;
 
     margin-bottom:15px;
 
+    color:#8060df;
+
+    font-size:12px;
+
+    letter-spacing:4px;
+
     text-shadow:
-        0 0 25px
-        rgba(145,108,255,.4);
+        0 0 15px
+        rgba(128,96,223,.7);
 }
 
-.trust-title span{
-    color:#9c78ff;
+.trust-line{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    color:#d0c2ff;
+
+    font-size:20px;
+
+    font-weight:1000;
+
+    line-height:1.8;
+
+    margin-bottom:17px;
+
+    text-shadow:
+        0 0 20px
+        rgba(144,104,255,.35);
+}
+
+.trust-line span{
+
+    color:#a27cff;
+
+    font-size:20px;
+
+    text-shadow:
+        0 0 12px #9068ff,
+        0 0 25px rgba(144,104,255,.8);
 }
 
 
-/* =========================
-   TEACHER DESCRIPTION
-========================= */
+/* =====================================================
+   THANK YOU
+===================================================== */
 
 .teacher-description{
-    max-width:600px;
+
+    position:relative;
 
     margin:
-        0 auto 25px;
+        0 auto 24px;
 
     padding:
-        22px 25px;
+        22px 28px;
 
-    border-radius:22px;
+    color:#aaa9b8;
+
+    font-size:14px;
+
+    line-height:2.25;
+
+    font-weight:500;
+
+    text-align:center;
 
     background:
         linear-gradient(
@@ -924,99 +1007,214 @@ h1 span{
         1px solid
         rgba(255,255,255,.09);
 
-    color:#aaa9b8;
-
-    font-size:14px;
-
-    line-height:2.2;
+    border-radius:22px;
 
     box-shadow:
-        0 15px 45px
+
+        inset 0 1px
+        rgba(255,255,255,.05),
+
+        0 20px 50px
         rgba(0,0,0,.25);
 
     backdrop-filter:blur(15px);
 }
 
+.teacher-description::before{
 
-/* =========================
-   THANK YOU
-========================= */
+    content:"";
 
-.thank-you{
-    max-width:620px;
+    position:absolute;
+
+    top:0;
+    right:50%;
+
+    transform:
+        translateX(50%);
+
+    width:100px;
+    height:2px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #916cff,
+            transparent
+        );
+
+    box-shadow:
+        0 0 15px
+        rgba(145,108,255,.8);
+}
+
+
+/* =====================================================
+   DEVELOPER CARD
+===================================================== */
+
+.developer-card{
+
+    position:relative;
+
+    width:100%;
+
+    max-width:570px;
 
     margin:0 auto;
 
-    padding:
-        25px 24px;
+    padding:25px 22px;
 
     border-radius:24px;
 
     background:
         linear-gradient(
             135deg,
-            rgba(120,80,255,.10),
-            rgba(255,255,255,.025)
+            rgba(130,90,255,.12),
+            rgba(255,255,255,.035)
         );
 
     border:
         1px solid
-        rgba(150,120,255,.20);
+        rgba(145,110,255,.22);
 
     box-shadow:
-        0 15px 50px
-        rgba(0,0,0,.3),
+
+        0 20px 60px
+        rgba(0,0,0,.28),
 
         0 0 35px
-        rgba(110,70,255,.08);
+        rgba(120,80,255,.08);
 
-    color:#aaa9b8;
+    backdrop-filter:blur(18px);
 
-    font-size:14px;
+    overflow:hidden;
+}
+
+.developer-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-80px;
+    right:-80px;
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    background:
+        rgba(130,85,255,.18);
+
+    filter:blur(30px);
+}
+
+.developer-title{
+
+    position:relative;
+
+    color:#a98aff;
+
+    font-size:12px;
+
+    font-weight:900;
+
+    letter-spacing:2px;
+
+    margin-bottom:10px;
+}
+
+.developer-name{
+
+    position:relative;
+
+    font-size:27px;
+
+    font-weight:1000;
+
+    margin-bottom:10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #d6c8ff,
+            #936bff
+        );
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
+
+    text-shadow:
+        0 0 30px
+        rgba(140,100,255,.18);
+}
+
+.developer-name-en{
+
+    position:relative;
+
+    direction:ltr;
+
+    font-size:15px;
+
+    color:#aaa0c9;
+
+    letter-spacing:3px;
+
+    margin-bottom:17px;
+}
+
+.developer-text{
+
+    position:relative;
+
+    color:#9e9daa;
+
+    font-size:13px;
 
     line-height:2.2;
 }
 
-.thank-title{
-    color:#d9ceff;
 
-    font-size:18px;
+/* =====================================================
+   MOTIVATION
+===================================================== */
 
-    font-weight:1000;
+.motivation{
 
-    margin-bottom:12px;
-}
-
-.developer{
     margin-top:20px;
 
-    color:#a990ff;
+    color:#777487;
 
-    font-size:15px;
+    font-size:12px;
 
-    font-weight:900;
+    line-height:2;
+
+    text-align:center;
 }
 
-.developer strong{
-    display:block;
+.motivation strong{
 
-    margin-top:5px;
-
-    color:#fff;
-
-    font-size:21px;
-
-    text-shadow:
-        0 0 20px
-        rgba(145,108,255,.5);
+    color:#c8b8ff;
 }
 
 
-/* =========================
+/* =====================================================
    FOOTER
-========================= */
+===================================================== */
 
 .footer{
+
+    position:relative;
+
     width:100%;
 
     text-align:center;
@@ -1026,15 +1224,18 @@ h1 span{
     font-size:11px;
 
     padding:
-        20px 0 30px;
+        10px 0 25px;
+
+    z-index:4;
 }
 
 
-/* =========================
+/* =====================================================
    ANIMATIONS
-========================= */
+===================================================== */
 
 @keyframes contentIn{
+
     from{
         opacity:0;
         transform:translateY(30px);
@@ -1047,6 +1248,7 @@ h1 span{
 }
 
 @keyframes visualIn{
+
     from{
         opacity:0;
         transform:
@@ -1063,11 +1265,11 @@ h1 span{
 }
 
 @keyframes lightFloat{
+
     0%,100%{
         transform:
             translateY(0)
             scale(1);
-
         opacity:.3;
     }
 
@@ -1075,12 +1277,12 @@ h1 span{
         transform:
             translateY(-25px)
             scale(1.7);
-
         opacity:.9;
     }
 }
 
 @keyframes starsMove{
+
     from{
         transform:translate(0,0);
     }
@@ -1090,7 +1292,29 @@ h1 span{
     }
 }
 
+@keyframes logoGlow{
+
+    0%,100%{
+
+        box-shadow:
+            0 12px 35px
+            rgba(119,76,255,.30);
+    }
+
+    50%{
+
+        box-shadow:
+
+            0 12px 45px
+            rgba(119,76,255,.55),
+
+            0 0 25px
+            rgba(119,76,255,.20);
+    }
+}
+
 @keyframes dotPulse{
+
     0%,100%{
         transform:scale(1);
         opacity:.7;
@@ -1102,17 +1326,8 @@ h1 span{
     }
 }
 
-@keyframes teacherFloat{
-    0%,100%{
-        transform:translateY(0);
-    }
-
-    50%{
-        transform:translateY(-5px);
-    }
-}
-
 @keyframes rotateRing{
+
     from{
         transform:rotate(0deg);
     }
@@ -1123,17 +1338,19 @@ h1 span{
 }
 
 
-/* =========================
+/* =====================================================
    TABLET
-========================= */
+===================================================== */
 
 @media(max-width:950px){
 
     .hero{
+
         padding-top:20px;
     }
 
     .hero-container{
+
         grid-template-columns:1fr;
 
         gap:45px;
@@ -1146,6 +1363,7 @@ h1 span{
     }
 
     .content::before{
+
         right:50%;
 
         transform:
@@ -1153,37 +1371,48 @@ h1 span{
     }
 
     .visual{
+
         order:2;
 
         min-height:auto;
     }
 
     .description{
+
         margin-left:auto;
         margin-right:auto;
     }
 
     .start-button{
+
         width:100%;
+
         max-width:340px;
     }
-
 }
 
 
-/* =========================
+/* =====================================================
    MOBILE
-========================= */
+===================================================== */
 
 @media(max-width:600px){
 
     .navbar{
+
         padding:18px;
     }
 
     .brand-icon{
+
         width:43px;
         height:43px;
+
+        border-radius:14px;
+    }
+
+    .brand-icon img{
+        border-radius:14px;
     }
 
     .brand-name{
@@ -1194,12 +1423,8 @@ h1 span{
         font-size:9px;
     }
 
-    .teacher-top{
-        width:54px;
-        height:54px;
-    }
-
     .hero{
+
         min-height:auto;
 
         padding:
@@ -1207,77 +1432,106 @@ h1 span{
     }
 
     .hero-container{
+
         gap:35px;
     }
 
     .badge{
+
         font-size:11px;
-        padding:8px 13px;
+
+        padding:
+            8px 13px;
     }
 
     h1{
+
         font-size:50px;
+
         letter-spacing:-2px;
+
         line-height:1.08;
     }
 
     .description{
+
         font-size:14px;
+
         line-height:1.9;
     }
 
     .visual{
+
         min-height:auto;
     }
 
-    .image-glow{
-        width:350px;
-        height:350px;
+    .teacher-center{
+
+        width:230px;
+        height:230px;
     }
 
-    .center-teacher{
-        width:84vw;
+    .teacher-center-glow{
+
+        width:320px;
+        height:320px;
     }
 
-    .trust{
+    .teacher-message{
+
         margin-top:35px;
     }
 
-    .trust-title{
-        font-size:18px;
+    .trust-line{
+
+        font-size:15px;
+
+        gap:7px;
     }
 
     .teacher-description{
-        padding:17px 16px;
+
+        padding:
+            17px 16px;
+
         font-size:12px;
+
         line-height:2.15;
     }
 
-    .thank-you{
-        padding:20px 16px;
+    .developer-card{
+
+        padding:21px 16px;
+    }
+
+    .developer-name{
+
+        font-size:23px;
+    }
+
+    .developer-name-en{
+
+        font-size:13px;
+    }
+
+    .developer-text{
+
         font-size:12px;
-        line-height:2.1;
-    }
-
-    .thank-title{
-        font-size:16px;
-    }
-
-    .developer strong{
-        font-size:19px;
     }
 
     .start-button{
-        font-size:16px;
-        padding:17px 20px;
-    }
 
+        font-size:16px;
+
+        padding:
+            17px 20px;
+    }
 }
 
 
-/* =========================
+/* =====================================================
    SMALL PHONES
-========================= */
+===================================================== */
 
 @media(max-width:390px){
 
@@ -1285,12 +1539,17 @@ h1 span{
         font-size:43px;
     }
 
-    .trust-title{
-        font-size:16px;
+    .teacher-center{
+
+        width:205px;
+        height:205px;
     }
 
-    .teacher-description,
-    .thank-you{
+    .trust-line{
+        font-size:13px;
+    }
+
+    .teacher-description{
         font-size:11px;
     }
 
@@ -1304,9 +1563,9 @@ h1 span{
 <body>
 
 
-<!-- =========================
+<!-- =====================================================
      BACKGROUND
-========================= -->
+===================================================== -->
 
 <div class="background">
 
@@ -1322,15 +1581,13 @@ h1 span{
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      NAVBAR
-========================= -->
+===================================================== -->
 
 <header class="navbar">
 
     <div class="brand">
-
-        <!-- صورة المستر بدل الشعار -->
 
         <div class="brand-icon">
 
@@ -1342,53 +1599,35 @@ h1 span{
 
         </div>
 
-
         <div class="brand-info">
 
             <div class="brand-name">
-                الخوارزمي
+              𝐀𝐥-𝐊𝐡𝐰𝐚𝐫𝐢𝐳𝐦𝐢  
             </div>
 
             <div class="brand-sub">
-                ثقة وتعلّم
+                ثقة • علم • تعلم
             </div>
 
         </div>
 
     </div>
 
-
-    <!-- صورة المستر أعلى اليمين -->
-
-    <div
-        class="teacher-top"
-        id="teacherTop"
-        title="المستر"
-    >
-
-        <img
-            src="teacher.png"
-            alt="المستر"
-            draggable="false"
-        >
-
-    </div>
-
 </header>
 
 
-<!-- =========================
+<!-- =====================================================
      HERO
-========================= -->
+===================================================== -->
 
 <main class="hero">
 
     <div class="hero-container">
 
 
-        <!-- =====================
-             MAIN TEXT
-        ====================== -->
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
 
         <section class="content">
 
@@ -1416,8 +1655,9 @@ h1 span{
 
                 اختبر معلوماتك، تحدَّ نفسك،
                 واكتشف مستواك من خلال
-                اختبارات وتحديات مصممة
-                لتساعدك على التطور خطوة بخطوة.
+                الاختبارات والتحديات المصممة
+                لتساعدك على تطوير مستواك
+                خطوة بخطوة.
 
             </p>
 
@@ -1445,97 +1685,127 @@ h1 span{
         </section>
 
 
-        <!-- =====================
+        <!-- =================================================
              TEACHER
-        ====================== -->
+        ================================================== -->
 
         <section
             class="visual"
             id="visual"
         >
 
-            <div class="image-glow"></div>
-
-
-            <!-- صورة المستر الكبيرة -->
-
             <div
-                class="center-teacher"
-                id="centerTeacher"
+                class="teacher-center"
+                id="teacherCenter"
             >
+
+                <div
+                    class="teacher-center-glow">
+                </div>
+
+                <div
+                    class="teacher-center-ring">
+                </div>
 
                 <img
                     src="teacher.png"
-                    alt="المستر"
+                    alt="Ｍｒ． Ａｍｉｒ Ｔａｌａａｔ"
                     draggable="false"
                 >
 
             </div>
 
 
-            <!-- الثقة والتعلم -->
+            <!-- =================================================
+                 THANK YOU MESSAGE
+            ================================================== -->
 
-            <div class="trust">
+            <div class="teacher-message">
 
-                <div class="trust-title">
+                <div class="trust-line">
 
-                    ✦ الخوارزمي —
-                    <span>
-                        ثقة وتعلّم
-                    </span>
-                    ✦
+                    <span>✦</span>
+
+                    𝘔𝘳. 𝘈𝘮𝘪𝘳 𝘛𝘢𝘭𝘢𝘢𝘵 — ثقة وعلم وتعلم
+
+                    <span>✦</span>
 
                 </div>
 
 
                 <p class="teacher-description">
 
-                    منصة اختبارات تهدف إلى جعل تجربة
-                    الاختبار أكثر سهولة وتنظيمًا.
-                    اختبر نفسك، راجع مستواك، وتابع
-                    تطورك من خلال تجربة بسيطة وواضحة
-                    مصممة للطلاب.
+                    كل الشكر والتقدير لمستر أمير،
+                    صاحب الفضل بعد الله في الكثير
+                    من الخطوات التي ساعدتني على
+                    التعلم والاستمرار وتطوير نفسي.
+                    لم يكن الأمر مجرد شرح للمادة،
+                    بل كان تشجيعًا على التفكير،
+                    والمحاولة، وعدم الاستسلام أمام
+                    أي تحدٍ.
+
+                    <br><br>
+
+                    هذه المنصة جزء بسيط من رحلة
+                    بدأت كطالب يتعلم ويجرب،
+                    ثم بدأ يحاول أن يصنع شيئًا
+                    يستفيد منه غيره.
 
                 </p>
 
 
-                <!-- رسالة الشكر -->
+                <!-- =================================================
+                     DEVELOPER
+                ================================================== -->
 
-                <div class="thank-you">
+                <div class="developer-card">
 
-                    <div class="thank-title">
-
-                        ❤️ رسالة شكر وتقدير
-
+                    <div class="developer-title">
+                        ✦ DEVELOPER ✦
                     </div>
 
-                    شكرًا يا مستر أمير على كل الشغل
-                    والمجهود اللي بتعمله معانا،
-                    وعلى كل وقت وتعب بتقدمه عشان
-                    تساعدنا ونفهم بشكل أفضل.
+
+                    <div class="developer-name">
+                       ᗰ⚧ ♭€↳⊙✓€ᕲ ϰ♄ωꍏ☈♗☡ᗰ♗ 
+                    </div>
+
+
+                    <div class="developer-name-en">
+                        𝑴𝒖'𝒂𝒅𝒉 𝒀𝒖𝒔𝒓𝒊
+                    </div>
+
+
+                    <p class="developer-text">
+
+                        مطور هذه الصفحة والمنصة.
+                        بدأت رحلتي كطالب عند مستر أمير،
+                        أتعلم وأحاول وأخطئ وأعيد المحاولة،
+                        ومع الوقت بدأت أطور مهاراتي
+                        وأحوّل أفكاري إلى مشاريع حقيقية.
+
+                        <br><br>
+
+                        الرسالة لكل طالب:
+                        لا تستصغر بدايتك.
+                        ممكن تبدأ كطالب يتعلم،
+                        ومع الاجتهاد والاستمرار تصبح
+                        الشخص الذي يصنع شيئًا جديدًا
+                        ويفيد غيره.
+
+                    </p>
+
+                </div>
+
+
+                <div class="motivation">
+
+                    شكرًا لكل شخص كان سببًا في خطوة
+                    <strong>من خطوات النجاح.</strong>
 
                     <br>
 
-                    إحنا كطلاب بنشوف تعبك ومجهودك
-                    وبنقدّر جدًا كل حاجة بتعملها
-                    معانا، ودي حاجة بسيطة مني
-                    تعبر عن شكري ليك. ❤️
-
-
-                    <div class="developer">
-
-                        من أحد طلابك في مصر 🇪🇬
-
-                        <strong>
-
-                            معاذ يسري
-
-                        </strong>
-
-                        مطور منصة الخوارزمي
-                        💻🚀
-
-                    </div>
+                    واستمر في التعلم... فالبداية دائمًا
+                    تكون من محاولة بسيطة.
 
                 </div>
 
@@ -1548,33 +1818,34 @@ h1 span{
 </main>
 
 
-<!-- =========================
+<!-- =====================================================
      FOOTER
-========================= -->
+===================================================== -->
 
 <footer class="footer">
 
-    © 2026 الخوارزمي | منصة الاختبارات
+    © 2026 الخوارزمي | منصة 
 
 </footer>
 
 
 <script>
 
-/* =========================
-   TOP TEACHER CLICK
-========================= */
+/* =====================================================
+   TEACHER IMAGE CLICK
+===================================================== */
 
-const teacherTop =
+const teacherCenter =
     document.getElementById(
-        "teacherTop"
+        "teacherCenter"
     );
 
-teacherTop.addEventListener(
+
+teacherCenter.addEventListener(
     "click",
     function(){
 
-        teacherTop.classList.toggle(
+        teacherCenter.classList.toggle(
             "active"
         );
 
@@ -1582,44 +1853,28 @@ teacherTop.addEventListener(
 );
 
 
-/* =========================
-   CENTER TEACHER CLICK
-========================= */
-
-const centerTeacher =
-    document.getElementById(
-        "centerTeacher"
-    );
-
-centerTeacher.addEventListener(
-    "click",
-    function(){
-
-        centerTeacher.classList.toggle(
-            "active"
-        );
-
-    }
-);
-
-
-/* =========================
+/* =====================================================
    START BUTTON
-========================= */
+===================================================== */
 
 const startButton =
     document.getElementById(
         "startButton"
     );
 
+
 startButton.addEventListener(
     "click",
     function(){
 
+        if(startButton.disabled){
+            return;
+        }
+
         startButton.disabled = true;
 
         startButton.style.opacity =
-            ".7";
+            "0.7";
 
         window.location.href =
             "auth.html";
@@ -1628,16 +1883,15 @@ startButton.addEventListener(
 );
 
 
-/* =========================
+/* =====================================================
    PAGE SHOW
-========================= */
+===================================================== */
 
 window.addEventListener(
     "pageshow",
     function(){
 
-        startButton.disabled =
-            false;
+        startButton.disabled = false;
 
         startButton.style.opacity =
             "1";
@@ -1646,6 +1900,7 @@ window.addEventListener(
 );
 
 </script>
+
 
 </body>
 
