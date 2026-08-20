@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
+
+<meta name="theme-color" content="#050507">
+
+<title>الخوارزمي | الاختبار</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+
+    min-height:100vh;
+
+    font-family:
+        "Cairo",
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 50% 25%,
+            rgba(105,70,220,.15),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 90% 0%,
+            #302052,
+            #15121e 30%,
+            #07070a 65%,
+            #000 100%
+        );
+
+    overflow-x:hidden;
+}
+
+.background{
+
+    position:fixed;
+    inset:0;
+    z-index:-10;
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(116,72,232,.07),
+            transparent 50%
+        );
+}
+
+.stars{
+
+    position:absolute;
+    inset:0;
+
+    opacity:.08;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.9) 1px,
+            transparent 1px
+        );
+
+    background-size:90px 90px;
+
+    animation:
+        starsMove 18s linear infinite;
+}
+
+
+/* NAVBAR */
+
+.navbar{
+
+    width:100%;
+
+    padding:18px 5%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+
+    background:
+        rgba(5,5,8,.55);
+
+    backdrop-filter:blur(20px);
+}
+
+.brand{
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.brand-icon{
+
+    width:47px;
+    height:47px;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    border:
+        1px solid
+        rgba(170,140,255,.4);
+
+    box-shadow:
+        0 0 30px
+        rgba(120,80,255,.25);
+}
+
+.brand-icon img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+.brand-name{
+
+    font-size:18px;
+    font-weight:1000;
+}
+
+.brand-sub{
+
+    color:#858493;
+    font-size:10px;
+    margin-top:3px;
+}
+
+
+/* TIMER */
+
+.timer{
+
+    min-width:110px;
+
+    padding:10px 15px;
+
+    border-radius:14px;
+
+    text-align:center;
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    color:#d9ccff;
+
+    font-weight:900;
+
+    box-shadow:
+        0 0 25px
+        rgba(120,80,255,.08);
+}
+
+.timer span{
+
+    display:block;
+
+    color:#777585;
+
+    font-size:9px;
+
+    margin-bottom:3px;
+}
+
+
+/* MAIN */
+
+.main{
+
+    width:100%;
+    max-width:900px;
+
+    margin:auto;
+
+    padding:40px 18px 70px;
+}
+
+
+/* HEADER */
+
+.exam-header{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+    animation:
+        fadeUp .7s ease both;
+}
+
+.badge{
+
+    display:inline-block;
+
+    padding:8px 15px;
+
+    border-radius:50px;
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    color:#aaa8ba;
+
+    font-size:11px;
+
+    margin-bottom:15px;
+}
+
+.exam-header h1{
+
+    font-size:
+        clamp(28px,5vw,45px);
+
+    font-weight:1000;
+
+    margin-bottom:10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #cdbfff,
+            #7953e5
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.exam-header p{
+
+    color:#91909f;
+
+    font-size:13px;
+
+    line-height:1.9;
+}
+
+
+/* PROGRESS */
+
+.progress-box{
+
+    margin-bottom:25px;
+}
+
+.progress-info{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#858392;
+
+    font-size:11px;
+
+    margin-bottom:8px;
+}
+
+.progress{
+
+    width:100%;
+    height:7px;
+
+    border-radius:20px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    overflow:hidden;
+}
+
+.progress-bar{
+
+    width:0%;
+    height:100%;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #4d2bac,
+            #9b75ff
+        );
+
+    box-shadow:
+        0 0 15px
+        rgba(140,100,255,.5);
+
+    transition:.3s;
+}
+
+
+/* QUESTION */
+
+.question-card{
+
+    padding:27px;
+
+    border-radius:24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.065),
+            rgba(255,255,255,.018)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.3);
+
+    backdrop-filter:blur(18px);
+
+    animation:
+        fadeUp .5s ease both;
+}
+
+.question-number{
+
+    color:#9674ff;
+
+    font-size:12px;
+
+    font-weight:900;
+
+    margin-bottom:13px;
+}
+
+.question-text{
+
+    font-size:20px;
+
+    line-height:1.9;
+
+    font-weight:900;
+
+    margin-bottom:25px;
+}
+
+
+/* OPTIONS */
+
+.options{
+
+    display:grid;
+
+    gap:12px;
+}
+
+.option{
+
+    width:100%;
+
+    padding:16px;
+
+    border-radius:16px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.035);
+
+    color:#d6d4df;
+
+    text-align:right;
+
+    font-family:inherit;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.option:hover{
+
+    border-color:
+        rgba(150,120,255,.4);
+
+    background:
+        rgba(135,95,255,.08);
+}
+
+.option.selected{
+
+    border-color:
+        #9875ff;
+
+    background:
+        rgba(125,85,255,.16);
+
+    box-shadow:
+        0 0 25px
+        rgba(125,85,255,.12);
+
+    color:#fff;
+}
+
+.option-letter{
+
+    min-width:34px;
+    height:34px;
+
+    border-radius:10px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:
+        rgba(255,255,255,.07);
+
+    color:#a895dc;
+
+    font-weight:1000;
+}
+
+.option.selected .option-letter{
+
+    background:
+        linear-gradient(
+            135deg,
+            #8962ff,
+            #4d2bac
+        );
+
+    color:#fff;
+}
+
+
+/* NAVIGATION */
+
+.navigation{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:20px;
+}
+
+.nav-button{
+
+    flex:1;
+
+    padding:14px;
+
+    border-radius:15px;
+
+    font-family:inherit;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.prev{
+
+    color:#aaa8b8;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+}
+
+.next,
+.submit{
+
+    color:#fff;
+
+    border:0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8962ff,
+            #4d2bac
+        );
+
+    box-shadow:
+        0 12px 30px
+        rgba(105,68,240,.25);
+}
+
+.nav-button:hover{
+
+    transform:translateY(-2px);
+}
+
+.nav-button:disabled{
+
+    opacity:.35;
+
+    cursor:not-allowed;
+
+    transform:none;
+}
+
+
+/* LOADING */
+
+.loading{
+
+    text-align:center;
+
+    padding:70px 20px;
+
+    color:#8d8b9d;
+}
+
+.loader{
+
+    width:40px;
+    height:40px;
+
+    margin:
+        0 auto 15px;
+
+    border-radius:50%;
+
+    border:
+        3px solid
+        rgba(255,255,255,.08);
+
+    border-top-color:#8962ff;
+
+    animation:
+        spin .8s linear infinite;
+}
+
+
+/* ERROR */
+
+.error{
+
+    display:none;
+
+    padding:18px;
+
+    border-radius:16px;
+
+    background:
+        rgba(255,60,90,.07);
+
+    border:
+        1px solid
+        rgba(255,80,110,.15);
+
+    color:#e8aab5;
+
+    font-size:12px;
+
+    line-height:1.9;
+
+    text-align:center;
+}
+
+
+/* RESULT */
+
+.result{
+
+    display:none;
+
+    text-align:center;
+
+    padding:40px 25px;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.02)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.35);
+}
+
+.result-icon{
+
+    font-size:55px;
+
+    margin-bottom:15px;
+}
+
+.result h2{
+
+    font-size:30px;
+
+    margin-bottom:15px;
+}
+
+.score{
+
+    font-size:50px;
+
+    font-weight:1000;
+
+    color:#a88aff;
+
+    text-shadow:
+        0 0 30px
+        rgba(150,110,255,.4);
+
+    margin-bottom:10px;
+}
+
+.result p{
+
+    color:#92909e;
+
+    font-size:13px;
+}
+
+
+/* FOOTER */
+
+.footer{
+
+    text-align:center;
+
+    color:#5f5e6d;
+
+    font-size:10px;
+
+    padding:20px;
+}
+
+
+/* ANIMATION */
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes starsMove{
+
+    from{
+        transform:translate(0,0);
+    }
+
+    to{
+        transform:translate(-90px,-90px);
+    }
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .navbar{
+
+        padding:14px 16px;
+    }
+
+    .brand-icon{
+
+        width:40px;
+        height:40px;
+
+        border-radius:13px;
+    }
+
+    .brand-name{
+        font-size:15px;
+    }
+
+    .timer{
+
+        min-width:85px;
+
+        padding:8px 10px;
+
+        font-size:12px;
+    }
+
+    .main{
+
+        padding:
+            30px 14px 50px;
+    }
+
+    .question-card{
+
+        padding:20px;
+    }
+
+    .question-text{
+
+        font-size:17px;
+    }
+
+    .option{
+
+        padding:13px;
+
+        font-size:13px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="background">
+
+    <div class="stars"></div>
+
+</div>
+
+
+<header class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+
+            <img
+                src="../teacher.png"
+                alt="المستر"
+            >
+
+        </div>
+
+        <div>
+
+            <div class="brand-name">
+                الخوارزمي
+            </div>
+
+            <div class="brand-sub">
+                منصة الاختبارات
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="timer">
+
+        <span>
+            الوقت المتبقي
+        </span>
+
+        <b id="timer">
+            --:--
+        </b>
+
+    </div>
+
+</header>
+
+
+<main class="main">
+
+
+    <div id="loading" class="loading">
+
+        <div class="loader"></div>
+
+        جاري تحميل الاختبار...
+
+    </div>
+
+
+    <div id="error" class="error"></div>
+
+
+    <section
+        id="examContent"
+        style="display:none;"
+    >
+
+        <div class="exam-header">
+
+            <div class="badge">
+                اختبار إلكتروني
+            </div>
+
+            <h1 id="examTitle">
+                الاختبار
+            </h1>
+
+            <p id="examDescription">
+                بالتوفيق في الاختبار
+            </p>
+
+        </div>
+
+
+        <div class="progress-box">
+
+            <div class="progress-info">
+
+                <span id="progressText">
+                    السؤال 1 من 1
+                </span>
+
+                <span id="answeredText">
+                    0 مجاب
+                </span>
+
+            </div>
+
+            <div class="progress">
+
+                <div
+                    id="progressBar"
+                    class="progress-bar"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="questionCard"
+            class="question-card"
+        ></div>
+
+
+        <div class="navigation">
+
+            <button
+                id="prevButton"
+                class="nav-button prev"
+                type="button"
+            >
+                السابق
+            </button>
+
+            <button
+                id="nextButton"
+                class="nav-button next"
+                type="button"
+            >
+                التالي
+            </button>
+
+            <button
+                id="submitButton"
+                class="nav-button submit"
+                type="button"
+                style="display:none;"
+            >
+                تسليم الاختبار
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <section
+        id="result"
+        class="result"
+    >
+
+        <div class="result-icon">
+            🏆
+        </div>
+
+        <h2>
+            تم تسليم الاختبار
+        </h2>
+
+        <div
+            id="score"
+            class="score"
+        >
+            0 / 0
+        </div>
+
+        <p id="resultText">
+            تم حفظ نتيجتك بنجاح.
+        </p>
+
+    </section>
+
+
+</main>
+
+
+<footer class="footer">
+
+    © 2026 الخوارزمي | منصة الاختبارات
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+    "https://mqwtrsbncanwtxotxppp.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_lPAYrGCg_7-5Y1Dj7E5BSw_o-DsYl9Z";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const loading =
+    document.getElementById("loading");
+
+const errorBox =
+    document.getElementById("error");
+
+const examContent =
+    document.getElementById("examContent");
+
+const resultBox =
+    document.getElementById("result");
+
+const examTitle =
+    document.getElementById("examTitle");
+
+const examDescription =
+    document.getElementById("examDescription");
+
+const questionCard =
+    document.getElementById("questionCard");
+
+const progressText =
+    document.getElementById("progressText");
+
+const answeredText =
+    document.getElementById("answeredText");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const prevButton =
+    document.getElementById("prevButton");
+
+const nextButton =
+    document.getElementById("nextButton");
+
+const submitButton =
+    document.getElementById("submitButton");
+
+const timerElement =
+    document.getElementById("timer");
+
+const scoreElement =
+    document.getElementById("score");
+
+const resultText =
+    document.getElementById("resultText");
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let questions = [];
+
+let currentQuestion = 0;
+
+let answers = {};
+
+let examId = null;
+
+let currentUser = null;
+
+let examData = null;
+
+let submitting = false;
+
+let timerInterval = null;
+
+let remainingSeconds = 0;
+
+
+/* =====================================================
+   GET EXAM ID
+===================================================== */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+examId =
+    params.get("id");
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+function showError(message){
+
+    loading.style.display =
+        "none";
+
+    examContent.style.display =
+        "none";
+
+    errorBox.textContent =
+        message;
+
+    errorBox.style.display =
+        "block";
+}
+
+
+/* =====================================================
+   LOAD USER
+===================================================== */
+
+async function loadUser(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient.auth.getUser();
+
+
+    if(error){
+
+        throw error;
+
+    }
+
+
+    if(!data.user){
+
+        window.location.replace(
+            "../auth.html"
+        );
+
+        return null;
+
+    }
+
+
+    return data.user;
+
+}
+
+
+/* =====================================================
+   LOAD QUESTIONS
+===================================================== */
+
+async function loadQuestions(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("questions")
+        .select(
+            "id,exam_id,question_text,question_type,options,correct_answer,points,question_order"
+        )
+        .eq(
+            "exam_id",
+            examId
+        )
+        .order(
+            "question_order",
+            {
+                ascending:true
+            }
+        );
+
+
+    if(error){
+
+        throw error;
+
+    }
+
+
+    return data || [];
+
+}
+
+
+/* =====================================================
+   LOAD EXAM
+===================================================== */
+
+async function loadExam(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("exams")
+        .select("*")
+        .eq(
+            "id",
+            examId
+        )
+        .maybeSingle();
+
+
+    if(error){
+
+        throw error;
+
+    }
+
+
+    return data;
+
+}
+
+
+/* =====================================================
+   OPTIONS NORMALIZER
+===================================================== */
+
+function normalizeOptions(options){
+
+    if(!options){
+
+        return [];
+
+    }
+
+
+    if(Array.isArray(options)){
+
+        return options.map(
+            item => String(item)
+        );
+
+    }
+
+
+    if(typeof options === "object"){
+
+        return Object.entries(options)
+            .map(
+                ([key,value]) =>
+                    ({
+                        key,
+                        value:String(value)
+                    })
+            );
+
+    }
+
+
+    if(typeof options === "string"){
+
+        try{
+
+            const parsed =
+                JSON.parse(options);
+
+            return normalizeOptions(
+                parsed
+            );
+
+        }
+        catch(e){
+
+            return options
+                .split(/\r?\n/)
+                .map(x => x.trim())
+                .filter(Boolean);
+
+        }
+
+    }
+
+
+    return [];
+
+}
+
+
+/* =====================================================
+   GET OPTION VALUE
+===================================================== */
+
+function getOptionValue(option){
+
+    if(
+        typeof option === "object" &&
+        option !== null
+    ){
+
+        return option.value;
+
+    }
+
+    return String(option);
+
+}
+
+
+/* =====================================================
+   RENDER QUESTION
+===================================================== */
+
+function renderQuestion(){
+
+    if(!questions.length){
+
+        showError(
+            "لا توجد أسئلة لهذا الاختبار حتى الآن."
+        );
+
+        return;
+
+    }
+
+
+    const question =
+        questions[currentQuestion];
+
+
+    const options =
+        normalizeOptions(
+            question.options
+        );
+
+
+    const selected =
+        answers[question.id];
+
+
+    let html = "";
+
+
+    html += `
+
+        <div class="question-number">
+            السؤال ${currentQuestion + 1}
+            من ${questions.length}
+        </div>
+
+        <div class="question-text">
+            ${escapeHTML(
+                question.question_text || ""
+            )}
+        </div>
+
+        <div class="options">
+
+    `;
+
+
+    if(options.length === 0){
+
+        html += `
+
+            <div style="
+                color:#999;
+                text-align:center;
+                padding:20px;
+            ">
+                لا توجد اختيارات لهذا السؤال.
+            </div>
+
+        `;
+
+    }
+    else{
+
+        options.forEach(
+            function(option,index){
+
+                const value =
+                    getOptionValue(
+                        option
+                    );
+
+                const letter =
+                    String.fromCharCode(
+                        65 + index
+                    );
+
+                const isSelected =
+                    selected === value;
+
+
+                html += `
+
+                    <button
+                        type="button"
+                        class="option ${
+                            isSelected
+                            ? "selected"
+                            : ""
+                        }"
+                        data-value="${escapeAttribute(value)}"
+                    >
+
+                        <span class="option-letter">
+                            ${letter}
+                        </span>
+
+                        <span>
+                            ${escapeHTML(value)}
+                        </span>
+
+                    </button>
+
+                `;
+
+            }
+        );
+
+    }
+
+
+    html += `
+        </div>
+    `;
+
+
+    questionCard.innerHTML =
+        html;
+
+
+    questionCard
+        .querySelectorAll(".option")
+        .forEach(
+            function(button){
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        answers[question.id] =
+                            button.dataset.value;
+
+                        renderQuestion();
+
+                    }
+                );
+
+            }
+        );
+
+
+    updateNavigation();
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function updateNavigation(){
+
+    const total =
+        questions.length;
+
+
+    const answered =
+        Object.keys(answers).length;
+
+
+    progressText.textContent =
+        `السؤال ${
+            currentQuestion + 1
+        } من ${total}`;
+
+
+    answeredText.textContent =
+        `${answered} مجاب`;
+
+
+    const progress =
+        ((currentQuestion + 1) / total) * 100;
+
+
+    progressBar.style.width =
+        progress + "%";
+
+
+    prevButton.disabled =
+        currentQuestion === 0;
+
+
+    if(
+        currentQuestion ===
+        total - 1
+    ){
+
+        nextButton.style.display =
+            "none";
+
+        submitButton.style.display =
+            "block";
+
+    }
+    else{
+
+        nextButton.style.display =
+            "block";
+
+        submitButton.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   NEXT
+===================================================== */
+
+nextButton.addEventListener(
+    "click",
+    function(){
+
+        if(
+            currentQuestion <
+            questions.length - 1
+        ){
+
+            currentQuestion++;
+
+            renderQuestion();
+
+            window.scrollTo({
+                top:0,
+                behavior:"smooth"
+            });
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   PREVIOUS
+===================================================== */
+
+prevButton.addEventListener(
+    "click",
+    function(){
+
+        if(
+            currentQuestion > 0
+        ){
+
+            currentQuestion--;
+
+            renderQuestion();
+
+            window.scrollTo({
+                top:0,
+                behavior:"smooth"
+            });
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   CALCULATE RESULT
+===================================================== */
+
+function calculateResult(){
+
+    let score = 0;
+
+    let total = 0;
+
+
+    questions.forEach(
+        function(question){
+
+            const points =
+                Number(
+                    question.points
+                ) || 1;
+
+
+            total += points;
+
+
+            const studentAnswer =
+                answers[question.id];
+
+
+            const correctAnswer =
+                question.correct_answer;
+
+
+            if(
+                studentAnswer !== undefined &&
+                String(studentAnswer).trim() ===
+                String(correctAnswer).trim()
+            ){
+
+                score += points;
+
+            }
+
+        }
+    );
+
+
+    return {
+        score,
+        total
+    };
+
+}
+
+
+/* =====================================================
+   SUBMIT
+===================================================== */
+
+submitButton.addEventListener(
+    "click",
+    async function(){
+
+        if(submitting){
+
+            return;
+
+        }
+
+
+        const unanswered =
+            questions.filter(
+                q =>
+                    answers[q.id] === undefined
+            ).length;
+
+
+        if(unanswered > 0){
+
+            const confirmed =
+                confirm(
+                    `يوجد ${unanswered} سؤال بدون إجابة.\nهل تريد تسليم الاختبار؟`
+                );
+
+
+            if(!confirmed){
+
+                return;
+
+            }
+
+        }
+
+
+        const confirmed =
+            confirm(
+                "هل أنت متأكد من تسليم الاختبار؟"
+            );
+
+
+        if(!confirmed){
+
+            return;
+
+        }
+
+
+        submitting = true;
+
+        submitButton.disabled =
+            true;
+
+        submitButton.textContent =
+            "جاري التسليم...";
+
+
+        try{
+
+            const result =
+                calculateResult();
+
+
+            /*
+             * نحاول حفظ النتيجة في exam_results
+             *
+             * إذا لم يكن الجدول موجودًا بعد،
+             * سيظهر تنبيه واضح بدل ما الصفحة تنهار.
+             */
+
+            const {
+                error
+            } =
+            await supabaseClient
+                .from("exam_results")
+                .insert({
+                    exam_id:examId,
+                    student_id:currentUser.id,
+                    score:result.score,
+                    total_questions:questions.length
+                });
+
+
+            if(error){
+
+                console.error(
+                    "Result save error:",
+                    error
+                );
+
+                /*
+                 * النتيجة تظهر للطالب حتى لو
+                 * جدول النتائج لم يتم تجهيزه بعد.
+                 */
+
+            }
+
+
+            clearInterval(
+                timerInterval
+            );
+
+
+            examContent.style.display =
+                "none";
+
+            resultBox.style.display =
+                "block";
+
+
+            scoreElement.textContent =
+                `${result.score} / ${result.total}`;
+
+
+            const percentage =
+                result.total > 0
+                ? Math.round(
+                    (result.score / result.total) * 100
+                )
+                : 0;
+
+
+            resultText.textContent =
+                `حصلت على ${percentage}% من درجة الاختبار.`;
+
+        }
+        catch(error){
+
+            console.error(error);
+
+            showError(
+                "حدث خطأ أثناء تسليم الاختبار."
+            );
+
+            submitting = false;
+
+            submitButton.disabled =
+                false;
+
+            submitButton.textContent =
+                "تسليم الاختبار";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+function startTimer(minutes){
+
+    const parsed =
+        Number(minutes);
+
+
+    if(
+        !Number.isFinite(parsed) ||
+        parsed <= 0
+    ){
+
+        timerElement.textContent =
+            "∞";
+
+        return;
+
+    }
+
+
+    remainingSeconds =
+        Math.floor(
+            parsed * 60
+        );
+
+
+    updateTimer();
+
+
+    timerInterval =
+        setInterval(
+            async function(){
+
+                remainingSeconds--;
+
+                updateTimer();
+
+
+                if(
+                    remainingSeconds <= 0
+                ){
+
+                    clearInterval(
+                        timerInterval
+                    );
+
+                    timerElement.textContent =
+                        "00:00";
+
+
+                    if(!submitting){
+
+                        await autoSubmit();
+
+                    }
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+/* =====================================================
+   UPDATE TIMER
+===================================================== */
+
+function updateTimer(){
+
+    const minutes =
+        Math.floor(
+            remainingSeconds / 60
+        );
+
+    const seconds =
+        remainingSeconds % 60;
+
+
+    timerElement.textContent =
+        String(minutes).padStart(2,"0") +
+        ":" +
+        String(seconds).padStart(2,"0");
+
+
+    if(
+        remainingSeconds <= 60
+    ){
+
+        timerElement.style.color =
+            "#ff8b9d";
+
+    }
+
+}
+
+
+/* =====================================================
+   AUTO SUBMIT
+===================================================== */
+
+async function autoSubmit(){
+
+    if(submitting){
+
+        return;
+
+    }
+
+
+    submitting = true;
+
+    submitButton.disabled =
+        true;
+
+
+    try{
+
+        const result =
+            calculateResult();
+
+
+        await supabaseClient
+            .from("exam_results")
+            .insert({
+                exam_id:examId,
+                student_id:currentUser.id,
+                score:result.score,
+                total_questions:questions.length
+            });
+
+
+        examContent.style.display =
+            "none";
+
+        resultBox.style.display =
+            "block";
+
+
+        scoreElement.textContent =
+            `${result.score} / ${result.total}`;
+
+
+        resultText.textContent =
+            "انتهى الوقت وتم تسليم الاختبار تلقائيًا.";
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showError(
+            "انتهى الوقت، ولكن حدث خطأ أثناء حفظ النتيجة."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;");
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+async function init(){
+
+    try{
+
+        if(!examId){
+
+            showError(
+                "لم يتم تحديد الاختبار."
+            );
+
+            return;
+
+        }
+
+
+        currentUser =
+            await loadUser();
+
+
+        if(!currentUser){
+
+            return;
+
+        }
+
+
+        examData =
+            await loadExam();
+
+
+        if(!examData){
+
+            throw new Error(
+                "Exam not found"
+            );
+
+        }
+
+
+        examTitle.textContent =
+            examData.title ||
+            "اختبار الخوارزمي";
+
+
+        examDescription.textContent =
+            examData.description ||
+            "بالتوفيق في الاختبار";
+
+
+        questions =
+            await loadQuestions();
+
+
+        if(!questions.length){
+
+            throw new Error(
+                "NO_QUESTIONS"
+            );
+
+        }
+
+
+        /*
+         * لو جدول exams عندك فيه duration
+         * هنستخدمه تلقائيًا.
+         */
+
+        startTimer(
+            examData.duration || 0
+        );
+
+
+        loading.style.display =
+            "none";
+
+        examContent.style.display =
+            "block";
+
+
+        renderQuestion();
+
+    }
+    catch(error){
+
+        console.error(
+            "Initialization error:",
+            error
+        );
+
+
+        if(
+            error.message ===
+            "NO_QUESTIONS"
+        ){
+
+            showError(
+                "الاختبار موجود، لكن لا توجد أسئلة مضافة إليه حتى الآن."
+            );
+
+        }
+        else{
+
+            showError(
+                "تعذر تحميل الاختبار. تأكد من أن الاختبار موجود وأن لديك صلاحية قراءة الأسئلة."
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+init();
+
+</script>
+
+</body>
+
+</html>
