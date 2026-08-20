@@ -1,0 +1,2743 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
+
+<meta name="theme-color" content="#050507">
+
+<title>الخوارزمي | إدارة الطلاب</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+
+    font-family:
+        "Cairo",
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(105,70,220,.14),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 5%,
+            #302052 0%,
+            #15121e 30%,
+            #07070a 65%,
+            #000 100%
+        );
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+}
+
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+.background{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:-10;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(116,72,232,.06),
+            transparent 45%
+        );
+}
+
+.background::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:600px;
+    height:600px;
+
+    top:-300px;
+    right:-180px;
+
+    border-radius:50%;
+
+    background:#7448e8;
+
+    filter:blur(170px);
+
+    opacity:.20;
+}
+
+.background::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:600px;
+    height:600px;
+
+    bottom:-350px;
+    left:-220px;
+
+    border-radius:50%;
+
+    background:#3154df;
+
+    filter:blur(180px);
+
+    opacity:.14;
+}
+
+
+/* =====================================================
+   STARS
+===================================================== */
+
+.stars{
+
+    position:absolute;
+
+    inset:0;
+
+    opacity:.08;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.9) 1px,
+            transparent 1px
+        );
+
+    background-size:90px 90px;
+
+    animation:
+        starsMove
+        18s
+        linear
+        infinite;
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar{
+
+    width:100%;
+
+    padding:
+        18px 5%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.06);
+
+    background:
+        rgba(5,5,8,.55);
+
+    backdrop-filter:blur(20px);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+}
+
+
+/* =====================================================
+   BRAND
+===================================================== */
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.brand-icon{
+
+    width:48px;
+    height:48px;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #855cff,
+            #3c2389
+        );
+
+    border:
+        1px solid
+        rgba(180,155,255,.35);
+
+    box-shadow:
+
+        0 12px 35px
+        rgba(119,76,255,.30),
+
+        0 0 25px
+        rgba(119,76,255,.18);
+
+    animation:
+        logoGlow
+        3s
+        ease-in-out
+        infinite;
+}
+
+.brand-icon img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+}
+
+.brand-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    line-height:1.2;
+}
+
+.brand-name{
+
+    font-size:18px;
+
+    font-weight:1000;
+}
+
+.brand-sub{
+
+    margin-top:4px;
+
+    color:#9090a1;
+
+    font-size:10px;
+}
+
+
+/* =====================================================
+   NAV ACTIONS
+===================================================== */
+
+.nav-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.nav-button{
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.045);
+
+    color:#d0cede;
+
+    padding:
+        10px 15px;
+
+    border-radius:12px;
+
+    font-family:inherit;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.nav-button:hover{
+
+    background:
+        rgba(137,98,255,.14);
+
+    border-color:
+        rgba(150,120,255,.35);
+
+    color:#fff;
+}
+
+.nav-button:disabled{
+
+    opacity:.5;
+
+    cursor:not-allowed;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main{
+
+    width:100%;
+
+    max-width:1250px;
+
+    margin:auto;
+
+    padding:
+        45px 5% 80px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.page-header{
+
+    margin-bottom:30px;
+
+    animation:
+        contentIn
+        .7s
+        ease
+        both;
+}
+
+.page-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:
+        9px 15px;
+
+    border-radius:50px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    color:#aaa8ba;
+
+    font-size:12px;
+
+    margin-bottom:15px;
+}
+
+.page-dot{
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#926cff;
+
+    box-shadow:
+        0 0 15px #926cff;
+}
+
+.page-header h1{
+
+    font-size:
+        clamp(
+            32px,
+            5vw,
+            55px
+        );
+
+    font-weight:1000;
+
+    line-height:1.2;
+
+    margin-bottom:10px;
+}
+
+.page-header h1 span{
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #c9baff,
+            #7953e5
+        );
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
+}
+
+.page-header p{
+
+    color:#92919f;
+
+    font-size:14px;
+
+    line-height:2;
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap:15px;
+
+    margin-bottom:25px;
+}
+
+.stat{
+
+    position:relative;
+
+    padding:20px;
+
+    border-radius:19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.065),
+            rgba(255,255,255,.018)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    overflow:hidden;
+}
+
+.stat::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:100px;
+    height:100px;
+
+    top:-60px;
+    right:-40px;
+
+    border-radius:50%;
+
+    background:#7953e5;
+
+    filter:blur(45px);
+
+    opacity:.15;
+}
+
+.stat-label{
+
+    color:#858492;
+
+    font-size:11px;
+
+    margin-bottom:8px;
+}
+
+.stat-value{
+
+    font-size:28px;
+
+    font-weight:1000;
+
+    color:#fff;
+}
+
+
+/* =====================================================
+   CONTROLS
+===================================================== */
+
+.controls{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:20px;
+
+    flex-wrap:wrap;
+}
+
+.search-box{
+
+    position:relative;
+
+    flex:1;
+
+    min-width:250px;
+}
+
+.search-box input{
+
+    width:100%;
+
+    padding:
+        14px 45px 14px 15px;
+
+    border-radius:14px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    outline:none;
+
+    background:
+        rgba(255,255,255,.045);
+
+    color:#fff;
+
+    font-family:inherit;
+
+    font-size:13px;
+
+    transition:.25s;
+}
+
+.search-box input:focus{
+
+    border-color:
+        rgba(145,108,255,.5);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(145,108,255,.08);
+}
+
+.search-icon{
+
+    position:absolute;
+
+    right:15px;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    color:#777686;
+
+    pointer-events:none;
+}
+
+.filter-select{
+
+    padding:
+        14px 15px;
+
+    border-radius:14px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    background:
+        #111016;
+
+    color:#ddd;
+
+    font-family:inherit;
+
+    font-size:12px;
+
+    outline:none;
+
+    cursor:pointer;
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+.message{
+
+    display:none;
+
+    padding:16px 18px;
+
+    border-radius:15px;
+
+    margin-bottom:20px;
+
+    font-size:12px;
+
+    line-height:1.8;
+}
+
+.message.error{
+
+    background:
+        rgba(255,70,100,.07);
+
+    border:
+        1px solid
+        rgba(255,80,110,.16);
+
+    color:#e3a9b5;
+}
+
+.message.success{
+
+    background:
+        rgba(60,220,140,.06);
+
+    border:
+        1px solid
+        rgba(60,220,140,.15);
+
+    color:#9fe0bd;
+}
+
+
+/* =====================================================
+   TABLE WRAPPER
+===================================================== */
+
+.table-wrapper{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    border-radius:22px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.015)
+        );
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.25);
+
+    backdrop-filter:blur(18px);
+
+    animation:
+        contentIn
+        .8s
+        ease
+        both;
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:850px;
+}
+
+thead{
+
+    background:
+        rgba(255,255,255,.035);
+}
+
+th{
+
+    padding:
+        17px 15px;
+
+    color:#888696;
+
+    font-size:11px;
+
+    font-weight:900;
+
+    text-align:right;
+
+    white-space:nowrap;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+td{
+
+    padding:
+        17px 15px;
+
+    color:#c9c7d3;
+
+    font-size:12px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.045);
+
+    vertical-align:middle;
+}
+
+tbody tr{
+
+    transition:.2s;
+}
+
+tbody tr:hover{
+
+    background:
+        rgba(137,98,255,.045);
+}
+
+tbody tr:last-child td{
+
+    border-bottom:0;
+}
+
+
+/* =====================================================
+   STUDENT
+===================================================== */
+
+.student-cell{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.avatar{
+
+    width:40px;
+    height:40px;
+
+    border-radius:13px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8962ff,
+            #4d2bac
+        );
+
+    box-shadow:
+        0 7px 20px
+        rgba(105,68,240,.25);
+
+    font-weight:1000;
+
+    color:#fff;
+}
+
+.student-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:4px;
+
+    min-width:0;
+}
+
+.student-name{
+
+    color:#fff;
+
+    font-weight:900;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    max-width:210px;
+}
+
+.student-email{
+
+    color:#777686;
+
+    font-size:10px;
+
+    direction:ltr;
+
+    text-align:right;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    max-width:230px;
+}
+
+
+/* =====================================================
+   ROLE
+===================================================== */
+
+.role{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    padding:
+        6px 10px;
+
+    border-radius:9px;
+
+    font-size:10px;
+
+    font-weight:900;
+}
+
+.role.student{
+
+    color:#b9a8ff;
+
+    background:
+        rgba(137,98,255,.10);
+
+    border:
+        1px solid
+        rgba(137,98,255,.15);
+}
+
+.role.admin{
+
+    color:#ffd99b;
+
+    background:
+        rgba(255,190,70,.08);
+
+    border:
+        1px solid
+        rgba(255,190,70,.13);
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:
+        6px 10px;
+
+    border-radius:9px;
+
+    font-size:10px;
+
+    font-weight:900;
+}
+
+.status-dot{
+
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+}
+
+.status.active{
+
+    color:#9de0bc;
+
+    background:
+        rgba(60,220,140,.07);
+
+    border:
+        1px solid
+        rgba(60,220,140,.12);
+}
+
+.status.active .status-dot{
+
+    background:#57dc93;
+
+    box-shadow:
+        0 0 9px #57dc93;
+}
+
+.status.inactive{
+
+    color:#e4a6b2;
+
+    background:
+        rgba(255,70,100,.07);
+
+    border:
+        1px solid
+        rgba(255,80,110,.12);
+}
+
+.status.inactive .status-dot{
+
+    background:#e4677d;
+
+    box-shadow:
+        0 0 9px #e4677d;
+}
+
+
+/* =====================================================
+   ACTION
+===================================================== */
+
+.action-button{
+
+    border:0;
+
+    border-radius:10px;
+
+    padding:
+        8px 11px;
+
+    font-family:inherit;
+
+    font-size:10px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.action-button.activate{
+
+    color:#a3e5bf;
+
+    background:
+        rgba(60,220,140,.08);
+
+    border:
+        1px solid
+        rgba(60,220,140,.12);
+}
+
+.action-button.deactivate{
+
+    color:#e5a5b1;
+
+    background:
+        rgba(255,70,100,.07);
+
+    border:
+        1px solid
+        rgba(255,80,110,.12);
+}
+
+.action-button:hover{
+
+    transform:
+        translateY(-2px);
+}
+
+.action-button:disabled{
+
+    opacity:.45;
+
+    cursor:not-allowed;
+
+    transform:none;
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading{
+
+    text-align:center;
+
+    padding:
+        65px 20px;
+
+    color:#8d8b9d;
+
+    font-size:13px;
+}
+
+.loader{
+
+    width:36px;
+    height:36px;
+
+    margin:
+        0 auto 15px;
+
+    border-radius:50%;
+
+    border:
+        3px solid
+        rgba(255,255,255,.08);
+
+    border-top-color:
+        #8962ff;
+
+    animation:
+        spin
+        .8s
+        linear
+        infinite;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty{
+
+    display:none;
+
+    text-align:center;
+
+    padding:
+        65px 20px;
+
+    color:#858492;
+}
+
+.empty-icon{
+
+    font-size:45px;
+
+    margin-bottom:12px;
+}
+
+.empty h3{
+
+    color:#fff;
+
+    font-size:18px;
+
+    margin-bottom:8px;
+}
+
+.empty p{
+
+    font-size:12px;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer{
+
+    text-align:center;
+
+    color:#5f5e6d;
+
+    font-size:10px;
+
+    padding:
+        15px 0 30px;
+}
+
+
+/* =====================================================
+   ANIMATIONS
+===================================================== */
+
+@keyframes contentIn{
+
+    from{
+        opacity:0;
+        transform:
+            translateY(25px);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateY(0);
+    }
+}
+
+@keyframes spin{
+
+    to{
+        transform:
+            rotate(360deg);
+    }
+}
+
+@keyframes starsMove{
+
+    from{
+        transform:
+            translate(0,0);
+    }
+
+    to{
+        transform:
+            translate(-90px,-90px);
+    }
+}
+
+@keyframes logoGlow{
+
+    0%,
+    100%{
+
+        box-shadow:
+            0 12px 35px
+            rgba(119,76,255,.30),
+
+            0 0 20px
+            rgba(119,76,255,.12);
+    }
+
+    50%{
+
+        box-shadow:
+
+            0 12px 45px
+            rgba(119,76,255,.55),
+
+            0 0 35px
+            rgba(119,76,255,.25);
+    }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:700px){
+
+    .navbar{
+
+        padding:
+            15px 16px;
+    }
+
+    .brand-icon{
+
+        width:42px;
+        height:42px;
+
+        border-radius:13px;
+    }
+
+    .brand-name{
+
+        font-size:15px;
+    }
+
+    .brand-sub{
+
+        font-size:8px;
+    }
+
+    .nav-button{
+
+        padding:
+            9px 11px;
+
+        font-size:10px;
+    }
+
+    .main{
+
+        padding:
+            35px 16px 60px;
+    }
+
+    .stats{
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .controls{
+
+        align-items:stretch;
+    }
+
+    .search-box{
+
+        min-width:100%;
+    }
+
+    .filter-select{
+
+        width:100%;
+    }
+
+    .page-header h1{
+
+        font-size:35px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     BACKGROUND
+===================================================== -->
+
+<div class="background">
+
+    <div class="stars"></div>
+
+</div>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+
+            <img
+                src="../teacher.png"
+                alt="المستر"
+                draggable="false"
+            >
+
+        </div>
+
+        <div class="brand-info">
+
+            <div class="brand-name">
+                الخوارزمي
+            </div>
+
+            <div class="brand-sub">
+                إدارة الطلاب
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-actions">
+
+        <button
+            id="refreshButton"
+            class="nav-button"
+            type="button"
+        >
+            ↻ تحديث
+        </button>
+
+        <button
+            id="logoutButton"
+            class="nav-button"
+            type="button"
+        >
+            تسجيل الخروج
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <section class="page-header">
+
+        <div class="page-badge">
+
+            <span class="page-dot"></span>
+
+            لوحة تحكم المستر
+
+        </div>
+
+
+        <h1>
+
+            إدارة
+
+            <span>
+                الطلاب
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            من هنا يمكنك متابعة الطلاب المسجلين
+            في منصة الخوارزمي وإدارة حالة حساباتهم.
+
+        </p>
+
+    </section>
+
+
+    <!-- =================================================
+         STATS
+    ================================================== -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <div class="stat-label">
+                إجمالي الطلاب
+            </div>
+
+            <div
+                class="stat-value"
+                id="totalStudents"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                الحسابات النشطة
+            </div>
+
+            <div
+                class="stat-value"
+                id="activeStudents"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                الحسابات المتوقفة
+            </div>
+
+            <div
+                class="stat-value"
+                id="inactiveStudents"
+            >
+                0
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         CONTROLS
+    ================================================== -->
+
+    <section class="controls">
+
+        <div class="search-box">
+
+            <span class="search-icon">
+                🔎
+            </span>
+
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="ابحث بالاسم أو البريد الإلكتروني..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <select
+            id="statusFilter"
+            class="filter-select"
+        >
+
+            <option value="all">
+                كل الطلاب
+            </option>
+
+            <option value="active">
+                الحسابات النشطة
+            </option>
+
+            <option value="inactive">
+                الحسابات المتوقفة
+            </option>
+
+        </select>
+
+    </section>
+
+
+    <!-- =================================================
+         MESSAGE
+    ================================================== -->
+
+    <div
+        id="errorMessage"
+        class="message error"
+    ></div>
+
+
+    <div
+        id="successMessage"
+        class="message success"
+    ></div>
+
+
+    <!-- =================================================
+         TABLE
+    ================================================== -->
+
+    <section class="table-wrapper">
+
+
+        <!-- LOADING -->
+
+        <div
+            id="loading"
+            class="loading"
+        >
+
+            <div class="loader"></div>
+
+            جاري تحميل الطلاب...
+
+        </div>
+
+
+        <!-- EMPTY -->
+
+        <div
+            id="empty"
+            class="empty"
+        >
+
+            <div class="empty-icon">
+                👨‍🎓
+            </div>
+
+            <h3>
+                لا يوجد طلاب
+            </h3>
+
+            <p>
+                لم يتم العثور على طلاب مطابقين للبحث.
+            </p>
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <table
+            id="studentsTable"
+            style="display:none;"
+        >
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        الطالب
+                    </th>
+
+                    <th>
+                        الدور
+                    </th>
+
+                    <th>
+                        الحالة
+                    </th>
+
+                    <th>
+                        تاريخ التسجيل
+                    </th>
+
+                    <th>
+                        الإجراء
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody
+                id="studentsBody"
+            ></tbody>
+
+        </table>
+
+
+    </section>
+
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    © 2026 الخوارزمي | منصة الاختبارات
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+    "https://mqwtrsbncanwtxotxppp.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_lPAYrGCg_7-5Y1Dj7E5BSw_o-DsYl9Z";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const loading =
+    document.getElementById(
+        "loading"
+    );
+
+const empty =
+    document.getElementById(
+        "empty"
+    );
+
+const studentsTable =
+    document.getElementById(
+        "studentsTable"
+    );
+
+const studentsBody =
+    document.getElementById(
+        "studentsBody"
+    );
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+const statusFilter =
+    document.getElementById(
+        "statusFilter"
+    );
+
+const totalStudents =
+    document.getElementById(
+        "totalStudents"
+    );
+
+const activeStudents =
+    document.getElementById(
+        "activeStudents"
+    );
+
+const inactiveStudents =
+    document.getElementById(
+        "inactiveStudents"
+    );
+
+const refreshButton =
+    document.getElementById(
+        "refreshButton"
+    );
+
+const logoutButton =
+    document.getElementById(
+        "logoutButton"
+    );
+
+const errorMessage =
+    document.getElementById(
+        "errorMessage"
+    );
+
+const successMessage =
+    document.getElementById(
+        "successMessage"
+    );
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let students = [];
+
+let isLoadingStudents = false;
+
+let isLoggingOut = false;
+
+
+/* =====================================================
+   MESSAGE HELPERS
+===================================================== */
+
+function showError(message){
+
+    errorMessage.textContent =
+        message;
+
+    errorMessage.style.display =
+        "block";
+
+    successMessage.style.display =
+        "none";
+}
+
+
+function showSuccess(message){
+
+    successMessage.textContent =
+        message;
+
+    successMessage.style.display =
+        "block";
+
+    errorMessage.style.display =
+        "none";
+
+
+    setTimeout(
+        function(){
+
+            successMessage.style.display =
+                "none";
+
+        },
+        3000
+    );
+}
+
+
+/* =====================================================
+   CLEAR MESSAGES
+===================================================== */
+
+function clearMessages(){
+
+    errorMessage.style.display =
+        "none";
+
+    successMessage.style.display =
+        "none";
+
+}
+
+
+/* =====================================================
+   CHECK ADMIN
+===================================================== */
+
+async function checkAdmin(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient.auth.getUser();
+
+
+    if(error){
+
+        throw error;
+
+    }
+
+
+    const user =
+        data.user;
+
+
+    if(!user){
+
+        window.location.replace(
+            "../auth.html"
+        );
+
+        return null;
+
+    }
+
+
+    /*
+       نقرأ بيانات المستخدم من profiles
+       ونتأكد أن الدور admin
+    */
+
+    const {
+        data: profile,
+        error: profileError
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(
+            "id,full_name,email,role,is_active"
+        )
+        .eq(
+            "id",
+            user.id
+        )
+        .maybeSingle();
+
+
+    if(profileError){
+
+        throw profileError;
+
+    }
+
+
+    if(!profile){
+
+        throw new Error(
+            "لم يتم العثور على ملف الحساب في profiles."
+        );
+
+    }
+
+
+    if(profile.role !== "admin"){
+
+        alert(
+            "هذه الصفحة مخصصة للأدمن فقط."
+        );
+
+        window.location.replace(
+            "../student/index.html"
+        );
+
+        return null;
+
+    }
+
+
+    if(profile.is_active === false){
+
+        await supabaseClient.auth.signOut();
+
+        alert(
+            "هذا الحساب غير نشط."
+        );
+
+        window.location.replace(
+            "../auth.html"
+        );
+
+        return null;
+
+    }
+
+
+    return profile;
+
+}
+
+
+/* =====================================================
+   LOAD STUDENTS
+===================================================== */
+
+async function loadStudents(){
+
+    if(isLoadingStudents){
+
+        return;
+
+    }
+
+
+    isLoadingStudents = true;
+
+    clearMessages();
+
+
+    loading.style.display =
+        "block";
+
+    empty.style.display =
+        "none";
+
+    studentsTable.style.display =
+        "none";
+
+
+    refreshButton.disabled =
+        true;
+
+    refreshButton.textContent =
+        "جاري التحديث...";
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .from("profiles")
+            .select(
+                "id,full_name,email,role,is_active,created_at,updated_at"
+            )
+            .eq(
+                "role",
+                "student"
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        students =
+            Array.isArray(data)
+                ? data
+                : [];
+
+
+        updateStats();
+
+        renderStudents();
+
+
+    }
+    catch(error){
+
+        console.error(
+            "Students error:",
+            error
+        );
+
+
+        showError(
+            "تعذر تحميل الطلاب من قاعدة البيانات. تأكد من صلاحيات RLS لجدول profiles."
+        );
+
+    }
+    finally{
+
+        isLoadingStudents =
+            false;
+
+        loading.style.display =
+            "none";
+
+        refreshButton.disabled =
+            false;
+
+        refreshButton.textContent =
+            "↻ تحديث";
+
+    }
+
+}
+
+
+/* =====================================================
+   UPDATE STATS
+===================================================== */
+
+function updateStats(){
+
+    const total =
+        students.length;
+
+
+    const active =
+        students.filter(
+            function(student){
+
+                return student.is_active !== false;
+
+            }
+        ).length;
+
+
+    const inactive =
+        total - active;
+
+
+    totalStudents.textContent =
+        total;
+
+    activeStudents.textContent =
+        active;
+
+    inactiveStudents.textContent =
+        inactive;
+
+}
+
+
+/* =====================================================
+   FILTER STUDENTS
+===================================================== */
+
+function getFilteredStudents(){
+
+    const search =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+
+    const filter =
+        statusFilter.value;
+
+
+    return students.filter(
+        function(student){
+
+            const name =
+                String(
+                    student.full_name || ""
+                )
+                .toLowerCase();
+
+
+            const email =
+                String(
+                    student.email || ""
+                )
+                .toLowerCase();
+
+
+            const matchesSearch =
+                !search ||
+                name.includes(search) ||
+                email.includes(search);
+
+
+            const active =
+                student.is_active !== false;
+
+
+            let matchesStatus =
+                true;
+
+
+            if(filter === "active"){
+
+                matchesStatus =
+                    active;
+
+            }
+
+
+            if(filter === "inactive"){
+
+                matchesStatus =
+                    !active;
+
+            }
+
+
+            return (
+                matchesSearch &&
+                matchesStatus
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function renderStudents(){
+
+    const filtered =
+        getFilteredStudents();
+
+
+    studentsBody.innerHTML =
+        "";
+
+
+    if(filtered.length === 0){
+
+        empty.style.display =
+            "block";
+
+        studentsTable.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    empty.style.display =
+        "none";
+
+    studentsTable.style.display =
+        "table";
+
+
+    filtered.forEach(
+        function(student){
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const fullName =
+                student.full_name ||
+                "بدون اسم";
+
+
+            const email =
+                student.email ||
+                "بدون بريد";
+
+
+            const active =
+                student.is_active !== false;
+
+
+            const role =
+                student.role ||
+                "student";
+
+
+            const created =
+                formatDate(
+                    student.created_at
+                );
+
+
+            const firstLetter =
+                getInitial(
+                    fullName
+                );
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    <div class="student-cell">
+
+                        <div class="avatar">
+                            ${escapeHTML(firstLetter)}
+                        </div>
+
+                        <div class="student-info">
+
+                            <div class="student-name">
+                                ${escapeHTML(fullName)}
+                            </div>
+
+                            <div class="student-email">
+                                ${escapeHTML(email)}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <span class="role student">
+
+                        طالب
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <span
+                        class="status ${
+                            active
+                                ? "active"
+                                : "inactive"
+                        }"
+                    >
+
+                        <span class="status-dot"></span>
+
+                        ${
+                            active
+                                ? "نشط"
+                                : "متوقف"
+                        }
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    ${escapeHTML(created)}
+
+                </td>
+
+
+                <td>
+
+                    <button
+                        type="button"
+                        class="action-button ${
+                            active
+                                ? "deactivate"
+                                : "activate"
+                        }"
+                        data-id="${escapeHTML(student.id)}"
+                    >
+
+                        ${
+                            active
+                                ? "تعطيل الحساب"
+                                : "تفعيل الحساب"
+                        }
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            const actionButton =
+                row.querySelector(
+                    ".action-button"
+                );
+
+
+            actionButton.addEventListener(
+                "click",
+                function(){
+
+                    toggleStudent(
+                        student.id,
+                        active,
+                        actionButton
+                    );
+
+                }
+            );
+
+
+            studentsBody.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   TOGGLE STUDENT
+===================================================== */
+
+async function toggleStudent(
+    studentId,
+    currentStatus,
+    button
+){
+
+    if(
+        !studentId ||
+        !button
+    ){
+
+        return;
+
+    }
+
+
+    if(button.disabled){
+
+        return;
+
+    }
+
+
+    const newStatus =
+        !currentStatus;
+
+
+    const message =
+        newStatus
+            ? "هل تريد تفعيل هذا الحساب؟"
+            : "هل تريد تعطيل هذا الحساب؟";
+
+
+    if(
+        !confirm(message)
+    ){
+
+        return;
+
+    }
+
+
+    button.disabled =
+        true;
+
+    button.textContent =
+        "جاري التنفيذ...";
+
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from("profiles")
+            .update({
+                is_active:
+                    newStatus,
+
+                updated_at:
+                    new Date().toISOString()
+            })
+            .eq(
+                "id",
+                studentId
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        /*
+           تحديث البيانات الموجودة
+           بدون إعادة تحميل الصفحة
+        */
+
+        students =
+            students.map(
+                function(student){
+
+                    if(
+                        student.id ===
+                        studentId
+                    ){
+
+                        return {
+                            ...student,
+
+                            is_active:
+                                newStatus,
+
+                            updated_at:
+                                new Date().toISOString()
+                        };
+
+                    }
+
+                    return student;
+
+                }
+            );
+
+
+        updateStats();
+
+        renderStudents();
+
+
+        showSuccess(
+            newStatus
+                ? "تم تفعيل حساب الطالب بنجاح."
+                : "تم تعطيل حساب الطالب بنجاح."
+        );
+
+
+    }
+    catch(error){
+
+        console.error(
+            "Update student error:",
+            error
+        );
+
+
+        button.disabled =
+            false;
+
+
+        button.textContent =
+            currentStatus
+                ? "تعطيل الحساب"
+                : "تفعيل الحساب";
+
+
+        showError(
+            "تعذر تعديل حالة الطالب. تأكد من صلاحيات UPDATE في جدول profiles."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   FORMAT DATE
+===================================================== */
+
+function formatDate(value){
+
+    if(!value){
+
+        return "غير معروف";
+
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "غير معروف";
+
+    }
+
+
+    return date.toLocaleDateString(
+        "ar-EG",
+        {
+            year:"numeric",
+            month:"long",
+            day:"numeric"
+        }
+    );
+
+}
+
+
+/* =====================================================
+   INITIAL
+===================================================== */
+
+function getInitial(name){
+
+    const value =
+        String(name || "")
+            .trim();
+
+
+    if(!value){
+
+        return "؟";
+
+    }
+
+
+    return value.charAt(0);
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+let searchTimer = null;
+
+
+searchInput.addEventListener(
+    "input",
+    function(){
+
+        clearTimeout(
+            searchTimer
+        );
+
+
+        searchTimer =
+            setTimeout(
+                function(){
+
+                    renderStudents();
+
+                },
+                100
+            );
+
+    }
+);
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+statusFilter.addEventListener(
+    "change",
+    function(){
+
+        renderStudents();
+
+    }
+);
+
+
+/* =====================================================
+   REFRESH
+===================================================== */
+
+refreshButton.addEventListener(
+    "click",
+    function(){
+
+        loadStudents();
+
+    }
+);
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+logoutButton.addEventListener(
+    "click",
+    async function(){
+
+        if(isLoggingOut){
+
+            return;
+
+        }
+
+
+        if(
+            !confirm(
+                "هل تريد تسجيل الخروج؟"
+            )
+        ){
+
+            return;
+
+        }
+
+
+        isLoggingOut =
+            true;
+
+        logoutButton.disabled =
+            true;
+
+        logoutButton.textContent =
+            "جاري الخروج...";
+
+
+        try{
+
+            const {
+                error
+            } =
+            await supabaseClient.auth.signOut();
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            window.location.replace(
+                "../auth.html"
+            );
+
+        }
+        catch(error){
+
+            console.error(error);
+
+            isLoggingOut =
+                false;
+
+            logoutButton.disabled =
+                false;
+
+            logoutButton.textContent =
+                "تسجيل الخروج";
+
+
+            showError(
+                "تعذر تسجيل الخروج. حاول مرة أخرى."
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   INIT
+===================================================== */
+
+async function init(){
+
+    try{
+
+        const admin =
+            await checkAdmin();
+
+
+        if(!admin){
+
+            return;
+
+        }
+
+
+        await loadStudents();
+
+    }
+    catch(error){
+
+        console.error(
+            "Init error:",
+            error
+        );
+
+
+        showError(
+            "حدث خطأ أثناء التحقق من صلاحيات الأدمن."
+        );
+
+    }
+
+}
+
+
+init();
+
+</script>
+
+</body>
+
+</html>
