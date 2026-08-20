@@ -6,20 +6,14 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width,
-initial-scale=1.0,
-maximum-scale=1.0,
-user-scalable=no">
+content="width=device-width, initial-scale=1.0,
+maximum-scale=1.0, user-scalable=no">
 
 <meta name="theme-color" content="#050507">
 
 <title>الخوارزمي | منصة الاختبارات</title>
 
 <style>
-
-/* =====================================================
-   RESET
-===================================================== */
 
 *{
     margin:0;
@@ -28,411 +22,243 @@ user-scalable=no">
     -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body{
+html,body{
     width:100%;
     min-height:100%;
 }
 
 body{
-
-    font-family:
-        "Cairo",
-        "Tajawal",
-        Arial,
-        sans-serif;
-
+    font-family:"Cairo","Tajawal",Arial,sans-serif;
     color:#fff;
-
     background:
-        radial-gradient(
-            circle at 50% 45%,
-            rgba(105,70,220,.13),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 85% 10%,
-            #302052 0%,
-            #15121e 30%,
-            #07070a 65%,
-            #000 100%
-        );
-
+        radial-gradient(circle at 50% 45%,rgba(105,70,220,.13),transparent 28%),
+        radial-gradient(circle at 85% 10%,#302052 0%,#15121e 30%,#07070a 65%,#000 100%);
     overflow-x:hidden;
 }
 
 
-/* =====================================================
-   BACKGROUND
-===================================================== */
+/* ================= BACKGROUND ================= */
 
 .background{
-
     position:fixed;
-
     inset:0;
-
     z-index:-20;
-
     overflow:hidden;
-
     pointer-events:none;
-
     background:
-        radial-gradient(
-            circle at 50% 50%,
-            rgba(116,72,232,.06),
-            transparent 45%
-        );
+        radial-gradient(circle at 50% 50%,rgba(116,72,232,.06),transparent 45%);
 }
 
 .background::before{
-
     content:"";
-
     position:absolute;
-
     width:650px;
     height:650px;
-
     top:-300px;
     right:-180px;
-
     border-radius:50%;
-
     background:#7448e8;
-
     filter:blur(170px);
-
     opacity:.22;
 }
 
 .background::after{
-
     content:"";
-
     position:absolute;
-
     width:600px;
     height:600px;
-
     bottom:-350px;
     left:-220px;
-
     border-radius:50%;
-
     background:#3154df;
-
     filter:blur(180px);
-
     opacity:.15;
 }
 
-
-/* =====================================================
-   STARS
-===================================================== */
-
 .stars{
-
     position:absolute;
-
     inset:0;
-
     opacity:.09;
-
     background-image:
-
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.9) 1px,
-            transparent 1px
-        );
-
+        radial-gradient(circle,rgba(255,255,255,.9) 1px,transparent 1px);
     background-size:90px 90px;
-
-    animation:
-        starsMove 18s linear infinite;
+    animation:starsMove 18s linear infinite;
 }
 
-
-/* =====================================================
-   LIGHT PARTICLES
-===================================================== */
-
 .light{
-
     position:absolute;
-
     width:4px;
     height:4px;
-
     border-radius:50%;
-
     background:#b9a4ff;
-
     box-shadow:
         0 0 15px #936cff,
         0 0 30px rgba(147,108,255,.7);
-
     opacity:.55;
-
-    animation:
-        lightFloat
-        var(--duration)
-        ease-in-out
-        infinite;
+    animation:lightFloat var(--duration) ease-in-out infinite;
 }
 
-.light:nth-child(1){
+.light:nth-child(2){
     top:18%;
     left:12%;
     --duration:5s;
 }
 
-.light:nth-child(2){
+.light:nth-child(3){
     top:34%;
     left:82%;
     --duration:7s;
 }
 
-.light:nth-child(3){
+.light:nth-child(4){
     top:65%;
     left:14%;
     --duration:6s;
 }
 
-.light:nth-child(4){
+.light:nth-child(5){
     top:78%;
     left:75%;
     --duration:8s;
 }
 
-.light:nth-child(5){
+.light:nth-child(6){
     top:12%;
     left:48%;
     --duration:6.5s;
 }
 
-.light:nth-child(6){
+.light:nth-child(7){
     top:52%;
     left:92%;
     --duration:5.5s;
 }
 
 
-/* =====================================================
-   NAVBAR
-===================================================== */
+/* ================= NAVBAR ================= */
 
 .navbar{
-
     width:100%;
-
-    padding:
-        24px 5%;
-
+    padding:24px 5%;
     display:flex;
-
     align-items:center;
-
-    justify-content:space-between;
-
+    justify-content:flex-start;
     position:relative;
-
     z-index:50;
 }
 
-
-/* =====================================================
-   BRAND
-===================================================== */
-
 .brand{
-
     display:flex;
-
     align-items:center;
-
     gap:12px;
 }
 
 .brand-icon{
-
     width:48px;
     height:48px;
-
     display:flex;
-
     align-items:center;
     justify-content:center;
-
     border-radius:15px;
-
     overflow:hidden;
 
-    background:
-        linear-gradient(
-            135deg,
-            #855cff,
-            #3c2389
-        );
+    background:linear-gradient(135deg,#855cff,#3c2389);
 
     box-shadow:
-        0 12px 35px
-        rgba(119,76,255,.30);
+        0 12px 35px rgba(119,76,255,.30);
 
-    animation:
-        logoGlow 3s ease-in-out infinite;
+    animation:logoGlow 3s ease-in-out infinite;
 }
 
 .brand-icon img{
-
     width:100%;
     height:100%;
-
     object-fit:cover;
-
     border-radius:15px;
+    display:block;
 }
 
 .brand-info{
-
     display:flex;
-
     flex-direction:column;
-
     line-height:1.2;
 }
 
 .brand-name{
-
     font-size:18px;
-
     font-weight:900;
 
     background:
-        linear-gradient(
-            135deg,
-            #fff,
-            #d3c5ff,
-            #8760ff
-        );
+        linear-gradient(135deg,#fff,#d3c5ff,#8760ff);
 
     -webkit-background-clip:text;
-
     background-clip:text;
-
     color:transparent;
 }
 
 .brand-sub{
-
     margin-top:4px;
-
     color:#9090a1;
-
     font-size:11px;
 }
 
 
-/* =====================================================
-   HERO
-===================================================== */
+/* ================= HERO ================= */
 
 .hero{
-
-    min-height:
-        calc(100vh - 96px);
-
+    min-height:calc(100vh - 96px);
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
-    padding:
-        20px 5% 60px;
+    padding:20px 5% 60px;
 }
 
 .hero-container{
-
     width:100%;
-
     max-width:1250px;
 
     display:grid;
-
-    grid-template-columns:
-        1.1fr 1fr;
+    grid-template-columns:1.1fr 1fr;
 
     align-items:center;
-
     gap:65px;
 }
 
 
-/* =====================================================
-   CONTENT
-===================================================== */
+/* ================= CONTENT ================= */
 
 .content{
-
     position:relative;
-
-    animation:
-        contentIn .9s ease both;
+    animation:contentIn .9s ease both;
 }
 
 .content::before{
-
     content:"";
-
     position:absolute;
-
     width:100px;
     height:2px;
-
     top:-35px;
     right:0;
 
     background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #8862ff,
-            transparent
-        );
+        linear-gradient(90deg,transparent,#8862ff,transparent);
 
     box-shadow:
-        0 0 15px
-        rgba(136,98,255,.8);
+        0 0 15px rgba(136,98,255,.8);
 }
 
-
-/* =====================================================
-   BADGE
-===================================================== */
-
 .badge{
-
     display:inline-flex;
-
     align-items:center;
-
     gap:9px;
 
-    padding:
-        10px 18px;
+    padding:10px 18px;
 
     border-radius:50px;
 
-    background:
-        rgba(255,255,255,.055);
+    background:rgba(255,255,255,.055);
 
-    border:
-        1px solid
-        rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.09);
 
     color:#c9c9d8;
 
@@ -441,40 +267,25 @@ body{
     margin-bottom:25px;
 
     backdrop-filter:blur(15px);
-
-    box-shadow:
-        0 0 30px
-        rgba(122,85,255,.08);
 }
 
 .badge-dot{
-
     width:8px;
     height:8px;
-
     border-radius:50%;
-
     background:#936dff;
 
     box-shadow:
         0 0 15px #936dff,
         0 0 30px #7650df;
 
-    animation:
-        dotPulse 2s ease-in-out infinite;
+    animation:dotPulse 2s ease-in-out infinite;
 }
 
-
-/* =====================================================
-   TITLE
-===================================================== */
-
 h1{
-
     position:relative;
 
-    font-size:
-        clamp(52px, 6.5vw, 88px);
+    font-size:clamp(52px,6.5vw,88px);
 
     line-height:1.04;
 
@@ -486,9 +297,7 @@ h1{
 }
 
 h1::after{
-
     content:"";
-
     position:absolute;
 
     width:180px;
@@ -500,47 +309,28 @@ h1::after{
     border-radius:50%;
 
     background:
-        radial-gradient(
-            circle,
-            rgba(134,91,255,.16),
-            transparent 70%
-        );
+        radial-gradient(circle,rgba(134,91,255,.16),transparent 70%);
 
     filter:blur(10px);
-
     pointer-events:none;
 }
 
 h1 span{
-
     display:block;
 
     background:
-        linear-gradient(
-            135deg,
-            #fff 0%,
-            #d1c4ff 42%,
-            #7953e5 100%
-        );
+        linear-gradient(135deg,#fff 0%,#d1c4ff 42%,#7953e5 100%);
 
     -webkit-background-clip:text;
-
     background-clip:text;
 
     color:transparent;
 
     text-shadow:
-        0 0 45px
-        rgba(129,91,255,.13);
+        0 0 45px rgba(129,91,255,.13);
 }
 
-
-/* =====================================================
-   DESCRIPTION
-===================================================== */
-
 .description{
-
     max-width:600px;
 
     color:#a7a7b6;
@@ -553,45 +343,30 @@ h1 span{
 }
 
 
-/* =====================================================
-   START BUTTON
-===================================================== */
+/* ================= BUTTON ================= */
 
 .start-button{
-
     position:relative;
 
     width:260px;
 
-    padding:
-        18px 25px;
+    padding:18px 25px;
 
     border:0;
-
     border-radius:18px;
 
     color:#fff;
 
     font-family:inherit;
-
     font-size:17px;
-
     font-weight:900;
 
     background:
-        linear-gradient(
-            135deg,
-            #8962ff,
-            #4d2bac
-        );
+        linear-gradient(135deg,#8962ff,#4d2bac);
 
     box-shadow:
-
-        0 18px 55px
-        rgba(105,68,240,.35),
-
-        0 0 35px
-        rgba(120,80,255,.13);
+        0 18px 55px rgba(105,68,240,.35),
+        0 0 35px rgba(120,80,255,.13);
 
     cursor:pointer;
 
@@ -599,21 +374,19 @@ h1 span{
 
     transition:
         transform .25s ease,
-        box-shadow .25s ease;
+        box-shadow .25s ease,
+        opacity .25s ease;
 }
 
 .start-button::before{
-
     content:"";
 
     position:absolute;
 
     top:0;
-
     left:-130%;
 
     width:80%;
-
     height:100%;
 
     background:
@@ -630,80 +403,58 @@ h1 span{
 }
 
 .start-button:hover{
-
-    transform:
-        translateY(-4px);
+    transform:translateY(-4px);
 
     box-shadow:
-
-        0 25px 65px
-        rgba(105,68,240,.52),
-
-        0 0 50px
-        rgba(120,80,255,.2);
+        0 25px 65px rgba(105,68,240,.52),
+        0 0 50px rgba(120,80,255,.2);
 }
 
 .start-button:hover::before{
-
     left:150%;
 }
 
 .start-button:active{
+    transform:scale(.97);
+}
 
-    transform:
-        scale(.97);
+.start-button:disabled{
+    cursor:not-allowed;
+    transform:none;
 }
 
 .button-content{
-
     position:relative;
-
     z-index:2;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     gap:13px;
 }
 
 .arrow{
-
     font-size:23px;
 }
 
 
-/* =====================================================
-   VISUAL
-===================================================== */
+/* ================= TEACHER ================= */
 
 .visual{
-
     position:relative;
 
     display:flex;
-
     flex-direction:column;
 
     align-items:center;
-
     justify-content:center;
 
     min-height:550px;
 
-    animation:
-        visualIn 1s ease .1s both;
+    animation:visualIn 1s ease .1s both;
 }
 
-
-/* =====================================================
-   CENTER TEACHER
-===================================================== */
-
 .teacher-center{
-
     position:relative;
 
     width:280px;
@@ -716,12 +467,10 @@ h1 span{
     z-index:5;
 
     transition:
-        transform .7s
-        cubic-bezier(.2,.8,.2,1);
+        transform .7s cubic-bezier(.2,.8,.2,1);
 }
 
 .teacher-center-glow{
-
     position:absolute;
 
     width:390px;
@@ -730,8 +479,7 @@ h1 span{
     top:50%;
     left:50%;
 
-    transform:
-        translate(-50%,-50%);
+    transform:translate(-50%,-50%);
 
     border-radius:50%;
 
@@ -753,30 +501,22 @@ h1 span{
 }
 
 .teacher-center-ring{
-
     position:absolute;
 
     inset:-9px;
 
     border-radius:50%;
 
-    border:
-        2px solid
-        rgba(160,130,255,.55);
+    border:2px solid rgba(160,130,255,.55);
 
     box-shadow:
-
-        0 0 25px
-        rgba(130,90,255,.35),
-
-        0 0 60px
-        rgba(100,60,220,.20);
+        0 0 25px rgba(130,90,255,.35),
+        0 0 60px rgba(100,60,220,.20);
 
     z-index:2;
 }
 
 .teacher-center::before{
-
     content:"";
 
     position:absolute;
@@ -785,22 +525,17 @@ h1 span{
 
     border-radius:50%;
 
-    border:
-        1px solid
-        rgba(150,115,255,.35);
+    border:1px solid rgba(150,115,255,.35);
 
     box-shadow:
-        0 0 30px
-        rgba(120,80,255,.30);
+        0 0 30px rgba(120,80,255,.30);
 
-    animation:
-        rotateRing 8s linear infinite;
+    animation:rotateRing 8s linear infinite;
 
     z-index:1;
 }
 
 .teacher-center img{
-
     position:relative;
 
     width:100%;
@@ -810,41 +545,26 @@ h1 span{
 
     border-radius:50%;
 
-    border:
-        3px solid
-        rgba(255,255,255,.16);
+    border:3px solid rgba(255,255,255,.16);
 
     display:block;
 
     z-index:3;
 
     box-shadow:
-
-        0 30px 70px
-        rgba(0,0,0,.7),
-
-        0 0 40px
-        rgba(120,80,255,.4);
+        0 30px 70px rgba(0,0,0,.7),
+        0 0 40px rgba(120,80,255,.4);
 
     transition:
         transform .7s ease,
         box-shadow .7s ease;
 }
 
-
-/* =====================================================
-   TEACHER ACTIVE LIGHT
-===================================================== */
-
 .teacher-center.active{
-
-    transform:
-        scale(1.08);
+    transform:scale(1.08);
 }
 
-.teacher-center.active
-.teacher-center-glow{
-
+.teacher-center.active .teacher-center-glow{
     opacity:1;
 
     transform:
@@ -864,49 +584,30 @@ h1 span{
 }
 
 .teacher-center.active img{
-
     transform:scale(1.05);
 
     box-shadow:
-
-        0 30px 80px
-        rgba(0,0,0,.75),
-
-        0 0 50px
-        rgba(175,140,255,.9),
-
-        0 0 100px
-        rgba(115,70,255,.7);
+        0 30px 80px rgba(0,0,0,.75),
+        0 0 50px rgba(175,140,255,.9),
+        0 0 100px rgba(115,70,255,.7);
 }
 
 .teacher-center.active .teacher-center-ring{
-
-    border-color:
-        rgba(215,195,255,1);
+    border-color:rgba(215,195,255,1);
 
     box-shadow:
-
-        0 0 20px
-        rgba(180,145,255,1),
-
-        0 0 50px
-        rgba(140,95,255,.95),
-
-        0 0 100px
-        rgba(105,60,230,.7);
+        0 0 20px rgba(180,145,255,1),
+        0 0 50px rgba(140,95,255,.95),
+        0 0 100px rgba(105,60,230,.7);
 }
 
 
-/* =====================================================
-   CENTER TEXT
-===================================================== */
+/* ================= MESSAGE ================= */
 
 .teacher-message{
-
     position:relative;
 
     width:100%;
-
     max-width:620px;
 
     text-align:center;
@@ -917,7 +618,6 @@ h1 span{
 }
 
 .teacher-message::before{
-
     content:"✦ ───────── ✦";
 
     display:block;
@@ -931,16 +631,13 @@ h1 span{
     letter-spacing:4px;
 
     text-shadow:
-        0 0 15px
-        rgba(128,96,223,.7);
+        0 0 15px rgba(128,96,223,.7);
 }
 
 .trust-line{
-
     display:flex;
 
     align-items:center;
-
     justify-content:center;
 
     gap:10px;
@@ -956,12 +653,10 @@ h1 span{
     margin-bottom:17px;
 
     text-shadow:
-        0 0 20px
-        rgba(144,104,255,.35);
+        0 0 20px rgba(144,104,255,.35);
 }
 
 .trust-line span{
-
     color:#a27cff;
 
     font-size:20px;
@@ -971,20 +666,12 @@ h1 span{
         0 0 25px rgba(144,104,255,.8);
 }
 
-
-/* =====================================================
-   THANK YOU
-===================================================== */
-
 .teacher-description{
-
     position:relative;
 
-    margin:
-        0 auto 24px;
+    margin:0 auto 24px;
 
-    padding:
-        22px 28px;
+    padding:22px 28px;
 
     color:#aaa9b8;
 
@@ -1003,25 +690,18 @@ h1 span{
             rgba(255,255,255,.018)
         );
 
-    border:
-        1px solid
-        rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.09);
 
     border-radius:22px;
 
     box-shadow:
-
-        inset 0 1px
-        rgba(255,255,255,.05),
-
-        0 20px 50px
-        rgba(0,0,0,.25);
+        inset 0 1px rgba(255,255,255,.05),
+        0 20px 50px rgba(0,0,0,.25);
 
     backdrop-filter:blur(15px);
 }
 
 .teacher-description::before{
-
     content:"";
 
     position:absolute;
@@ -1029,8 +709,7 @@ h1 span{
     top:0;
     right:50%;
 
-    transform:
-        translateX(50%);
+    transform:translateX(50%);
 
     width:100px;
     height:2px;
@@ -1046,21 +725,16 @@ h1 span{
         );
 
     box-shadow:
-        0 0 15px
-        rgba(145,108,255,.8);
+        0 0 15px rgba(145,108,255,.8);
 }
 
 
-/* =====================================================
-   DEVELOPER CARD
-===================================================== */
+/* ================= DEVELOPER ================= */
 
 .developer-card{
-
     position:relative;
 
     width:100%;
-
     max-width:570px;
 
     margin:0 auto;
@@ -1076,17 +750,11 @@ h1 span{
             rgba(255,255,255,.035)
         );
 
-    border:
-        1px solid
-        rgba(145,110,255,.22);
+    border:1px solid rgba(145,110,255,.22);
 
     box-shadow:
-
-        0 20px 60px
-        rgba(0,0,0,.28),
-
-        0 0 35px
-        rgba(120,80,255,.08);
+        0 20px 60px rgba(0,0,0,.28),
+        0 0 35px rgba(120,80,255,.08);
 
     backdrop-filter:blur(18px);
 
@@ -1094,7 +762,6 @@ h1 span{
 }
 
 .developer-card::before{
-
     content:"";
 
     position:absolute;
@@ -1107,14 +774,12 @@ h1 span{
 
     border-radius:50%;
 
-    background:
-        rgba(130,85,255,.18);
+    background:rgba(130,85,255,.18);
 
     filter:blur(30px);
 }
 
 .developer-title{
-
     position:relative;
 
     color:#a98aff;
@@ -1129,7 +794,6 @@ h1 span{
 }
 
 .developer-name{
-
     position:relative;
 
     font-size:27px;
@@ -1147,18 +811,12 @@ h1 span{
         );
 
     -webkit-background-clip:text;
-
     background-clip:text;
 
     color:transparent;
-
-    text-shadow:
-        0 0 30px
-        rgba(140,100,255,.18);
 }
 
 .developer-name-en{
-
     position:relative;
 
     direction:ltr;
@@ -1173,7 +831,6 @@ h1 span{
 }
 
 .developer-text{
-
     position:relative;
 
     color:#9e9daa;
@@ -1183,13 +840,7 @@ h1 span{
     line-height:2.2;
 }
 
-
-/* =====================================================
-   MOTIVATION
-===================================================== */
-
 .motivation{
-
     margin-top:20px;
 
     color:#777487;
@@ -1202,17 +853,13 @@ h1 span{
 }
 
 .motivation strong{
-
     color:#c8b8ff;
 }
 
 
-/* =====================================================
-   FOOTER
-===================================================== */
+/* ================= FOOTER ================= */
 
 .footer{
-
     position:relative;
 
     width:100%;
@@ -1223,19 +870,15 @@ h1 span{
 
     font-size:11px;
 
-    padding:
-        10px 0 25px;
+    padding:10px 0 25px;
 
     z-index:4;
 }
 
 
-/* =====================================================
-   ANIMATIONS
-===================================================== */
+/* ================= ANIMATIONS ================= */
 
 @keyframes contentIn{
-
     from{
         opacity:0;
         transform:translateY(30px);
@@ -1248,41 +891,30 @@ h1 span{
 }
 
 @keyframes visualIn{
-
     from{
         opacity:0;
-        transform:
-            translateY(30px)
-            scale(.96);
+        transform:translateY(30px) scale(.96);
     }
 
     to{
         opacity:1;
-        transform:
-            translateY(0)
-            scale(1);
+        transform:translateY(0) scale(1);
     }
 }
 
 @keyframes lightFloat{
-
     0%,100%{
-        transform:
-            translateY(0)
-            scale(1);
+        transform:translateY(0) scale(1);
         opacity:.3;
     }
 
     50%{
-        transform:
-            translateY(-25px)
-            scale(1.7);
+        transform:translateY(-25px) scale(1.7);
         opacity:.9;
     }
 }
 
 @keyframes starsMove{
-
     from{
         transform:translate(0,0);
     }
@@ -1293,28 +925,19 @@ h1 span{
 }
 
 @keyframes logoGlow{
-
     0%,100%{
-
         box-shadow:
-            0 12px 35px
-            rgba(119,76,255,.30);
+            0 12px 35px rgba(119,76,255,.30);
     }
 
     50%{
-
         box-shadow:
-
-            0 12px 45px
-            rgba(119,76,255,.55),
-
-            0 0 25px
-            rgba(119,76,255,.20);
+            0 12px 45px rgba(119,76,255,.55),
+            0 0 25px rgba(119,76,255,.20);
     }
 }
 
 @keyframes dotPulse{
-
     0%,100%{
         transform:scale(1);
         opacity:.7;
@@ -1327,7 +950,6 @@ h1 span{
 }
 
 @keyframes rotateRing{
-
     from{
         transform:rotate(0deg);
     }
@@ -1338,23 +960,17 @@ h1 span{
 }
 
 
-/* =====================================================
-   TABLET
-===================================================== */
+/* ================= TABLET ================= */
 
 @media(max-width:950px){
 
     .hero{
-
         padding-top:20px;
     }
 
     .hero-container{
-
         grid-template-columns:1fr;
-
         gap:45px;
-
         text-align:center;
     }
 
@@ -1363,51 +979,38 @@ h1 span{
     }
 
     .content::before{
-
         right:50%;
-
-        transform:
-            translateX(50%);
+        transform:translateX(50%);
     }
 
     .visual{
-
         order:2;
-
         min-height:auto;
     }
 
     .description{
-
         margin-left:auto;
         margin-right:auto;
     }
 
     .start-button{
-
         width:100%;
-
         max-width:340px;
     }
 }
 
 
-/* =====================================================
-   MOBILE
-===================================================== */
+/* ================= MOBILE ================= */
 
 @media(max-width:600px){
 
     .navbar{
-
         padding:18px;
     }
 
     .brand-icon{
-
         width:43px;
         height:43px;
-
         border-radius:14px;
     }
 
@@ -1424,114 +1027,83 @@ h1 span{
     }
 
     .hero{
-
         min-height:auto;
-
-        padding:
-            35px 16px 30px;
+        padding:35px 16px 30px;
     }
 
     .hero-container{
-
         gap:35px;
     }
 
     .badge{
-
         font-size:11px;
-
-        padding:
-            8px 13px;
+        padding:8px 13px;
     }
 
     h1{
-
         font-size:50px;
-
         letter-spacing:-2px;
-
         line-height:1.08;
     }
 
     .description{
-
         font-size:14px;
-
         line-height:1.9;
     }
 
     .visual{
-
         min-height:auto;
     }
 
     .teacher-center{
-
         width:230px;
         height:230px;
     }
 
     .teacher-center-glow{
-
         width:320px;
         height:320px;
     }
 
     .teacher-message{
-
         margin-top:35px;
     }
 
     .trust-line{
-
         font-size:15px;
-
         gap:7px;
     }
 
     .teacher-description{
-
-        padding:
-            17px 16px;
-
+        padding:17px 16px;
         font-size:12px;
-
         line-height:2.15;
     }
 
     .developer-card{
-
         padding:21px 16px;
     }
 
     .developer-name{
-
         font-size:23px;
     }
 
     .developer-name-en{
-
         font-size:13px;
     }
 
     .developer-text{
-
         font-size:12px;
     }
 
     .start-button{
-
         font-size:16px;
-
-        padding:
-            17px 20px;
+        padding:17px 20px;
     }
 }
 
 
-/* =====================================================
-   SMALL PHONES
-===================================================== */
+/* ================= SMALL ================= */
 
 @media(max-width:390px){
 
@@ -1540,7 +1112,6 @@ h1 span{
     }
 
     .teacher-center{
-
         width:205px;
         height:205px;
     }
@@ -1552,7 +1123,6 @@ h1 span{
     .teacher-description{
         font-size:11px;
     }
-
 }
 
 </style>
@@ -1561,11 +1131,6 @@ h1 span{
 
 
 <body>
-
-
-<!-- =====================================================
-     BACKGROUND
-===================================================== -->
 
 <div class="background">
 
@@ -1581,10 +1146,6 @@ h1 span{
 </div>
 
 
-<!-- =====================================================
-     NAVBAR
-===================================================== -->
-
 <header class="navbar">
 
     <div class="brand">
@@ -1592,7 +1153,7 @@ h1 span{
         <div class="brand-icon">
 
             <img
-                src="teacher.png"
+                src="./teacher.png"
                 alt="المستر"
                 draggable="false"
             >
@@ -1602,7 +1163,7 @@ h1 span{
         <div class="brand-info">
 
             <div class="brand-name">
-              𝐀𝐥-𝐊𝐡𝐰𝐚𝐫𝐢𝐳𝐦𝐢  
+                𝐀𝐥-𝐊𝐡𝐰𝐚𝐫𝐢𝐳𝐦𝐢
             </div>
 
             <div class="brand-sub">
@@ -1616,18 +1177,10 @@ h1 span{
 </header>
 
 
-<!-- =====================================================
-     HERO
-===================================================== -->
-
 <main class="hero">
 
     <div class="hero-container">
 
-
-        <!-- =================================================
-             CONTENT
-        ================================================== -->
 
         <section class="content">
 
@@ -1670,7 +1223,7 @@ h1 span{
 
                 <span class="button-content">
 
-                    <span>
+                    <span id="buttonText">
                         🚀 ابدأ مع الخوارزمي
                     </span>
 
@@ -1685,40 +1238,25 @@ h1 span{
         </section>
 
 
-        <!-- =================================================
-             TEACHER
-        ================================================== -->
-
-        <section
-            class="visual"
-            id="visual"
-        >
+        <section class="visual">
 
             <div
                 class="teacher-center"
                 id="teacherCenter"
             >
 
-                <div
-                    class="teacher-center-glow">
-                </div>
+                <div class="teacher-center-glow"></div>
 
-                <div
-                    class="teacher-center-ring">
-                </div>
+                <div class="teacher-center-ring"></div>
 
                 <img
-                    src="teacher.png"
-                    alt="Ｍｒ． Ａｍｉｒ Ｔａｌａａｔ"
+                    src="./teacher.png"
+                    alt="Mr. Amir Talaat"
                     draggable="false"
                 >
 
             </div>
 
-
-            <!-- =================================================
-                 THANK YOU MESSAGE
-            ================================================== -->
 
             <div class="teacher-message">
 
@@ -1754,26 +1292,19 @@ h1 span{
                 </p>
 
 
-                <!-- =================================================
-                     DEVELOPER
-                ================================================== -->
-
                 <div class="developer-card">
 
                     <div class="developer-title">
                         ✦ DEVELOPER ✦
                     </div>
 
-
                     <div class="developer-name">
-                       ᗰ⚧ ♭€↳⊙✓€ᕲ ϰ♄ωꍏ☈♗☡ᗰ♗ 
+                        معاذ يسري
                     </div>
-
 
                     <div class="developer-name-en">
                         𝑴𝒖'𝒂𝒅𝒉 𝒀𝒖𝒔𝒓𝒊
                     </div>
-
 
                     <p class="developer-text">
 
@@ -1785,7 +1316,7 @@ h1 span{
 
                         <br><br>
 
-                        الرسالة لكل طالب:
+                        لكل طالب:
                         لا تستصغر بدايتك.
                         ممكن تبدأ كطالب يتعلم،
                         ومع الاجتهاد والاستمرار تصبح
@@ -1818,89 +1349,94 @@ h1 span{
 </main>
 
 
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
 <footer class="footer">
 
-    © 2026 الخوارزمي | منصة 
+    © 2026 الخوارزمي | منصة الاختبارات
 
 </footer>
 
 
 <script>
 
-/* =====================================================
-   TEACHER IMAGE CLICK
-===================================================== */
+/* ================= TEACHER EFFECT ================= */
 
 const teacherCenter =
-    document.getElementById(
-        "teacherCenter"
-    );
-
+    document.getElementById("teacherCenter");
 
 teacherCenter.addEventListener(
     "click",
     function(){
 
-        teacherCenter.classList.toggle(
-            "active"
-        );
+        teacherCenter.classList.toggle("active");
 
     }
 );
 
 
-/* =====================================================
-   START BUTTON
-===================================================== */
+/* ================= START BUTTON ================= */
 
 const startButton =
-    document.getElementById(
-        "startButton"
-    );
+    document.getElementById("startButton");
 
+const buttonText =
+    document.getElementById("buttonText");
+
+let openingAuth = false;
 
 startButton.addEventListener(
     "click",
     function(){
 
-        if(startButton.disabled){
+        /*
+         * منع الضغط المتكرر.
+         */
+        if(openingAuth){
             return;
         }
 
+        openingAuth = true;
+
         startButton.disabled = true;
 
-        startButton.style.opacity =
-            "0.7";
+        startButton.style.opacity = "0.65";
 
-        window.location.href =
-            "auth.html";
+        buttonText.textContent =
+            "جاري فتح المنصة...";
+
+        /*
+         * مهم مع GitHub Pages:
+         *
+         * ./auth.html
+         *
+         * وليس:
+         *
+         * /auth.html
+         */
+        window.location.assign("./auth.html");
 
     }
 );
 
 
-/* =====================================================
-   PAGE SHOW
-===================================================== */
+/* ================= PAGE SHOW ================= */
 
 window.addEventListener(
     "pageshow",
     function(){
 
+        openingAuth = false;
+
         startButton.disabled = false;
 
-        startButton.style.opacity =
-            "1";
+        startButton.style.opacity = "1";
+
+        buttonText.textContent =
+            "🚀 ابدأ مع الخوارزمي";
 
     }
 );
 
 </script>
-
 
 </body>
 
